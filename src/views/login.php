@@ -18,8 +18,8 @@
         <!-- Columna de Branding -->
         <div class="login-branding">
             <!-- <img src="path/to/your/logo.svg" alt="Logo Municipal" class="logo"> -->
-            <h1>SIGEM</h1>
-            <p>Sistema Integral de Gestión de Eventos Municipales</p>
+            <h1>SIGEEV</h1>
+            <p>Sistema Integral de Gestión de Eventos</p>
         </div>
 
         <!-- Columna del Formulario -->
