@@ -1,0 +1,15 @@
+{
+    "name": "slow/sigeev",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Slow\\Sigeev\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Juan elias"
+        }
+    ],
+    "require": {}
+}
