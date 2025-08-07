@@ -3,8 +3,6 @@ session_start();
 require_once "./src/config/config.php";
 require_once "./src/controller/vistas_control.php";
 
-
-
 $mostrar = new vistasControlador();
 $vista = $mostrar->obtenerVistaControlador();
 
@@ -50,11 +48,11 @@ if (isset($_SESSION['sesion_id']) && isset($_SESSION['sesion_token'])) {
 if ($vista == "login" || $vista == "404" ||$vista == "UpdatePassword" ) {
     require_once "./src/views/" . $vista . ".php";
 } else {
-   if($vista != "./src/views/imprimir-movimiento.php" && $vista != "./src/view/reportes-exel.php" && $vista != "./src/view/imprimir-pdfs.php"){
-       include "./src/views/include/header.php";
+   if($vista != "./src/views/imprimir-movimiento.php"){
+       include "./src/views/include/navbar.php";
     }
     include $vista;
-      if($vista != "./src/views/imprimir-movimiento.php" && $vista != "./src/view/reportes-exel.php" && $vista != "./src/view/imprimir-pdfs.php"){
+      if($vista != "./src/views/imprimir-movimiento.php" ){
        include "./src/views/include/footer.php";
     } 
 }

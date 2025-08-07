@@ -1,61 +1,65 @@
-/* Importar una fuente moderna (opcional) */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+/* Import de la fuente */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* --- Variables y Estilos Base --- */
+/* Variables de Color (Tema Oscuro Futurista) */
 :root {
-    --color-primary: #6a5af9;
-    --color-primary-dark: #4a3e9c;
-    --color-white: #ffffff;
-    --color-dark: #333333;
-    --color-light-gray: #f4f4f4;
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --primary-color: #2a9d8f;   /* Verde azulado para acentos y brillos */
+    --secondary-color: #264653; /* Azul oscuro para el fondo */
+    --accent-color: #e9c46a;    /* Dorado para elementos clave */
+    --green-color: #4CAF50;     /* Verde para estados positivos */
+    --white-color: #FFFFFF;
+    --text-color: #e0e0e0;      /* Texto principal casi blanco */
+    --text-color-muted: #9e9e9e;/* Texto secundario grisáceo */
 }
 
+/* Estilos Generales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--color-light-gray);
-    color: var(--color-dark);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
-
-/* --- Estilos de la Cabecera --- */
-.header {
-    background-color: var(--color-white);
-    padding: 0 2rem;
-    box-shadow: var(--shadow);
-    position: sticky; /* O 'fixed' si prefieres */
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.nav {
+/* Barra de Navegación Superior */
+.top-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 70px;
+    padding: 1rem 2rem;
+    position: sticky; /* <-- La magia para que se quede fija arriba */
+    top: 0;
+    z-index: 1000;
+    
+    /* Efecto "Frosted Glass" */
+    background-color: rgba(38, 70, 83, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(42, 157, 143, 0.3);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--white-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.logo .material-symbols-outlined {
+    color: var(--primary-color);
+    font-size: 2rem;
 }
 
 .nav-links {
@@ -63,120 +67,161 @@ ul {
     gap: 2rem;
 }
 
-.nav-links a {
-    font-weight: 600;
-    color: var(--color-dark);
-    position: relative;
-    padding: 5px 0;
-    transition: color 0.3s ease;
+.nav-item {
+    text-decoration: none;
+    color: var(--text-color-muted);
+    font-weight: 500;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
 }
 
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background-color: var(--color-primary);
-    transition: width 0.3s ease;
+.nav-item:hover {
+    color: var(--white-color);
 }
 
-.nav-links a:hover {
-    color: var(--color-primary);
+.nav-item.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
 }
 
-.nav-links a:hover::after {
-    width: 100%;
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-.cta-button {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: var(--color-primary-dark);
-}
-
-/* --- Estilos del Menú de Hamburguesa --- */
-.hamburger-menu {
-    display: none; /* Oculto en escritorio */
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 25px;
-    background: transparent;
+.icon-button {
+    background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
+    color: var(--text-color-muted);
+    transition: color 0.3s;
+}
+.icon-button:hover {
+    color: var(--white-color);
 }
 
-.hamburger-menu .bar {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: var(--color-dark);
-    border-radius: 3px;
-    transition: all 0.3s ease-in-out;
+.icon-button .material-symbols-outlined {
+    font-size: 1.6rem;
 }
 
-/* --- Diseño Responsivo (Mobile First) --- */
-@media (max-width: 820px) {
-    .cta-button {
-        display: none;
-    }
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+}
 
-    .hamburger-menu {
-        display: flex;
-    }
+#mobile-menu-toggle {
+    display: none; /* Oculto en escritorio */
+}
 
+/* Contenido Principal */
+.main-content {
+    padding: 2rem;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: var(--white-color);
+}
+
+.page-header p {
+    color: var(--text-color-muted);
+    font-size: 1.1rem;
+}
+
+/* Grid y Tarjetas */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(42, 157, 143, 0.2);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color-muted);
+}
+
+.card-header .material-symbols-outlined {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+}
+
+.card-body h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--white-color);
+}
+
+.card-body p {
+    font-size: 0.9rem;
+}
+
+.positive { color: var(--green-color); }
+.negative { color: #f44336; }
+.neutral { color: var(--accent-color); }
+
+/* ---- ESTILOS RESPONSIVOS ---- */
+@media (max-width: 992px) {
     .nav-links {
-        position: absolute;
-        top: 70px; /* Altura de la cabecera */
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        background-color: var(--color-white);
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
-        padding: 1rem 0;
-        gap: 1.5rem;
-        
-        /* Ocultar menú por defecto */
-        transform: translateY(-110%);
-        transition: transform 0.4s ease-in-out;
+        display: none; /* Oculta los links de navegación en la barra */
     }
 
     .nav-links.active {
-        transform: translateY(0);
+        /* Muestra el menú como un dropdown vertical */
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(38, 70, 83, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(42, 157, 143, 0.3);
     }
     
-    /* Animación de la hamburguesa a 'X' */
-    .hamburger-menu.active .bar:nth-child(1) {
-        transform: rotate(45deg) translate(7px, 6px);
-    }
-    .hamburger-menu.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger-menu.active .bar:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
+    #mobile-menu-toggle {
+        display: inline-block; /* Muestra el botón de hamburguesa */
     }
 }
 
-/* --- Estilos del Contenido de Ejemplo --- */
-.content {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 2rem auto;
-    height: 200vh; /* Para forzar el scroll */
-}
-
-.content h1 {
-    margin-bottom: 1rem;
+@media (max-width: 768px) {
+    .top-navbar {
+        padding: 1rem;
+    }
+    .main-content {
+        padding: 1.5rem;
+    }
+    .page-header h1 {
+        font-size: 2rem;
+    }
 }
