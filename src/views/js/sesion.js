@@ -21,6 +21,7 @@ async function iniciar_sesion() {
             formData.append('session', json.contenido['sesion_id']);
             formData.append('usuario', json.contenido['sesion_usuario']);
             formData.append('nombres_apellidos', json.contenido['sesion_usuario_nom']);
+            formData.append('rol', json.contenido['sesion_usuario_rol']);
             formData.append('token', json.contenido['sesion_token']);
 
             fetch(base_url + 'src/controller/sesion_cliente.php?tipo=iniciar_sesion', {
@@ -49,10 +50,10 @@ if (document.querySelector('#frm_login')) {
     }
 }
 async function cerrar_sesion() {
-    let respuesta = await fetch(base_url + 'src/control/sesion_cliente.php?tipo=cerrar_sesion');
+    let respuesta = await fetch(base_url + 'src/controller/sesion_cliente.php?tipo=cerrar_sesion');
     json = await respuesta.json();
     if (json.status) {
-        location.replace(base_url + "intranet");
+        location.replace(base_url);
     }
 }
 

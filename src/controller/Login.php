@@ -39,6 +39,7 @@ if ($tipo == "iniciar_sesion") {
             $arr_contenido['sesion_id'] = $arrSesion;
             $arr_contenido['sesion_usuario'] = $id_usuario;
             $arr_contenido['sesion_usuario_nom'] = $arrUsuario->nombres_apellidos;
+            $arr_contenido['sesion_usuario_rol'] = $arrUsuario->rol;
             $arr_contenido['sesion_token'] = $token;
             $arrResponse['contenido'] = $arr_contenido;
         } else {
