@@ -1,3 +1,15 @@
+<?php 
+$ruta = explode("/", $_GET['views']);
+if($ruta[0] == "eventos"){
+ $eventos = "active";
+}else if($ruta[0] == ""){
+ $inicio = "active";
+}else if($ruta[0] == "usuarios"){
+ $usuarios = "active";
+}else{
+ $inicio = "";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +21,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="<?php echo BASE_URL;?>src/views/img/favicon.ico" rel="icon">
+    <link href="<?php echo BASE_URL;?>src/view/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,14 +33,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="<?php echo BASE_URL;?>src/views/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL;?>src/views/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="<?php echo BASE_URL;?>src/view/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>src/view/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="<?php echo BASE_URL;?>src/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>src/view/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="<?php echo BASE_URL;?>src/views/css/style.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>src/view/css/style.css" rel="stylesheet">
         <script>
         const base_url = '<?php echo BASE_URL; ?>';
         const base_url_server = '<?php echo BASE_URL_SERVER; ?>';
@@ -57,7 +69,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="<?php echo BASE_URL;?>src/views/img/user.jpg" alt="perfil" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="<?php echo BASE_URL;?>src/view/img/user.jpg" alt="perfil" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -66,29 +78,27 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="bi bi-house-door-fill"></i>  Home</a>
+                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link <?php echo $inicio;?>"><i class="bi bi-house-door-fill"></i>  Home</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Eventos</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item">Buttons</a>
-                            <a href="typography.html" class="dropdown-item">Typography</a>
-                            <a href="element.html" class="dropdown-item">Other Elements</a>
+                            <a href="<?php echo BASE_URL;?>eventos" class="dropdown-item">eventos</a>
+                            <a href="<?php echo BASE_URL;?>resultadosEventos" class="dropdown-item">Resultados Eventos</a>
+                            <a href="<?php echo BASE_URL;?>rolesEvento" class="dropdown-item">Roles Evento</a>
+                            <a href="<?php echo BASE_URL;?>ubicaciones" class="dropdown-item">Ubicaciones</a>
                         </div>
                     </div>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Eventos</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Personas</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Tareas</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fas fa-user-tag"></i>Organizadores</a>
-                    
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>Personas</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
+                            <a href="<?php echo BASE_URL;?>organizadores" class="dropdown-item">Organizadores</a>
+                            <a href="<?php echo BASE_URL;?>participantes" class="dropdown-item">Participantes</a>
+                            <a href="<?php echo BASE_URL;?>proveedores" class="dropdown-item">Proveedores</a>
                         </div>
                     </div>
+                    <a href="<?php echo BASE_URL;?>tareas" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Tareas</a>
+                    <a href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link"><i class="fas fa-user-tag"></i>Comunicados</a>
+                    <a href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link"><i class="fas fa-user-tag"></i>Usuarios</a>              
                 </div>
             </nav>
         </div>
@@ -115,7 +125,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/views/img/user.jpg" alt="perfil" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/view/img/user.jpg" alt="perfil" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -125,7 +135,7 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/views/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/view/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -135,7 +145,7 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/views/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="<?php echo BASE_URL;?>src/view/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -172,7 +182,7 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="<?php echo BASE_URL;?>src/views/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="<?php echo BASE_URL;?>src/view/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex"><?php echo  $_SESSION['sesion_usuario_nom'];?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">

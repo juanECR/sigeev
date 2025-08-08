@@ -1,7 +1,7 @@
 <?php
-require_once("../models/admin-usuarioModel.php");
-require_once("../models/admin-sesionModel.php");
-require_once("../models/adminModel.php");
+require_once("../model/admin-usuarioModel.php");
+require_once("../model/admin-sesionModel.php");
+require_once("../model/adminModel.php");
 
 $objUsuario = new UsuarioModel();
 $objSesion = new SessionModel();

@@ -1,12 +1,12 @@
 <?php
 
-require_once "./src/models/vistas_model.php";
+require_once "./src/model/vistas_model.php";
 
 class vistasControlador extends vistaModelo
 {
     public function obtenerPlantillaControlador()
     {
-        return require_once "./src/views/plantilla.php";
+        return require_once "./src/view/plantilla.php";
     }
    public function obtenerVistaControlador()
     {
@@ -34,4 +34,3 @@ class vistasControlador extends vistaModelo
     }
 
 }
-?>

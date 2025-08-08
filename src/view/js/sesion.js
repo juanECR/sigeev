@@ -9,7 +9,7 @@ async function iniciar_sesion() {
         // capturamos datos del formulario html
         const datos = new FormData(frm_login);
         //enviar datos hacia el controlador
-        let respuesta = await fetch(base_url_server + 'src/controller/Login.php?tipo=iniciar_sesion', {
+        let respuesta = await fetch(base_url_server + 'src/control/Login.php?tipo=iniciar_sesion', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -24,7 +24,7 @@ async function iniciar_sesion() {
             formData.append('rol', json.contenido['sesion_usuario_rol']);
             formData.append('token', json.contenido['sesion_token']);
 
-            fetch(base_url + 'src/controller/sesion_cliente.php?tipo=iniciar_sesion', {
+            fetch(base_url + 'src/control/sesion_cliente.php?tipo=iniciar_sesion', {
                 method: 'POST',
                 mode: 'cors',
                 cache: 'no-cache',
@@ -33,7 +33,7 @@ async function iniciar_sesion() {
             location.replace(base_url);
             location.replace(base_url);
         } else {
-         toastr.error('error al iniciar sesion');
+         toastr.error('Credenciales incorrectas');
         }
         //console.log(respuesta);
     } catch (e) {
@@ -50,7 +50,7 @@ if (document.querySelector('#frm_login')) {
     }
 }
 async function cerrar_sesion() {
-    let respuesta = await fetch(base_url + 'src/controller/sesion_cliente.php?tipo=cerrar_sesion');
+    let respuesta = await fetch(base_url + 'src/control/sesion_cliente.php?tipo=cerrar_sesion');
     json = await respuesta.json();
     if (json.status) {
         location.replace(base_url);

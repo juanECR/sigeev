@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "./src/config/config.php";
-require_once "./src/controller/vistas_control.php";
+require_once "./src/control/vistas_control.php";
 
 $mostrar = new vistasControlador();
 $vista = $mostrar->obtenerVistaControlador();
@@ -11,7 +11,7 @@ if (isset($_SESSION['sesion_id']) && isset($_SESSION['sesion_token'])) {
 
     $curl = curl_init(); //inicia la sesión cURL
     curl_setopt_array($curl, array(
-        CURLOPT_URL => BASE_URL_SERVER."src/controller/Sesion.php?tipo=validar_sesion&sesion=".$_SESSION['sesion_id']."&token=".$_SESSION['sesion_token'], //url a la que se conecta
+        CURLOPT_URL => BASE_URL_SERVER."src/control/Sesion.php?tipo=validar_sesion&sesion=".$_SESSION['sesion_id']."&token=".$_SESSION['sesion_token'], //url a la que se conecta
         CURLOPT_RETURNTRANSFER => true, //devuelve el resultado como una cadena del tipo curl_exec
         CURLOPT_FOLLOWLOCATION => true, //sigue el encabezado que le envíe el servidor
         CURLOPT_ENCODING => "", // permite decodificar la respuesta y puede ser"identity", "deflate", y "gzip", si está vacío recibe todos los disponibles.
@@ -46,14 +46,15 @@ if (isset($_SESSION['sesion_id']) && isset($_SESSION['sesion_token'])) {
 
 
 if ($vista == "login" || $vista == "404" ||$vista == "UpdatePassword" ) {
-    require_once "./src/views/" . $vista . ".php";
+    require_once "./src/view/" . $vista . ".php";
 } else {
-   if($vista != "./src/views/imprimir-movimiento.php"){
-       include "./src/views/include/navbar.php";
+    
+   if($vista != "./src/view/imprimir-movimiento.php"){
+       include "./src/view/include/navbar.php";
     }
     include $vista;
-      if($vista != "./src/views/imprimir-movimiento.php" ){
-       include "./src/views/include/footer.php";
+      if($vista != "./src/view/imprimir-movimiento.php" ){
+       include "./src/view/include/footer.php";
     } 
 }
 ?>
