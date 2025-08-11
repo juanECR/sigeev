@@ -28,7 +28,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Usuarios registrados</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_usuarios">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -40,7 +40,7 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_tbl_usuarios">
                             <tr>
                                 <th scope="row">1</th>
                                 <td>John</td>
@@ -48,24 +48,6 @@
                                 <td>jhon@email.com</td>
                                 <td>USA</td>
                                 <td>123</td>
-                                <td>Member</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mark@email.com</td>
-                                <td>UK</td>
-                                <td>456</td>
-                                <td>Member</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>jacob@email.com</td>
-                                <td>AU</td>
-                                <td>789</td>
                                 <td>Member</td>
                             </tr>
                         </tbody>
@@ -127,3 +109,4 @@
 
    </div>
 </div>
+<script src="<?php echo BASE_URL;?>src/view/js/admin_usuario.js">listarUsuarios();</script>

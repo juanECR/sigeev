@@ -23,6 +23,16 @@ class UsuarioModel
         }
         return $arrRespuesta;
     }
+
+
+
+
+
+
+
+
+
+
     public function registrarUsuario($dni, $apellidos_nombres,$correo, $telefono,$password)
     {
         $sql = $this->conexion->query("INSERT INTO usuarios (dni, nombres_apellidos, correo, telefono, password) VALUES ('$dni','$apellidos_nombres','$correo','$telefono','$password')");
