@@ -25,10 +25,10 @@
 
         <!-- tabala eventos recientes -->
         <div class="col-12">
-            <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Eventos pendientes</h6>
+            <div class="bg-white rounded h-100 p-4">
+                <h6 class="mb-4 text-secondary">Eventos pendientes</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_eventos">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -66,7 +66,9 @@
                                 <td>jacob@email.com</td>
                                 <td>AU</td>
                                 <td>789</td>
-                                <td>Member</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -79,7 +81,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Eventos completados</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_eventos">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

@@ -1,15 +1,3 @@
-<?php 
-$ruta = explode("/", $_GET['views']);
-if($ruta[0] == "eventos"){
- $eventos = "active";
-}else if($ruta[0] == ""){
- $inicio = "active";
-}else if($ruta[0] == "usuarios"){
- $usuarios = "active";
-}else{
- $inicio = "";
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,10 +15,10 @@ if($ruta[0] == "eventos"){
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>
 
     <!-- Libraries Stylesheet -->
     <link href="<?php echo BASE_URL;?>src/view/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -78,7 +66,7 @@ if($ruta[0] == "eventos"){
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link <?php echo $inicio;?>"><i class="bi bi-house-door-fill"></i>  Home</a>
+                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link "><i class="bi bi-house-door-fill"></i>  Home</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Eventos</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -91,6 +79,7 @@ if($ruta[0] == "eventos"){
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>Personas</a>
                         <div class="dropdown-menu bg-transparent border-0">
+                             <a href="<?php echo BASE_URL;?>empleados" class="dropdown-item">Empleados</a>
                             <a href="<?php echo BASE_URL;?>organizadores" class="dropdown-item">Organizadores</a>
                             <a href="<?php echo BASE_URL;?>participantes" class="dropdown-item">Participantes</a>
                             <a href="<?php echo BASE_URL;?>proveedores" class="dropdown-item">Proveedores</a>

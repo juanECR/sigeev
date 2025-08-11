@@ -5,9 +5,9 @@
         <!-- Fila de Cabecera y Botón de Acción -->
         <div class="col-sm-12 col-xl-6">
             <div class="bg-secondary rounded h-100 p-4">
-                <h2>Resultados de los eventos</h2>
+                <h2>Gestión de Empleados</h2>
                 <div class="m-n2">          
-                    <p>Registra, edita o elimina resultados de los eventos.</p>
+                    <p>Regsitra, edita o elimina empleados.</p>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>
