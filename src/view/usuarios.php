@@ -28,7 +28,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Usuarios registrados</h6>
                 <div class="table-responsive">
-                    <table class="table" id="tbl_usuarios">
+                    <table class="table" id="tbl_usuarios"> 
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
