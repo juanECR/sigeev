@@ -6,6 +6,10 @@
     --dark: #000000;
 }
 
+#toast-container > div {
+  z-index: 9999 !important;
+}
+
 .back-to-top {
     position: fixed;
     display: none;

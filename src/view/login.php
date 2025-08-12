@@ -109,7 +109,7 @@
     <style>
                 /* --- Variables y Estilos Globales --- */
         :root {
-            --primary-color: #0056b3; /* Un azul corporativo */
+            --primary-color: red; /* Un azul corporativo */
             --primary-color-dark: #004494;
             --secondary-color: #f4f4f9;
             --text-color: #333;
@@ -155,7 +155,7 @@
         /* --- Columna de Branding (Izquierda) --- */
         .login-branding {
             flex: 1;
-            background: linear-gradient(rgba(0, 86, 179, 0.7), rgba(0, 36, 75, 0.8)), url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80') no-repeat center center/cover;
+            background: linear-gradient(rgba(179, 7, 7, 0.7), rgba(92, 20, 3, 0.8)), url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80') no-repeat center center/cover;
             color: #fff;
             display: flex;
             flex-direction: column;

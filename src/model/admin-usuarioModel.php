@@ -23,19 +23,9 @@ class UsuarioModel
         }
         return $arrRespuesta;
     }
-
-
-
-
-
-
-
-
-
-
-    public function registrarUsuario($dni, $apellidos_nombres,$correo, $telefono,$password)
+    public function registrarUsuario($nombres_apellidos, $correo,$telefono,$password,$rol)
     {
-        $sql = $this->conexion->query("INSERT INTO usuarios (dni, nombres_apellidos, correo, telefono, password) VALUES ('$dni','$apellidos_nombres','$correo','$telefono','$password')");
+        $sql = $this->conexion->query("INSERT INTO usuarios (nombres_apellidos, correo, telefono, password,rol) VALUES ('$nombres_apellidos','$correo','$telefono','$password','$rol')");
         if ($sql) {
             $sql = $this->conexion->insert_id;
         } else {
@@ -43,6 +33,16 @@ class UsuarioModel
         }
         return $sql;
     }
+
+
+
+
+
+
+
+
+
+
     public function actualizarUsuario($id, $dni, $nombres_apellidos, $correo, $telefono, $estado)
     {
         $sql = $this->conexion->query("UPDATE usuarios SET dni='$dni',nombres_apellidos='$nombres_apellidos',correo='$correo',telefono='$telefono',estado ='$estado' WHERE id='$id'");

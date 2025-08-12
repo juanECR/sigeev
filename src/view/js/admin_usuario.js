@@ -25,4 +25,50 @@ async function listarUsuarios() {
  }
  
 }
+
+async function registrarUsuario() {
+  let nombres = document.getElementById("nombres").value;
+  let correo = document.getElementById("correo").value;
+  let telefono = document.getElementById("telefono").value;
+  let password = document.getElementById("password").value;
+  let rol = document.getElementById("rol").value;
+  if(nombres == "" || correo == ""|| telefono == "" ||password==""||rol==""){
+        toastr.error('campos vacios');
+        return;
+  }
+  try {
+        // capturamos datos del formulario html
+        const datos = new FormData(frm_nuevo_usuario);
+        datos.append('sesion', session_session);
+        datos.append('token', token_token);
+        //enviar datos hacia el controlador
+        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=registrar', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        json = await respuesta.json();
+        if (json.status) {
+             let modalEl = document.getElementById("modalNuevoUsuario");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+      // Cerrar modal
+            modal.hide();
+            toastr.success('Nuevo usuario registrado');
+        
+
+/*             modalEl.addEventListener('hidden.bs.modal', function () {
+                toastr.success("Nuevo usuario registrado");
+                }, { once: true });
+
+                modal.hide(); */
+        } else if (json.msg == "Error_Sesion") {
+            alerta_sesion();
+        } else {
+            toastr.error(json.mensaje);
+        }
+  } catch (error) {
+     console.log("Oops, ocurrio un error " + e);
+  }
+}
   
