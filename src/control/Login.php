@@ -1,13 +1,19 @@
 <?php
 require_once("../model/admin-usuarioModel.php");
+require_once("../model/admin-personaModel.php");
+require_once("../model/admin-rolesUsuario.php");
 require_once("../model/admin-sesionModel.php");
 require_once("../model/adminModel.php");
 
 $objUsuario = new UsuarioModel();
+$objPersona = new PersonaModel();
+$objRolesUsuario = new RolesUsuario();
 $objSesion = new SessionModel();
 $objAdmin = new AdminModel();
 
 $tipo = $_GET['tipo'];
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$ip_address = $_SERVER['REMOTE_ADDR'];
 
 if ($tipo == "iniciar_sesion") {
     //print_r($_POST);
@@ -15,12 +21,23 @@ if ($tipo == "iniciar_sesion") {
     $password = trim($_POST['password']);
     $arrResponse = array('status' => false, 'msg' => '');
 
-    $arrUsuario = $objUsuario->buscarUsuarioByUsuario($usuario);
+    $arrPersona = $objPersona->buscarPersonaByCorreo($usuario); 
+    
     //print_r($arrUsuario);
-    if (empty($arrUsuario)) {
+    if (empty($arrPersona)) {
         $arrResponse = array('status' => false, 'msg' => 'Error, Usuario no esta registrado en el sistema');
     } else {
-        if (password_verify($password, $arrUsuario->password)) {
+        $arrUsuario = $objUsuario->buscarUsuarioByPersonaId($arrPersona->id);
+        $arrObjRoles = $objRolesUsuario->getRolesByUsuarioId($arrUsuario->id);
+        if (password_verify($password, $arrUsuario->password)) {  
+           //obtenemos nombres de los roles de un usuario
+            $rolesDelUsuario = array();
+            foreach ($arrObjRoles as $rol) {
+                array_push($rolesDelUsuario, $rol->nombre);
+            }
+            //concatenamos en un solo valor string
+            $stringRoles = implode(",", $rolesDelUsuario);
+
             $arr_contenido = [];
             // datos de sesion
             $fecha_hora_inicio = date("Y-m-d H:i:s");
@@ -31,19 +48,19 @@ if ($tipo == "iniciar_sesion") {
             $token = password_hash($llave, PASSWORD_DEFAULT);
             $id_usuario = $arrUsuario->id;
 
-            $arrSesion = $objSesion->registrarSesion($id_usuario, $fecha_hora_inicio, $fecha_hora_fin, $llave);
+            $arrSesion = $objSesion->registrarSesion($id_usuario, $llave, $fecha_hora_inicio, $fecha_hora_fin, $ip_address, $userAgent);
             //buscamos ultimo periodo
             /* $arrIes = $objInstitucion->buscarPrimerIe(); */
             $arrResponse = array('status' => true, 'msg' => 'Ingresar al sistema');
 
             $arr_contenido['sesion_id'] = $arrSesion;
             $arr_contenido['sesion_usuario'] = $id_usuario;
-            $arr_contenido['sesion_usuario_nom'] = $arrUsuario->nombres_apellidos;
-            $arr_contenido['sesion_usuario_rol'] = $arrUsuario->rol;
+            $arr_contenido['sesion_usuario_nom'] = $arrPersona->nombres;
+            $arr_contenido['sesion_usuario_rol'] = $stringRoles;
             $arr_contenido['sesion_token'] = $token;
             $arrResponse['contenido'] = $arr_contenido;
         } else {
-            $arrResponse = array('status' => false, 'msg' => 'Error, Usuario y/o Contrasena Incorrecta');
+            $arrResponse = array('status' => false, 'msg' => 'Error, Contraseña Incorrecta');
         }
     }
     echo json_encode($arrResponse);

@@ -55,8 +55,6 @@ async function registrarUsuario() {
       // Cerrar modal
             modal.hide();
             toastr.success('Nuevo usuario registrado');
-        
-
 /*             modalEl.addEventListener('hidden.bs.modal', function () {
                 toastr.success("Nuevo usuario registrado");
                 }, { once: true });
