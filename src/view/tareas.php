@@ -7,7 +7,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h2>Gestión de Tareas</h2>
                 <div class="m-n2">          
-                    <p>Regsitra, edita o elimina Tareas asignadas a una persona con Rol Empleado.</p>
+                    <p>Registra, Edita o Elimina Tareas asignadas a una persona con Rol Empleado.</p>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>

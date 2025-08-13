@@ -7,7 +7,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h2>Gestión de roles de evento</h2>
                 <div class="m-n2">          
-                    <p>Registra, edita o elimina roles de personas vinculadas a un evento.</p>
+                    <p>Registra, Edita o Elimina roles de personas vinculadas a un evento.</p>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>

@@ -7,7 +7,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h2>Gestión de usuarios</h2>
                 <div class="m-n2">          
-                    <p>Registra, Edita o elimina usuarios del sistema</p>
+                    <p>Registra, Edita o Elimina usuarios del sistema</p>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>

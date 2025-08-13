@@ -7,7 +7,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h2>Gestión de Organizadores</h2>
                 <div class="m-n2">          
-                    <p>Registra, edita o elimina personas con Rol Organizador.</p>
+                    <p>Registra, Edita o Elimina personas con Rol Organizador.</p>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>
