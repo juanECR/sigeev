@@ -22,14 +22,15 @@ class PersonaModel{
       $sql = $sql->fetch_object();
       return $sql;
    }
-/*    public function listarPersonas(){
+   public function listarPersonas(){
         $array = array();
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE correo='ss'");
+        $sql = $this->conexion->query("SELECT * FROM personas");
         while ($objeto = $sql->fetch_object()) {
            array_push($array, $objeto);
         }
         return $array;
    }
+   /* 
    public function contarEmpleados(){
     $sql = $this->conexion->query("SELECT count(*) FROM personas WHERE tipo = empleado");
     $sql = $sql->fetch_object();

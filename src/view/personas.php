@@ -78,30 +78,24 @@
         <!-- tabala eventos recientes -->
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Usuarios registrados</h6>
+                <h6 class="mb-4">Personas registrados</h6>
                 <div class="table-responsive">
-                    <table class="table" id="tbl_usuarios"> 
+                    <table class="table" id="tbl_personas"> 
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">ZIP</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Dni</th>
+                                <th scope="col">Nombres</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">Fecha_nacimiento</th>
+                                <th scope="col">Género</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody_tbl_usuarios">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>jhon@email.com</td>
-                                <td>USA</td>
-                                <td>123</td>
-                                <td>Member</td>
-                            </tr>
+                        <tbody id="tbody_tbl_personas">
+
                         </tbody>
                     </table>
                 </div>
@@ -113,7 +107,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Eventos completados</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_1">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

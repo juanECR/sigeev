@@ -22,12 +22,15 @@ if ($tipo == "iniciar_sesion") {
     $arrResponse = array('status' => false, 'msg' => '');
 
     $arrPersona = $objPersona->buscarPersonaByCorreo($usuario); 
-    
+   
     //print_r($arrUsuario);
     if (empty($arrPersona)) {
         $arrResponse = array('status' => false, 'msg' => 'Error, Usuario no esta registrado en el sistema');
     } else {
         $arrUsuario = $objUsuario->buscarUsuarioByPersonaId($arrPersona->id);
+        if(empty($arrUsuario)){
+             $arrResponse = array('status' => false, 'msg' => 'Error, Usuario no tiene acceso al sistema');
+        }else{
         $arrObjRoles = $objRolesUsuario->getRolesByUsuarioId($arrUsuario->id);
         if (password_verify($password, $arrUsuario->password)) {  
            //obtenemos nombres de los roles de un usuario
@@ -61,7 +64,9 @@ if ($tipo == "iniciar_sesion") {
             $arrResponse['contenido'] = $arr_contenido;
         } else {
             $arrResponse = array('status' => false, 'msg' => 'Error, Contraseña Incorrecta');
+        }    
         }
+
     }
     echo json_encode($arrResponse);
 }
