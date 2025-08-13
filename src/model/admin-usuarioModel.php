@@ -10,8 +10,13 @@ class UsuarioModel
         $this->conexion = new Conexion();
         $this->conexion = $this->conexion->connect();
     }
+    public function buscarUsuarioByPersonaId($idPersona){
+        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE persona_id='$idPersona'");
+        $sql = $sql->fetch_object();
+        return $sql;
+    }
     public function buscarUsuarioByUsuario($correo){
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE correo='$correo'");
+        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE correo_electronico='$correo'");
         $sql = $sql->fetch_object();
         return $sql;
     }

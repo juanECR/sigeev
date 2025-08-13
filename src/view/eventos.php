@@ -25,10 +25,10 @@
 
         <!-- tabala eventos recientes -->
         <div class="col-12">
-            <div class="bg-white rounded h-100 p-4">
+            <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4 text-secondary">Eventos pendientes</h6>
                 <div class="table-responsive">
-                    <table class="table" id="tbl_eventos">
+                    <table class="table" id="tbl_1">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

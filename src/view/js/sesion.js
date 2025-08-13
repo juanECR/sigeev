@@ -33,7 +33,12 @@ async function iniciar_sesion() {
             location.replace(base_url);
             location.replace(base_url);
         } else {
-         toastr.error('Credenciales incorrectas');
+         Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: json.msg,
+            footer: '<a href="#">Why do I have this issue?</a>'
+            });
         }
         //console.log(respuesta);
     } catch (e) {
