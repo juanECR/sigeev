@@ -26,7 +26,37 @@ async function listarUsuarios() {
  
 }
 
-async function registrarUsuario() {
+async function listarRolesSistema(){
+    try {
+     let form = new FormData();
+     form.append('sesion',session_session);
+     form.append('token',token_token);
+
+     let respuesta = await fetch(base_url_server + 'src/control/RolesSistema.php?tipo=listarRolesSistema',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: form
+     });
+     json = await respuesta.json();
+     if (json.status) {
+            let datos = json.contenido;
+            datos.forEach(item => {
+                let nuevaFila =  document.createElement("option");
+                //nuevaFilaid: es crear // item.Id: viene de la base de datos
+                nuevaFila.value = item.id;
+                cont ++;
+                nuevaFila.innerHTML = item.nombre;
+                document.querySelector('#rol').appendChild(nuevaFila);
+        });
+     } 
+     console.log(json);
+    } catch (error) {
+        console.log('error en la funcion'+e );
+    }
+}
+
+async function registrarUsuario(){
   let nombres = document.getElementById("nombres").value;
   let correo = document.getElementById("correo").value;
   let telefono = document.getElementById("telefono").value;
