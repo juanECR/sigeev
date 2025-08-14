@@ -85,5 +85,62 @@ if($tipo == "listarPersonas"){
     echo json_encode($arr_Respuesta);
 }
 
+if ($tipo == "listarPersonasPaginado") {
+    $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sesión');
+
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        // --- INICIO DE CAMBIOS PARA PAGINACIÓN ---
+
+        // 1. Definir configuración y obtener página actual
+        $resultados_por_pagina = 10; // O el número que prefieras
+        // Recibimos el número de página desde el fetch de JavaScript
+        $pagina_actual = isset($_POST['pagina']) ? (int)$_POST['pagina'] : 1;
+        
+        // 2. Calcular el OFFSET para la consulta SQL
+        $offset = ($pagina_actual - 1) * $resultados_por_pagina;
+
+        // 3. Obtener el total de registros y calcular el total de páginas
+        $total_personas = $objPersona->contarTotalPersonas(); // Usamos la nueva función del modelo
+        $total_paginas = ceil($total_personas / $resultados_por_pagina);
+
+        // 4. Obtener solo las personas para la página actual
+        $arr_Persona = $objPersona->listarPersonasPaginado($resultados_por_pagina, $offset); // Usamos la nueva función
+
+        // --- FIN DE CAMBIOS PARA PAGINACIÓN ---
+
+        if (!empty($arr_Persona)) {
+            // El resto de tu lógica para formatear los datos permanece igual
+            for ($i = 0; $i < count($arr_Persona); $i++) {
+                if ($arr_Persona[$i]->genero == "M") {
+                    $arr_Persona[$i]->genero = "Masculino";
+                } else if ($arr_Persona[$i]->genero == "F") {
+                    $arr_Persona[$i]->genero = "Femenino";
+                }
+
+                $id_persona = $arr_Persona[$i]->id;
+                // Importante: Sanitizar la salida para prevenir XSS
+                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_persona . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
+                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_persona . ')"><i class="fas fa-trash-alt"></i></button>';
+                $arr_Persona[$i]->options = $opciones;
+            }
+
+            $arr_Respuesta['status'] = true;
+            $arr_Respuesta['contenido'] = $arr_Persona;
+            
+            // AÑADIDO: Incluir información de la paginación en la respuesta JSON
+            $arr_Respuesta['paginacion'] = [
+                'pagina_actual' => $pagina_actual,
+                'total_paginas' => $total_paginas
+            ];
+        } else {
+            // Manejar el caso de que no haya resultados para esa página
+            $arr_Respuesta['status'] = true; // Es un éxito, pero no hay contenido
+            $arr_Respuesta['contenido'] = [];
+            $arr_Respuesta['paginacion'] = ['pagina_actual' => 1, 'total_paginas' => 1];
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}
+
 
 ?>

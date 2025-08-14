@@ -30,6 +30,34 @@ class PersonaModel{
         }
         return $array;
    }
+
+    public function listarPersonasPaginado(int $limit, int $offset) {
+        $array = array();
+        // Usamos sentencias preparadas para mayor seguridad
+        $sql = $this->conexion->prepare("SELECT * FROM personas ORDER BY nombres ASC LIMIT ? OFFSET ?");
+        // 'ii' significa que ambos parámetros son enteros (integer)
+        $sql->bind_param('ii', $limit, $offset);
+        $sql->execute();
+        $resultado = $sql->get_result();
+
+        while ($objeto = $resultado->fetch_object()) {
+           array_push($array, $objeto);
+        }
+        return $array;
+    }
+
+    /**
+     * NUEVO: Esta función cuenta el total de registros en la tabla.
+     * Es esencial para calcular el número total de páginas.
+     */
+    public function contarTotalPersonas() {
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM personas");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
+
+
+
    /* 
    public function contarEmpleados(){
     $sql = $this->conexion->query("SELECT count(*) FROM personas WHERE tipo = empleado");
