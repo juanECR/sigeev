@@ -1,32 +1,11 @@
-async function listarUsuarios() {
-    let tablaBody = document.getElementById('tbody_tbl_usuarios');
- try {
-       let respuesta = await fetch(base_url_server + 'src/control/usuario.php?tipo=listarUsuarios',{
-           method: 'POST',
-           mode: 'cors',
-           cache: 'no-cache',
-    });
-      json = await respuesta.json();
-        if (json.status) {
-           tablaBody.innerHTML ='';
-           contenido.forEach(item => {
-            const fila= document.createElement("tr");
-            const celdas = [contenido.nombres_apellidos, contenido.correo, contenido.telefono, contenido.estado];
-            celdas.forEach(valor =>{
-                const td = document.createElement("td");
-                td.textContent = valor;
-                fila.appendChild(td);
-            });
-            tablaBody.appendChild(fila);
-           });
-        }
- } catch (error) {
-       console.log("Error al inicar sesion" + e);
- }
- 
-}
 
-async function listarRolesSistema(){
+//funciones que deven iniciarse al iniciar la pagina.
+document.addEventListener("DOMContentLoaded", function() {
+    ListarRolesSistema();
+});
+
+
+async function ListarRolesSistema(){
     try {
      let form = new FormData();
      form.append('sesion',session_session);
@@ -41,37 +20,39 @@ async function listarRolesSistema(){
      json = await respuesta.json();
      if (json.status) {
             let datos = json.contenido;
-            datos.forEach(item => {
+             datos.forEach(item => {
                 let nuevaFila =  document.createElement("option");
                 //nuevaFilaid: es crear // item.Id: viene de la base de datos
                 nuevaFila.value = item.id;
-                cont ++;
                 nuevaFila.innerHTML = item.nombre;
                 document.querySelector('#rol').appendChild(nuevaFila);
         });
      } 
      console.log(json);
-    } catch (error) {
+    } catch (e) {
         console.log('error en la funcion'+e );
     }
 }
 
+
 async function registrarUsuario(){
   let nombres = document.getElementById("nombres").value;
-  let correo = document.getElementById("correo").value;
+  let apellidos = document.getElementById("apellidos").value;
   let telefono = document.getElementById("telefono").value;
-  let password = document.getElementById("password").value;
+  let genero = document.getElementById("genero").value;
   let rol = document.getElementById("rol").value;
-  if(nombres == "" || correo == ""|| telefono == "" ||password==""||rol==""){
-        toastr.error('campos vacios');
-        return;
+
+  if(nombres == "" || apellidos == ""|| telefono == "" ||genero==""||rol==""){
+      Swal.fire({
+      title: "Campos vacios",
+      text: "Los campos ingresados estan vacios",
+      icon: "error"
+      });
   }
   try {
-        // capturamos datos del formulario html
         const datos = new FormData(frm_nuevo_usuario);
         datos.append('sesion', session_session);
         datos.append('token', token_token);
-        //enviar datos hacia el controlador
         let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=registrar', {
             method: 'POST',
             mode: 'cors',
@@ -80,20 +61,30 @@ async function registrarUsuario(){
         });
         json = await respuesta.json();
         if (json.status) {
+             const tablaBody = document.getElementById('tbody_tbl_usuarios');
+             tablaBody.innerHTML = ''; 
              let modalEl = document.getElementById("modalNuevoUsuario");
-            let modal = bootstrap.Modal.getInstance(modalEl);
+             let modal = bootstrap.Modal.getInstance(modalEl);
       // Cerrar modal
             modal.hide();
-            toastr.success('Nuevo usuario registrado');
-/*             modalEl.addEventListener('hidden.bs.modal', function () {
-                toastr.success("Nuevo usuario registrado");
-                }, { once: true });
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
 
-                modal.hide(); */
+               /*  listar_personas(1); */
+
         } else if (json.msg == "Error_Sesion") {
             alerta_sesion();
         } else {
-            toastr.error(json.mensaje);
+             Swal.fire({
+                title: "Error",
+                text: json.mensaje,
+                icon: "error"
+                });
         }
   } catch (error) {
      console.log("Oops, ocurrio un error " + e);

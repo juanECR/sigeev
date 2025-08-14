@@ -137,9 +137,9 @@ function actualizarPaginacion(paginacion, contenedorId) {
 async function listar_personas(pagina = 1) { // Acepta el número de página
     try {
         const datos = new FormData();
-        datos.append('sesion', session_session); // Asumo que estas variables son globales
+        datos.append('sesion', session_session);
         datos.append('token', token_token);
-        datos.append('pagina', pagina); // <-- AÑADIDO: Enviamos el número de página
+        datos.append('pagina', pagina); 
 
         let respuesta = await fetch(base_url + 'src/control/Persona.php?tipo=listarPersonasPaginado', {
             method: 'POST',

@@ -28,20 +28,26 @@ if ($tipo == 'listarUsuarios') {
 if ($tipo == "registrar") {
     $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
-        //print_r($_POST);
-        //repuesta
+
         if ($_POST) {
+            $dni = $_POST['dni'];
             $nombres = $_POST['nombres'];
+            $apellidos = $_POST['apellidos'];
             $correo = $_POST['correo'];
             $telefono = $_POST['telefono'];
+            $fecha_nacimiento = $_POST['fecha_nacimiento'];
+            $genero = $_POST['genero'];
             $password = $_POST['password'];
             $rol = $_POST['rol'];
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            if ($nombres == "" || $correo == "" || $telefono == "" || $password == ""|| $rol == "") {
+            if ( $dni == "" || $nombres == "" || $apellidos == "" || $correo == "" || $telefono == "" ||$fecha_nacimiento ==""|| $password == ""|| $rol == "") {
                 $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
             } else {
-                $arr_Usuario = $objUsuario->buscarUsuarioByUsuario($correo);
+                //primero registrar persona->devielve id - despues registrar usuario->devuelve id - despues registrar usuario_roles(id rol, id usuario).
+                //validar dni y correo no existan
+
+/*                 $arr_Usuario = $objUsuario->buscarUsuarioByUsuario($correo);
                 if ($arr_Usuario) {
                     $arr_Respuesta = array('status' => false, 'mensaje' => 'Registro Fallido, Usuario ya se encuentra registrado');
                 } else {
@@ -53,7 +59,7 @@ if ($tipo == "registrar") {
                     } else {
                         $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al registrar usuario');
                     }
-                }
+                } */
             }
         }
     }

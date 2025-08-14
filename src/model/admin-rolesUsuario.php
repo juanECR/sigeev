@@ -8,6 +8,17 @@ class RolesUsuario
         $this->conexion = new Conexion();
         $this->conexion = $this->conexion->connect();
     }
+    //FUNCIONES SISTEMA
+
+    public function listarRolesdelSistema(){
+        $arrayroles = array();
+        $sql = $this->conexion->query("SELECT * FROM roles_sistema");
+        while ($objeto = $sql->fetch_object()) {
+            array_push($arrayroles, $objeto);
+        }
+        return $arrayroles;
+    }
+    
     public function getRolesByUsuarioId($idUsuario)
     {
         $arrRespuesta = array();
@@ -28,4 +39,5 @@ class RolesUsuario
         
         return $arrRespuesta;
     }
+
 }

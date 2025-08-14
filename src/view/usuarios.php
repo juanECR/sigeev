@@ -32,7 +32,7 @@
                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="frm_nuevo_persona">
+                        <form id="frm_nuevo_usuario">
                             <div class="mb-3">
                                 <label for="dni" class="form-label">Dni:</label>
                                 <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" required>
@@ -74,14 +74,11 @@
                                 <label for="rol" class="form-label">Rol:</label>
                                 <select class="form-select" name="rol" id="rol" required>
                                 <option value="">Seleccione un Rol</option>
-                                <option value="admi">administrador</option>
-                                <option value="gerente">gerente</option>
-                                <option value="empleado">empleado</option>
                                 </select>
                             </div>                 
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="registrarPersona();" >Registrar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="registrarUsuario();" >Registrar</button> 
                             </div>
                         </form>
                     </div>
@@ -124,4 +121,4 @@
 
    </div>
 </div>
-<script src="<?php echo BASE_URL;?>src/view/js/admin_usuario.js"> listarRolesSistema();</script>
+<script src="<?php echo BASE_URL;?>src/view/js/admin_usuario.js"></script>
