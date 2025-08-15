@@ -15,22 +15,9 @@ class UsuarioModel
         $sql = $sql->fetch_object();
         return $sql;
     }
-    public function buscarUsuarioByUsuario($correo){
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE correo_electronico='$correo'");
-        $sql = $sql->fetch_object();
-        return $sql;
-    }
-    public function listarUsuarios(){
-        $arrRespuesta = array();
-        $sql = $this->conexion->query("SELECT * FROM usuarios");
-        while ($objeto = $sql->fetch_object()) {
-            array_push($arrRespuesta, $objeto);
-        }
-        return $arrRespuesta;
-    }
-    public function registrarUsuario($nombres_apellidos, $correo,$telefono,$password,$rol)
+    public function registrarUsuario($persona_id, $password)
     {
-        $sql = $this->conexion->query("INSERT INTO usuarios (nombres_apellidos, correo, telefono, password,rol) VALUES ('$nombres_apellidos','$correo','$telefono','$password','$rol')");
+        $sql = $this->conexion->query("INSERT INTO usuarios (persona_id, password) VALUES ('$persona_id','$password')");
         if ($sql) {
             $sql = $this->conexion->insert_id;
         } else {

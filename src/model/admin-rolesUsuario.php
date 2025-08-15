@@ -18,6 +18,16 @@ class RolesUsuario
         }
         return $arrayroles;
     }
+
+    public function registrarRolUsuario($usuario_id,$rol_id){
+        $consulta = $this->conexion->query("INSERT INTO usuario_roles (usuario_id, rol_id) VALUES ('$usuario_id','$rol_id')");
+        if ($consulta) {
+            $consulta = 1;
+        } else {
+            $consulta = 0;
+        }
+        return $consulta;
+    }
     
     public function getRolesByUsuarioId($idUsuario)
     {

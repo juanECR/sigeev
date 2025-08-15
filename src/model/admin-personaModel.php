@@ -22,6 +22,12 @@ class PersonaModel{
       $sql = $sql->fetch_object();
       return $sql;
    }
+   public function buscarPersonaByDni($dni){
+      $sql = $this->conexion->query("SELECT * FROM personas WHERE dni='$dni'");
+      $sql = $sql->fetch_object();
+      return $sql;
+   }
+
    public function listarPersonas(){
         $array = array();
         $sql = $this->conexion->query("SELECT * FROM personas");
@@ -56,7 +62,15 @@ class PersonaModel{
         return (int)$resultado->total;
     }
 
-
+    public function eliminarPersonaById($id_persona){
+      $sql = $this->conexion->query("DELETE FROM personas WHERE `personas`.`id` = $id_persona");
+      // Verificamos si la eliminación fue exitosa
+      if ($this->conexion->affected_rows > 0) {
+         return true; 
+      } else {
+         return false;
+      }
+    }
 
    /* 
    public function contarEmpleados(){
