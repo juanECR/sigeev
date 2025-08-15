@@ -27,6 +27,11 @@ class PersonaModel{
       $sql = $sql->fetch_object();
       return $sql;
    }
+   public function buscarPersonaById($id){
+      $sql = $this->conexion->query("SELECT * FROM personas WHERE id='$id'");
+      $sql = $sql->fetch_object();
+      return $sql;
+   }
 
    public function listarPersonas(){
         $array = array();

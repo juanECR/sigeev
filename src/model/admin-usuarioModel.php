@@ -26,6 +26,25 @@ class UsuarioModel
         return $sql;
     }
 
+    public function listarUsuariosPaginados(int $limit, int $offset) {
+        $array = array();
+        $sql = $this->conexion->prepare("SELECT * FROM usuarios LIMIT ? OFFSET ?");
+        // 'ii' significa que ambos parámetros son enteros (integer)
+        $sql->bind_param('ii', $limit, $offset);
+        $sql->execute();
+        $resultado = $sql->get_result();
+
+        while ($objeto = $resultado->fetch_object()) {
+           array_push($array, $objeto);
+        }
+        return $array;
+    }
+    
+    public function contarTotalUsuarios() {
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM usuarios");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
 
 
 
@@ -34,7 +53,7 @@ class UsuarioModel
 
 
 
-
+    //en deshuso
     public function actualizarUsuario($id, $dni, $nombres_apellidos, $correo, $telefono, $estado)
     {
         $sql = $this->conexion->query("UPDATE usuarios SET dni='$dni',nombres_apellidos='$nombres_apellidos',correo='$correo',telefono='$telefono',estado ='$estado' WHERE id='$id'");
@@ -46,12 +65,10 @@ class UsuarioModel
         return $sql;
     }
 
-
     public function UpdateResetPassword($id, $token,  $estado){
         $sql = $this->conexion->query("UPDATE usuarios SET token_password = '$token', reset_password='$estado' WHERE id = '$id'");
         return $sql;
     }
-
 
     public function buscarUsuarioById($id)
     {
@@ -65,25 +82,7 @@ class UsuarioModel
         $sql = $sql->fetch_object();
         return $sql;
     }
-    public function buscarUsuarioByNomAp($nomap)
-    {
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE nombres_apellidos='$nomap'");
-        $sql = $sql->fetch_object();
-        return $sql;
-    }
-    public function buscarUsuarioByApellidosNombres_like($dato)
-    {
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE nombres_apellidos LIKE '%$dato%'");
-        $sql = $sql->fetch_object();
-        return $sql;
-    }
-
-    public function buscarUsuarioByDniCorreo($dni, $correo)
-    {
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE dni='$dni' AND correo='$correo'");
-        $sql = $sql->fetch_object();
-        return $sql;
-    }
+   //buscar usuarios activos ordenadamente
     public function buscarUsuariosOrdenados()
     {
         $arrRespuesta = array();
@@ -93,39 +92,5 @@ class UsuarioModel
         }
         return $arrRespuesta;
     }
-   
-    public function buscarUsuariosOrderByApellidosNombres_tabla_filtro($busqueda_tabla_dni, $busqueda_tabla_nomap, $busqueda_tabla_estado)
-    {
-        //condicionales para busqueda
-        $condicion = "";
-        $condicion .= " dni LIKE '$busqueda_tabla_dni%' AND nombres_apellidos LIKE '$busqueda_tabla_nomap%'";
-        if ($busqueda_tabla_estado != '') {
-            $condicion .= " AND estado = '$busqueda_tabla_estado'";
-        }
-        $arrRespuesta = array();
-        $respuesta = $this->conexion->query("SELECT * FROM usuarios WHERE $condicion ORDER BY nombres_apellidos");
-        while ($objeto = $respuesta->fetch_object()) {
-            array_push($arrRespuesta, $objeto);
-        }
-        return $arrRespuesta;
-    }
-    public function buscarUsuariosOrderByApellidosNombres_tabla($pagina, $cantidad_mostrar, $busqueda_tabla_dni, $busqueda_tabla_nomap, $busqueda_tabla_estado)
-    {
-        //condicionales para busqueda
-        $condicion = "";
-        $condicion .= " dni LIKE '$busqueda_tabla_dni%' AND nombres_apellidos LIKE '$busqueda_tabla_nomap%'";
-        if ($busqueda_tabla_estado != '') {
-            $condicion .= " AND estado = '$busqueda_tabla_estado'";
-        }
-        $iniciar = ($pagina - 1) * $cantidad_mostrar;
-        $arrRespuesta = array();
-        $respuesta = $this->conexion->query("SELECT * FROM usuarios WHERE $condicion ORDER BY nombres_apellidos LIMIT $iniciar, $cantidad_mostrar");
-        while ($objeto = $respuesta->fetch_object()) {
-            array_push($arrRespuesta, $objeto);
-        }
-        return $arrRespuesta;
-    }
-
-
 
 }

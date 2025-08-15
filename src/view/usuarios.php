@@ -95,26 +95,24 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">ZIP</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Dni</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Correo Electronico</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">     </th>
                             </tr>
                         </thead>
                         <tbody id="tbody_tbl_usuarios">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>jhon@email.com</td>
-                                <td>USA</td>
-                                <td>123</td>
-                                <td>Member</td>
-                            </tr>
+                                <!--CONTENIDO TABLA CON JS-->
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="paginacion-controles">
+                            <!-- Se llenará con JS -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
