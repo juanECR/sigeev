@@ -1,10 +1,11 @@
 async function registrarOrganizador() {
-  let documento = document.getElementById("documento").value;
+  let tipoDoc = document.getElementById("tipo_documento").value;
+  let nro_documento = document.getElementById("nro_documento").value;
   let razon_social = document.getElementById("razon_social").value;
   let tipo = document.getElementById("tipo").value;
   let correo = document.getElementById("correo").value;
   let telefono = document.getElementById("telefono").value;
-  if(documento==""||razon_social == ""||tipo == "" || correo == ""|| telefono == ""){
+  if(tipoDoc == ""||nro_documento==""||razon_social == ""||tipo == "" || correo == ""|| telefono == ""){
         Swal.fire({
             title: "Campos vacios",
             text: "Los campos ingresados estan vacios",
@@ -25,8 +26,8 @@ async function registrarOrganizador() {
         });
         json = await respuesta.json();
         if (json.status) {
-             const tablaBody = document.getElementById('tbody_tbl_organizadores');
-             tablaBody.innerHTML = ''; 
+             let form = document.getElementById("frm_nuevo_organizador");
+             form.reset();
              let modalEl = document.getElementById("modalNuevoOrganizador");
              let modal = bootstrap.Modal.getInstance(modalEl);
       // Cerrar modal

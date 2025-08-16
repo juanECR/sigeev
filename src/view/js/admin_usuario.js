@@ -62,12 +62,13 @@ async function registrarUsuario(){
         });
         json = await respuesta.json();
         if (json.status) {
-             const tablaBody = document.getElementById('tbody_tbl_usuarios');
-             tablaBody.innerHTML = ''; 
+             let form = document.getElementById("frm_nuevo_usuario");
+             form.reset();
              let modalEl = document.getElementById("modalNuevoUsuario");
              let modal = bootstrap.Modal.getInstance(modalEl);
-      // Cerrar modal
-            modal.hide();
+             // Cerrar modal
+             modal.hide();
+
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -75,9 +76,7 @@ async function registrarUsuario(){
                 showConfirmButton: false,
                 timer: 1500
                 });
-
                listar_usuarios(1);
-
         } else if (json.msg == "Error_Sesion") {
             alerta_sesion();
         } else {
@@ -93,8 +92,6 @@ async function registrarUsuario(){
 }
   
 //LISTAR USUARIOS DEL SISTEMA
-
-
 async function listar_usuarios(pagina = 1) {
     try {
         const datos = new FormData();
@@ -132,6 +129,7 @@ async function listar_usuarios(pagina = 1) {
                     <td>${item.apellido}</td>
                     <td>${item.correo}</td>
                     <td>${item.telefono}</td>
+                    <td>${item.rol}</td>
                     <td>${item.estado}</td>
                     <td>${item.options}</td>
                 `;

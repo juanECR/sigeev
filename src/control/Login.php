@@ -31,15 +31,15 @@ if ($tipo == "iniciar_sesion") {
         if(empty($arrUsuario)){
              $arrResponse = array('status' => false, 'msg' => 'Error, Usuario no tiene acceso al sistema');
         }else{
-        $arrObjRoles = $objRolesUsuario->getRolesByUsuarioId($arrUsuario->id);
+        $arrObjRol = $objRolesUsuario->getRolUsuarioByIdUsuario($arrUsuario->id);
         if (password_verify($password, $arrUsuario->password)) {  
-           //obtenemos nombres de los roles de un usuario
-            $rolesDelUsuario = array();
-            foreach ($arrObjRoles as $rol) {
+           //obtenemos nombres de los roles de un usuario (PARA SISTEMA QUE MANEJA USUARIO CON VARIOS ROLES)
+        /*  $rolesDelUsuario = array();
+            foreach ($arrObjRol as $rol) {
                 array_push($rolesDelUsuario, $rol->nombre);
             }
             //concatenamos en un solo valor string
-            $stringRoles = implode(",", $rolesDelUsuario);
+            $stringRoles = implode(",", $rolesDelUsuario); */
 
             $arr_contenido = [];
             // datos de sesion
@@ -59,7 +59,7 @@ if ($tipo == "iniciar_sesion") {
             $arr_contenido['sesion_id'] = $arrSesion;
             $arr_contenido['sesion_usuario'] = $id_usuario;
             $arr_contenido['sesion_usuario_nom'] = $arrPersona->nombres;
-            $arr_contenido['sesion_usuario_rol'] = $stringRoles;
+            $arr_contenido['sesion_usuario_rol'] = $arrObjRol->nombre;
             $arr_contenido['sesion_token'] = $token;
             $arrResponse['contenido'] = $arr_contenido;
         } else {

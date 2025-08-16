@@ -10,8 +10,8 @@ class OrganizadorModel
         $this->conexion = new Conexion();
         $this->conexion = $this->conexion->connect();
     }
-    public function registrarOrganizador($documento,$razon_social,$tipo,$correo,$telefono){
-        $sql = $this->conexion->query("INSERT INTO organizadores (documento,nombre,tipo,correo_contacto,telefono_contacto) VALUES ('$documento','$razon_social','$tipo','$correo','$telefono')");
+    public function registrarOrganizador($tipo_documento,$nro_documento,$razon_social,$tipo,$correo,$telefono){
+        $sql = $this->conexion->query("INSERT INTO organizadores (tipo_documento,nro_documento,razon_social,tipo,correo_contacto,telefono_contacto) VALUES ('$tipo_documento','$nro_documento','$razon_social','$tipo','$correo','$telefono')");
         if ($sql) {
             $sql = $this->conexion->insert_id;
         } else {
@@ -24,8 +24,8 @@ class OrganizadorModel
         $sql = $sql->fetch_object();
         return $sql;
     }
-    public function buscarOrganizadorByDocumento($documento){
-        $sql = $this->conexion->query("SELECT * FROM organizadores WHERE documento = '$documento'");
+    public function buscarOrganizadorByNroDocumento($nro_documento){
+        $sql = $this->conexion->query("SELECT * FROM organizadores WHERE nro_documento = '$nro_documento'");
         $sql = $sql->fetch_object();
         return $sql;
     }

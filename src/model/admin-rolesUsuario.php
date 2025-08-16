@@ -28,7 +28,18 @@ class RolesUsuario
         }
         return $consulta;
     }
+
+    //funcion temporanea (solo lista un rol del usuario mientras solo exista un rol por usuario en tabla usuario_roles)
+    public function getRolUsuarioByIdUsuario($idUsuario){
+        $sql = $this->conexion->query("SELECT r.nombre 
+                FROM usuario_roles ur
+                INNER JOIN roles_sistema r ON ur.rol_id = r.id
+                WHERE ur.usuario_id = '$idUsuario'");
+        $sql = $sql->fetch_object();
+        return $sql;
+    }
     
+    //funcion para sistema mas avanzado (cuando un usuario tenga varios roles en tabla usuario_roles)
     public function getRolesByUsuarioId($idUsuario)
     {
         $arrRespuesta = array();

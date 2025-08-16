@@ -27,8 +27,6 @@ async function registrarPersona() {
         });
         json = await respuesta.json();
         if (json.status) {
-             const tablaBody = document.getElementById('tbody_tbl_personas');
-             tablaBody.innerHTML = ''; 
              let modalEl = document.getElementById("modalNuevoPersona");
              let modal = bootstrap.Modal.getInstance(modalEl);
       // Cerrar modal

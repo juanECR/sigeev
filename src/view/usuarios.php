@@ -100,8 +100,9 @@
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Correo Electronico</th>
                                 <th scope="col">Telefono</th>
+                                <th scope="col">Rol</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">     </th>
+                                <th scope="col"> </th>
                             </tr>
                         </thead>
                         <tbody id="tbody_tbl_usuarios">

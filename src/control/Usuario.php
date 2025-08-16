@@ -109,6 +109,7 @@ if($tipo == "listarUsuariosPaginado"){
 
                 $arr_Usuario[$i]->estado = 1? $arr_Usuario[$i]->estado = '<p class="text-success">activo</p>' : $arr_Usuario[$i]->estado = '<p class="text-success">de baja</p>';
                 $arrPersona = $objPersona->buscarPersonaById($arr_Usuario[$i]->persona_id);
+                $arrRolUsu = $objRolesUsu->getRolUsuarioByIdUsuario($arr_Usuario[$i]->id);
                 $id_usuario = $arr_Usuario[$i]->id;
 
                 $arr_Usuario[$i]->dni = $arrPersona->dni;
@@ -116,6 +117,7 @@ if($tipo == "listarUsuariosPaginado"){
                 $arr_Usuario[$i]->apellido = $arrPersona->apellidos;
                 $arr_Usuario[$i]->correo = $arrPersona->correo_electronico;
                 $arr_Usuario[$i]->telefono = $arrPersona->telefono;
+                $arr_Usuario[$i]->rol = $arrRolUsu->nombre;
 
                 $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_usuario . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
                              <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_usuario . ')"><i class="fas fa-trash-alt"></i></button>';

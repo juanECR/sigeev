@@ -34,15 +34,23 @@
                     <div class="modal-body">
                         <form id="frm_nuevo_organizador">
                             <div class="mb-3">
-                                <label for="documento" class="form-label">N° de documento:</label>
-                                <input type="number" class="form-control" name="documento" id="documento" placeholder="Ingrese su numero de documento" required>
+                                <label for="tipo_documento" class="form-label">Tipo de documento</label>
+                                <select class="form-select" name="tipo_documento" id="tipo_documento" required>
+                                <option value="">Seleccione tipo de documento</option>
+                                <option value="dni">DNI</option>
+                                <option value="ruc">RUC</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nro_documento" class="form-label">N° de documento:</label>
+                                <input type="number" class="form-control" name="nro_documento" id="nro_documento" placeholder="Ingrese su numero de documento" required>
                             </div>
                             <div class="mb-3">
                                 <label for="razon_social" class="form-label">Razon social:</label>
                                 <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Ingrese su Razon social" required>
                             </div>
                             <div class="mb-3">
-                                <label for="tipo" class="form-label">Tipo</label>
+                                <label for="tipo" class="form-label">Tipo organizador</label>
                                 <select class="form-select" name="tipo" id="tipo" required>
                                 <option value="">Seleccione tipo</option>
                                 <option value="interno">Interno</option>
@@ -95,4 +103,4 @@
 
    </div>
 </div>
-<script src="<?php echo BASE_URL;?>src/views/js/admin_organizadores.js"></script>
+<script src="<?php echo BASE_URL;?>src/view/js/admin_organizadores.js"></script>
