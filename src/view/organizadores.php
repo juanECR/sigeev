@@ -85,18 +85,24 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Tipo de documento</th>
                                 <th scope="col">N° de documento</th>
                                 <th scope="col">Razon social</th>
                                 <th scope="col">Tipo de organizador</th>
                                 <th scope="col">Correo electronico</th>
                                 <th scope="col">Telefono</th>
-                                <th scope="col"> </th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody id="tbody_tbl_organizadores">
                            <!-- esto se llena con js-->
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="paginacion-controles">
+                            <!-- Se llenará con JS -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

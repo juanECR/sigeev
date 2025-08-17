@@ -29,4 +29,24 @@ class OrganizadorModel
         $sql = $sql->fetch_object();
         return $sql;
     }
+    public function listarOrganizadoresPaginado(int $limit, int $offset){
+        $respuesta = array();
+        // Usamos sentencias preparadas para mayor seguridad
+        $sql = $this->conexion->prepare("SELECT * FROM organizadores ORDER BY razon_social ASC LIMIT ? OFFSET ?");
+        // 'ii' significa que ambos parámetros son enteros (integer)
+        $sql->bind_param('ii', $limit, $offset);
+        $sql->execute();
+        $resultado = $sql->get_result();
+
+        while ($objeto = $resultado->fetch_object()) {
+           array_push($respuesta, $objeto);
+        }
+        return $respuesta;
+    }
+
+    public function contarTotalOrganizadores(){
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM organizadores");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
 }

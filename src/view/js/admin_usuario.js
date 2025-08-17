@@ -37,19 +37,6 @@ async function ListarRolesSistema(){
 
 
 async function registrarUsuario(){
-  let nombres = document.getElementById("nombres").value;
-  let apellidos = document.getElementById("apellidos").value;
-  let telefono = document.getElementById("telefono").value;
-  let genero = document.getElementById("genero").value;
-  let rol = document.getElementById("rol").value;
-
-  if(nombres == "" || apellidos == ""|| telefono == "" ||genero==""||rol==""){
-      Swal.fire({
-      title: "Campos vacios",
-      text: "Los campos ingresados estan vacios",
-      icon: "error"
-      });
-  }
   try {
         const datos = new FormData(frm_nuevo_usuario);
         datos.append('sesion', session_session);
@@ -90,6 +77,8 @@ async function registrarUsuario(){
      console.log("Oops, ocurrio un error " + e);
   }
 }
+
+
   
 //LISTAR USUARIOS DEL SISTEMA
 async function listar_usuarios(pagina = 1) {
