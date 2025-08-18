@@ -10,6 +10,12 @@ class EventoModel{
 
    public function registrarEvento(){
     $sql = $this->conexion->query("INSERT INTO eventos(titulo,descripcion,categoria_evento_id,fecha_inicio,fecha_fin,ubicacion,organizador_id) VALUES ('$titulo','$descripcion','$categoria','$fecha_inicio','$fecha_fin','$ubicacion','$organizador')");
+    if($sql){
+       $this->$sql->insert_id;
+    }else{
+     $sql = 0;
+    }
+    return $sql;
 
    }
 

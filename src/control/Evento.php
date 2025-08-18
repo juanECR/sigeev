@@ -70,7 +70,7 @@ if($tipo == "crearEvento"){
             if ($titulo =="" ||$descripcion == ""||$categoria_id== "" || $fecha_inicio == "" || $fecha_fin == "" || $ubicacion == ""|| $organizador_id == "") {
                 $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
             } else {
-                    $id_evento = $objEvento->registrarEvento($dni,$nombres,$apellidos,$correo,$telefono,$fecha_nacimiento,$genero);
+                    $id_evento = $objEvento->registrarEvento();
                     if ($id_evento > 0) {
                         // array con los id de los sistemas al que tendra el acceso con su rol registrado
                         // caso de administrador y director
