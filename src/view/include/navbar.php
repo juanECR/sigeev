@@ -65,29 +65,25 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link "><i class="bi bi-house-door-fill"></i>  Home</a>
+                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link "><i class="bi bi-house-fill"></i>  Home</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Eventos</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-calendar-event-fill"></i> Eventos</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="<?php echo BASE_URL;?>eventos" class="dropdown-item">eventos</a>
-                            <a href="<?php echo BASE_URL;?>resultadosEventos" class="dropdown-item">Resultados Eventos</a>
-                            <a href="<?php echo BASE_URL;?>rolesEvento" class="dropdown-item">Roles Evento</a>
-                            <a href="<?php echo BASE_URL;?>ubicaciones" class="dropdown-item">Ubicaciones</a>
+                            <a href="<?php echo BASE_URL;?>eventos" class="dropdown-item"><i class="fas fa-calendar-week"></i> eventos</a>
+                            <a href="<?php echo BASE_URL;?>resultadosEventos" class="dropdown-item"><i class="fas fa-calendar-check"></i> Resultados Eventos</a>
+                            <a href="<?php echo BASE_URL;?>organizadores" class="dropdown-item"><i class="fas fa-building"></i> Organizadores</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>Personas</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                             <a href="<?php echo BASE_URL;?>personas" class="dropdown-item">Personas</a>
-                            <a href="<?php echo BASE_URL;?>empleados" class="dropdown-item">Empleados</a>
-                            <a href="<?php echo BASE_URL;?>organizadores" class="dropdown-item">Organizadores</a>
-                            <a href="<?php echo BASE_URL;?>participantes" class="dropdown-item">Participantes</a>
-                            <a href="<?php echo BASE_URL;?>proveedores" class="dropdown-item">Proveedores</a>
+                            <a href="<?php echo BASE_URL;?>personas" class="dropdown-item"><i class="fas fa-users"></i> Personas</a>
+                            <a href="<?php echo BASE_URL;?>participantes" class="dropdown-item"><i class="fas fa-id-card"></i> Participantes</a>
                         </div>
                     </div>
                     <a href="<?php echo BASE_URL;?>tareas" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Tareas</a>
-                    <a href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link"><i class="fas fa-user-tag"></i>Comunicados</a>
-                    <a href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link"><i class="fas fa-user-tag"></i>Usuarios</a>              
+                    <a href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link"><i class="fas fa-envelope-open-text"></i> Comunicados</a>
+                    <a href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link"><i class="fas fa-user-lock"></i> Usuarios</a>              
                 </div>
             </nav>
         </div>
