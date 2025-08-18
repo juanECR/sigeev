@@ -29,6 +29,12 @@ class OrganizadorModel
         $sql = $sql->fetch_object();
         return $sql;
     }
+    public function buscarOrganizadorById($id){
+     $sql = $this->conexion->query("SELECT * FROM organizadores WHERE id='$id'");
+     $sql = $sql->fetch_object();
+     return $sql;
+    }
+
     public function listarOrganizadoresPaginado(int $limit, int $offset){
         $respuesta = array();
         // Usamos sentencias preparadas para mayor seguridad
@@ -48,5 +54,14 @@ class OrganizadorModel
         $sql = $this->conexion->query("SELECT COUNT(id) as total FROM organizadores");
         $resultado = $sql->fetch_object();
         return (int)$resultado->total;
+    }
+
+    public function listarTodosOrganizadores(){
+        $arrOrganizadores = array();
+        $sql = $this->conexion->query("SELECT * FROM organizadores ORDER BY razon_social asc");
+        while ($objeto = $sql->fetch_object()) {
+            array_push($arrOrganizadores, $objeto);
+        }
+    return $arrOrganizadores;
     }
 }

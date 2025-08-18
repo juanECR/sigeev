@@ -103,5 +103,18 @@ if($tipo == "listarOrganizadoresPaginado"){
     }
     echo json_encode($arr_Respuesta);
 }
+if($tipo == "listarOrganizadores"){
+    $arr_Respuesta = array('status'=> false, 'contenido'=>'' ,'msg'=>'Error_Sesion');
+    if($objSesion->verificar_sesion_si_activa($id_sesion, $token)){
+        $arr_organizadores = $objOrganizador->listarTodosOrganizadores();
+        if(!empty($arr_organizadores)){
+           $arr_Respuesta['status'] = true;
+           $arr_Respuesta['contenido'] = $arr_organizadores;
+           $arr_Respuesta['msg'] = 'correcto';
+        }
+    }
+    echo json_encode($arr_Respuesta);
+
+}
 
 ?>
