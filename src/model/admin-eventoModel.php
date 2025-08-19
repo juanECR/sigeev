@@ -8,15 +8,14 @@ class EventoModel{
     $this->conexion = $this->conexion->connect();
    }
 
-   public function registrarEvento(){
+   public function registrarEvento($titulo,$descripcion,$categoria,$fecha_inicio,$fecha_fin,$ubicacion,$organizador){
     $sql = $this->conexion->query("INSERT INTO eventos(titulo,descripcion,categoria_evento_id,fecha_inicio,fecha_fin,ubicacion,organizador_id) VALUES ('$titulo','$descripcion','$categoria','$fecha_inicio','$fecha_fin','$ubicacion','$organizador')");
     if($sql){
-       $this->$sql->insert_id;
+       $sql = $this->conexion->insert_id;
     }else{
      $sql = 0;
     }
     return $sql;
-
    }
 
   public function listarEventosPaginado(int $limit, int $offset) {

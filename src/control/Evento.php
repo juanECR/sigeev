@@ -35,7 +35,7 @@ if ($tipo == "listarEventosPaginado") {
                 $arr_Organizador = $objOrganizador->buscarOrganizadorById($arr_Evento[$i]->organizador_id);
                 $id_evento = $arr_Evento[$i]->id;
                 $arr_Evento[$i]->organizador = $arr_Organizador->razon_social;
-                $opciones = '<a href="' . BASE_URL . 'detalle_evento/' . $id_evento . '"><button class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>Detalles</button></a>';
+                $opciones = '<a href="' . BASE_URL . 'detalleEvento/' . $id_evento . '"><button class="btn btn-primary btn-sm"><i class="bi bi-card-checklist"></i>Detalles</button></a>';
                 $arr_Evento[$i]->options = $opciones;
             }
             $arr_Respuesta['status'] = true;
@@ -59,8 +59,8 @@ if($tipo == "crearEvento"){
      $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
         if ($_POST) {
-            $titulo = trim($_POST['titulo']);
-            $descripcion = $_POST['descripcion'];
+            $titulo = strtoupper(trim($_POST['titulo']));
+            $descripcion = strtolower($_POST['descripcion']);
             $categoria_id = trim($_POST['categoria']);
             $fecha_inicio = $_POST['fecha_inicio'];
             $fecha_fin = $_POST['fecha_fin'];
@@ -70,13 +70,11 @@ if($tipo == "crearEvento"){
             if ($titulo =="" ||$descripcion == ""||$categoria_id== "" || $fecha_inicio == "" || $fecha_fin == "" || $ubicacion == ""|| $organizador_id == "") {
                 $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
             } else {
-                    $id_evento = $objEvento->registrarEvento();
+                    $id_evento = $objEvento->registrarEvento($titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id);
                     if ($id_evento > 0) {
-                        // array con los id de los sistemas al que tendra el acceso con su rol registrado
-                        // caso de administrador y director
-                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Registro Exitoso');
+                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Evento creado');
                     } else {
-                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al registrar usuario');
+                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al Crear evento');
                     }
             }
         }

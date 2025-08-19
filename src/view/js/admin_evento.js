@@ -163,6 +163,20 @@ async function listar_eventos(pagina = 1) {
                 let newFila = document.createElement("tr");
                 newFila.id = "fila" + item.id;
                 
+                switch (item.estado) {
+                    case "programado":
+                           item.estado = '<p class="text-info">programado</p>';
+                        break;
+                    case "en curso":
+                          item.estado = '<p class="text-success">en curso</p>';
+                        break;
+                    case "finalizado":
+                        item.estado = '<p class="text-tertiary">finalizado</p>';
+                        break;
+                    case "cancelado":
+                        item.estado = '<p class="text-danger">cancelado</p>';
+                        break;
+                }
                 // El contador ahora es relativo a la página
                 let contador = offset + index + 1;
 

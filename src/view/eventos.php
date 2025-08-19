@@ -86,7 +86,7 @@
                     <div class="modal-body">
                         <form id="frm_nuevaCategoriaEvento">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombres</label>
+                                <label for="nombre" class="form-label">Nombre de la categoria:</label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese El Nombre de la Categorias" required>
                             </div>  
                             <div class="mb-3">
