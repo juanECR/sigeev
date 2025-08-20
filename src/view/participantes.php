@@ -54,34 +54,34 @@
                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="frm_nuevo_persona">
-                            <input type="hidden" value="<?php echo base64_decode($_GET['data'])?>"><!-- data = id evnt-->
+                        <form id="frm_nuevo_participante">
+                            <input type="hidden" value="<?php echo base64_decode($_GET['data'])?>" name="data" id="data">
                             <div class="mb-3">
-                                <label for="dni" class="form-label">Dni:</label>
+                                <label for="dni" class="form-label">Dni:<span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" required>
                             </div>
                             <div class="mb-3">
-                                <label for="nombres" class="form-label">Nombres</label>
+                                <label for="nombres" class="form-label">Nombres:<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="nombres" id="nombres" placeholder="Ingrese sus nombres" required>
                             </div>
                             <div class="mb-3">
-                                <label for="apellidos" class="form-label">Apellidos:</label>
+                                <label for="apellidos" class="form-label">Apellidos:<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ingrese sus apellidos" required>
                             </div>
                             <div class="mb-3">
-                                <label for="correo" class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" name="correo" id="correo" placeholder="ejemplo@correo.com" required>
+                                <label for="correo" class="form-label">Correo electrónico:</label>
+                                <input type="email" class="form-control" name="correo" id="correo" placeholder="ejemplo@correo.com" require>
                             </div>
                             <div class="mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
+                                <label for="telefono" class="form-label">Teléfono:</label>
                                 <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Ingerese su telefono" required>
                             </div>
                             <div class="mb-3">
-                                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+                                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento:</label>
                                 <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="Ingrese su fecha de nacimiento" required>
                             </div>
                             <div class="mb-3">
-                                <label for="genero" class="form-label">Género</label>
+                                <label for="genero" class="form-label">Género:<span class="text-danger">*</span></label>
                                 <select class="form-select" name="genero" id="genero" required>
                                 <option value="">Seleccione un genero</option>
                                 <option value="M">Masculino</option>
@@ -90,14 +90,14 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="rolEvento" class="form-label">Rol</label><!--listar roles con js-->
+                                <label for="rolEvento" class="form-label">Rol:<span class="text-danger">*</span></label>
                                 <select class="form-select" name="rolEvento" id="rolEvento" required>
                                 <option value="">Seleccione un rol</option>
                                 </select>
                             </div>
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="funcion();" >Registrar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="registrarParticipanteEvento();" >Registrar</button> 
                             </div>
                         </form>
                     </div>

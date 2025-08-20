@@ -8,11 +8,8 @@
             <div class="col-12">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h4><i class="fa fa-info-circle card-header-icon text-primary"></i> Descripción del Evento</h4><hr>
-                    <p>
+                    <p id="descripcion_evento">
                         Únete a nosotros en la Conferencia Anual de Tecnología Web, el principal evento para desarrolladores, diseñadores y profesionales de la tecnología. Este año, nos centraremos en las últimas tendencias en desarrollo full-stack, la inteligencia artificial en aplicaciones web y el futuro de las interfaces de usuario.
-                    </p>
-                    <p>
-                        Habrá charlas de expertos de la industria, talleres prácticos y amplias oportunidades de networking.
                     </p>
                 </div>
             </div>
@@ -22,13 +19,12 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <h5><i class="fa fa-calendar-alt text-info mr-2"></i> Fechas</h5><hr>
-                            <p class="mb-1"><strong>Inicio:</strong> Lunes, 15 de Noviembre, 2025</p>
-                            <p><strong>Finaliza:</strong> Miércoles, 17 de Noviembre, 2025</p>
+                            <p class="mb-1 f_inicio"><strong>Inicio:</strong> Lunes, 15 de Noviembre, 2025</p>
+                            <p class="f_fin"><strong>Finaliza:</strong> Miércoles, 17 de Noviembre, 2025</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <h5><i class="fa fa-map-marker-alt text-info mr-2"></i> Ubicación</h5><hr>
-                            <p class="mb-1"><strong>Centro de Convenciones Metropolitano</strong></p>
-                            <p>Av. Principal 123, Ciudad Capital</p>
+                            <p class="mb-1 ubicacion"><strong>Centro de Convenciones Metropolitano</strong></p>
                         </div>
                     </div>
                 </div>
@@ -76,7 +72,7 @@
             <div class="col-12">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h5><i class="fa fa-sitemap text-info mr-2"></i> Organizador</h5><hr>
-                    <p class="mb-1"><strong>Tech Solutions Inc.</strong></p>
+                    <p class="mb-1 organizador"><strong>Tech Solutions Inc.</strong></p>
                     <a href="#" style="color: var(--primary);">Contactar al organizador</a>
                 </div>
             </div>
@@ -130,3 +126,5 @@
     </div>
 
 </div>
+<script src="<?php echo BASE_URL;?>src/view/js/admin_detalleEvento.js"></script>
+<script> listarDetallesEvento(<?php echo base64_decode($_GET['data']);?>);</script>

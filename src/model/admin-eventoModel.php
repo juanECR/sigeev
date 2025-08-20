@@ -42,5 +42,10 @@ class EventoModel{
         $resultado = $sql->fetch_object();
         return (int)$resultado->total;
     }
+   public function buscarEventoById($id){
+       $consulta = $this->conexion->query("SELECT * FROM eventos WHERE id='$id'");
+       $consulta = $consulta->fetch_object();
+       return $consulta;
+    }
 }
 ?>

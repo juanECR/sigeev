@@ -65,3 +65,44 @@ async function listarRolesEventoForm(){
         console.log('ups ocurrio un error en la funcion' + e);
     } 
 }
+
+async function registrarParticipanteEvento() {
+    try {
+        let datos = new FormData(frm_nuevo_participante);
+        datos.append('sesion', session_session);
+        datos.append('token', token_token);
+        let respuesta = await fetch(base_url_server+'src/control/Participante.php?tipo=registrarParticipanteEvento',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        json = await respuesta.json();
+        if(json.status){
+            let form = document.getElementById("frm_nuevo_participante");
+            form.reset();
+            let modalEl = document.getElementById("modalNuevoParticipante");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+               /*  listar_personas(1); */
+        } else if (json.mensaje == "Error_sesion") {
+            alerta_sesion();
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: json.mensaje,
+                icon: "error"
+                });
+        }
+    } catch (e) {
+        console.log('ups, ocurrio un error con la funcion '+ e);
+    }
+    
+}
