@@ -210,3 +210,16 @@
     
 })(jQuery);
 
+
+//funcion en caso de session acudacada
+async function alerta_sesion() {
+    Swal.fire({
+        type: 'error',
+        title: 'Error de Sesión',
+        text: "Sesión Caducada, Por favor inicie sesión",
+        confirmButtonClass: 'btn btn-confirm mt-2',
+        footer: '',
+        timer: 1000
+    });
+    location.replace(base_url + "login");
+}

@@ -35,7 +35,7 @@ if ($tipo == "listarEventosPaginado") {
                 $arr_Organizador = $objOrganizador->buscarOrganizadorById($arr_Evento[$i]->organizador_id);
                 $id_evento = $arr_Evento[$i]->id;
                 $arr_Evento[$i]->organizador = $arr_Organizador->razon_social;
-                $opciones = '<a href="' . BASE_URL . 'detalleEvento/' . $id_evento . '"><button class="btn btn-primary btn-sm"><i class="bi bi-card-checklist"></i>Detalles</button></a>';
+                $opciones = '<a href="' . BASE_URL . 'detalleEvento?data=' . base64_encode($id_evento) . '"><button class="btn btn-primary btn-sm"><i class="bi bi-card-checklist"></i>Detalles</button></a>';
                 $arr_Evento[$i]->options = $opciones;
             }
             $arr_Respuesta['status'] = true;

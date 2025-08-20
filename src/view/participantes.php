@@ -8,7 +8,6 @@
                 <h2>Gestión de Participantes</h2>
                 <div class="m-n2">          
                     <p>Registra, edita o elimina Personas del evento seleccionado.</p>
-                    <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-home me-2"></i>Volver al inicio</button>
                 </div>
             </div>
         </div>
@@ -16,9 +15,33 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Acciones</h6>
                 <div class="m-n2">
-                    <button type="button" class="btn btn-outline-primary m-2" data-bs-toggle="modal" data-bs-target="#modalNuevoParticipante"><i class="fa fa-plus me-2"></i> Agregar</button>
+                    <button type="button" class="btn btn-outline-primary m-2" data-bs-toggle="modal" data-bs-target="#modalNuevoParticipante"><i class="fa fa-plus me-2"></i> Registrar</button>
                     <button type="button" class="btn btn-outline-success m-2"><i class="fa fa-file-excel me-2"></i>Reporte .xls</button>
                     <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-file-pdf me-2"></i>Reporte .pdf</button>
+                    <button type="button" class="btn btn-outline-primary m-2" data-bs-toggle="modal" data-bs-target="#modalNuevoRolParticipante"><i class="fa fa-plus me-2"></i>Nuevo rol de participante</button>
+                </div>
+            </div>
+        </div>
+        <!--modal registrar rol de participante-->
+        <div class="modal fade" id="modalNuevoRolParticipante" tabindex="-1" aria-labelledby="modalNuevoRolParticipanteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-secondary">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalNuevoRolParticipanteLabel"><i class="fas fa-address-book text-primary"></i> Nuevo rol de Evento</h1>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="frm_nuevo_rol_participante">
+                            <div class="mb-3">
+                                <label for="NewRolEvento" class="form-label">Nombre del nuevo Rol:</label>
+                                <input type="text" class="form-control" name="NewRolEvento" id="NewRolEvento" placeholder="Ingrese Nuevo Rol" required>
+                            </div>
+                            <div class="text-center g-2">                             
+                                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
+                                <button type="button" class="btn btn-outline-primary" onclick="registrarNuevoRolEvento();" >Registrar</button> 
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,12 +50,12 @@
             <div class="modal-dialog">
                 <div class="modal-content bg-secondary">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalNuevoParticipanteLabel"><i class="fa fa-user me-2"></i>Nuevo Participante</h1>
+                        <h1 class="modal-title fs-5" id="modalNuevoParticipanteLabel"><i class="fa fa-user me-2 text-primary"></i>Nuevo Participante</h1>
                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="frm_nuevo_persona">
-                            <input type="hidden" value="<?php echo $_GET['data']?>"><!-- data = id evnt-->
+                            <input type="hidden" value="<?php echo base64_decode($_GET['data'])?>"><!-- data = id evnt-->
                             <div class="mb-3">
                                 <label for="dni" class="form-label">Dni:</label>
                                 <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" required>
@@ -74,7 +97,7 @@
                             </div>
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="registrarPersona();" >Registrar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="funcion();" >Registrar</button> 
                             </div>
                         </form>
                     </div>
@@ -109,3 +132,4 @@
 
    </div>
 </div>
+<script src="<?php echo BASE_URL;?>src/view/js/admin_participantes.js"></script>

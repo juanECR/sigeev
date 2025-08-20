@@ -114,7 +114,7 @@
                             </div>
                         </div><hr>
                     </div>
-                    <a href="<?php echo BASE_URL;?>participantes?data=1"><button class="w-100 btn btn-outline-light">Ver todos los participantes</button></a>
+                    <a href="<?php echo BASE_URL;?>participantes?data=<?php echo $_GET['data'];?>"><button class="w-100 btn btn-outline-light">Ver todos los participantes</button></a>
                 </div>
             </div>
             <div class="col-12">

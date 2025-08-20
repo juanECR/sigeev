@@ -159,9 +159,9 @@
                             <span class="d-none d-lg-inline-flex"><?php echo  $_SESSION['sesion_usuario_nom'];?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item" onclick="cerrar_sesion();">Cerrar sesion</a>
+                            <a href="#" class="dropdown-item"><i class="bi bi-person-lines-fill text-primary"></i> My Profile</a>
+                            <a href="#" class="dropdown-item"><i class="bi bi-gear-fill text-primary"></i> Settings</a>
+                            <a href="#" class="dropdown-item" onclick="cerrar_sesion();"><i class="fas fa-power-off text-primary"></i> Cerrar sesion</a>
                         </div>
                     </div>
                 </div>
