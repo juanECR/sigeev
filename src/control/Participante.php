@@ -2,6 +2,7 @@
 session_start();
 require_once('../model/admin-sesionModel.php');
 require_once('../model/admin-personaModel.php');
+require_once('../model/admin-participanteModel.php');
 require_once('../model/adminModel.php');
 
 $tipo = $_GET['tipo'];
@@ -9,6 +10,7 @@ $tipo = $_GET['tipo'];
 //instanciar la clase categoria model
 $objSesion = new SessionModel();
 $objPersona =  new PersonaModel();
+$objParticipante = new ParticipanteModel();
 $objAdmin = new AdminModel();
 
 //variables de sesion
@@ -27,7 +29,7 @@ if ($tipo == "registrarParticipanteEvento") {
           $telefono = trim($_POST['telefono']);
           $f_nacimiento = $_POST['fecha_nacimiento'];
           $genero = trim($_POST['genero']);
-          $rol_id = int(trim($_POST['rolEvento']));
+          $rol_id = trim($_POST['rolEvento']);
           if($correo == ""){
              $correo = $dni.'@event.to';
           }
@@ -39,14 +41,26 @@ if ($tipo == "registrarParticipanteEvento") {
                $arr_Respuesta = array('status'=>false,'mensaje'=>'esta persona ya existe');
             }else{
                 $id_new_persona = $objPersona->registrarPersona($dni,$nombres,$apellidos,$correo,$telefono,$f_nacimiento,$genero);
-                if(){
-                    //faltacodigo
+                if($id_new_persona > 0){
+                    //registrar tabla participantes
+                    $id_new_participante = $objParticipante->registrarParticipanteEvento($evento_id,$id_new_persona,$rol_id);
+                    if($id_new_participante > 0){
+                        $arr_Respuesta = array('status'=>true,'mensaje'=>'participante registrado');
+                    }else{
+                       $arr_Respuesta = array('status'=>false,'mensaje'=>'fallo al registrar participante');
+                    }
+                }else{
+                   $arr_Respuesta = array('status'=>false,'mensaje'=>'arror al registrar persona');
                 }
             }
           }
         }
     }
+    echo json_encode($arr_Respuesta);
 }
 
+if($tipo == "listarParticipantesEvento"){
+
+}
 
 ?>

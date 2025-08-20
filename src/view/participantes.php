@@ -97,7 +97,7 @@
                             </div>
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="registrarParticipanteEvento();" >Registrar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="registrarParticipanteEvento();">Registrar</button> 
                             </div>
                         </form>
                     </div>
@@ -108,9 +108,9 @@
         <!-- tabala eventos recientes -->
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Eventos pendientes</h6>
+                <h6 class="mb-4">Todos los Participantes</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_participantes">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -122,10 +122,15 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_tbl_participantes">
                            <!-- esto se llena con js-->
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="paginacion-controles">
+                            <!-- Se llenará con JS -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
