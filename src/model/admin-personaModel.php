@@ -18,13 +18,19 @@ class PersonaModel{
    
    }
    public function buscarPersonaByCorreo($correo){
-      $sql = $this->conexion->query("SELECT * FROM personas WHERE correo_electronico='$correo'");
-      $sql = $sql->fetch_object();
-      return $sql;
+      $sql = $this->conexion->prepare("SELECT * FROM personas WHERE correo_electronico=?");
+      $sql->bind_param('s',$correo);
+      $sql->execute();
+      $result = $sql->get_result();
+      $result = $result->fetch_object();
+      return $result;
    }
    public function buscarPersonaByDni($dni){
-      $sql = $this->conexion->query("SELECT * FROM personas WHERE dni='$dni'");
-      $sql = $sql->fetch_object();
+      $sql = $this->conexion->prepare("SELECT * FROM personas WHERE dni=?");
+      $sql->bind_param('i',$dni);
+      $sql->execute();
+      $result = $sql->get_result();
+      $result = $result->fetch_object();
       return $sql;
    }
    public function buscarPersonaById($id){
