@@ -171,11 +171,11 @@ async function listar_participantes_evento(pagina = 1) { // Acepta el número de
                 nuevaFila.innerHTML = `
                     <td>${contador}</td>
                     <td>${item.dni}</td>
-                    <td>${item.nombres}</td>
+                    <td>${item.nombre}</td>
                     <td>${item.apellidos}</td>
                     <td>${item.telefono}</td>
                     <td>${item.fecha_nacimiento}</td>
-                    <td>${item.rol}</td>
+                    <td>${item.rolNombre}</td>
                     <td>${item.options}</td>
                 `;
                 tbody.appendChild(nuevaFila);

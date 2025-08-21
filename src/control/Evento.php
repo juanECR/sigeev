@@ -81,4 +81,14 @@ if($tipo == "crearEvento"){
     }
     echo json_encode($arr_Respuesta);
 }
+if($tipo == "contarEventos"){
+       $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        $total_eventos = $objEvento->contarTotalEventos();
+
+        $arr_Respuesta['status'] = true;
+        $arr_Respuesta['total'] = $total_eventos;
+    }
+    echo json_encode($arr_Respuesta);
+}
 ?>

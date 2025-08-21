@@ -33,7 +33,7 @@
             <div class="col-12">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h4><i class="fa fa-user-shield card-header-icon text-primary"></i> Personal Asignado</h4><hr>
-                    <div class="person-list">
+                    <div class="person-list-asigned">
                         <!-- Empleado 1 -->
                         <div class="d-flex align-items-center">
                             <div class="me-3">
@@ -81,8 +81,8 @@
                     <h4><i class="fa fa-users card-header-icon text-primary"></i> Participantes</h4><hr>
                     <p>Mostrando 3 de 75 registrados.</p>
                     <div class="person-list">
-                        <!-- Participante 1 -->
-                        <div class="d-flex align-items-center">
+                        <!-- javascript -->
+<!--                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-user-circle fa-4x text-primary"></i>
                             </div>
@@ -90,25 +90,7 @@
                                 <h5 class="mb-0">John Doe</h5>
                                 <p class="text-muted mb-0">Desarrollador Web</p>
                             </div>
-                        </div><hr>
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-user-circle fa-4x text-primary"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">John Doe</h5>
-                                <p class="text-muted mb-0">Desarrollador Web</p>
-                            </div>
-                        </div><hr>
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-user-circle fa-4x text-primary"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">John Doe</h5>
-                                <p class="text-muted mb-0">Desarrollador Web</p>
-                            </div>
-                        </div><hr>
+                        </div><hr> -->
                     </div>
                     <a href="<?php echo BASE_URL;?>participantes?data=<?php echo $_GET['data'];?>"><button class="w-100 btn btn-outline-light">Ver todos los participantes</button></a>
                 </div>
@@ -126,5 +108,5 @@
     </div>
 
 </div>
+<script>  var id_evento = <?php echo base64_decode($_GET['data']);?> </script>
 <script src="<?php echo BASE_URL;?>src/view/js/admin_detalleEvento.js"></script>
-<script> listarDetallesEvento(<?php echo base64_decode($_GET['data']);?>);</script>

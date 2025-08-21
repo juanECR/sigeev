@@ -3,6 +3,7 @@ session_start();
 require_once('../model/admin-sesionModel.php');
 require_once('../model/admin-personaModel.php');
 require_once('../model/admin-participanteModel.php');
+require_once('../model/admin-rolEventoModel.php');
 require_once('../model/adminModel.php');
 
 $tipo = $_GET['tipo'];
@@ -11,6 +12,7 @@ $tipo = $_GET['tipo'];
 $objSesion = new SessionModel();
 $objPersona =  new PersonaModel();
 $objParticipante = new ParticipanteModel();
+$objRolEvento = new RolEvento();
 $objAdmin = new AdminModel();
 
 //variables de sesion
@@ -83,10 +85,19 @@ if($tipo == "listarParticipantesEvento"){
         if (!empty($arr_participante)) { /////////////////////////////////////////////////////////////////////////////////////
             // El resto de tu lógica para formatear los datos permanece igual
             for ($i = 0; $i < count($arr_participante); $i++) {
-                $id_new_participante = $arr_participante[$i]->id;
-                // Importante: Sanitizar la salida para prevenir XSS
-                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_new_participante . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
-                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_new_participante . ')"><i class="fas fa-trash-alt"></i></button>';
+                $arr_persona = $objPersona->buscarPersonaById($arr_participante[$i]->persona_id);
+                $arr_rolParticipante = $objRolEvento->buscarRolEventoById($arr_participante[$i]->rol_id);
+                //dstos de la persona
+                $arr_participante[$i]->dni = $arr_persona->dni;
+                $arr_participante[$i]->nombre = $arr_persona->nombres;
+                $arr_participante[$i]->apellidos = $arr_persona->apellidos;
+                $arr_participante[$i]->telefono = $arr_persona->telefono ?? 'no tiene';
+                $arr_participante[$i]->fecha_nacimiento = $arr_persona->fecha_nacimiento ?? 'no tiene';
+                $arr_participante[$i]->rolNombre = $arr_rolParticipante->nombre;
+
+                $id_participante = $arr_participante[$i]->id; //valor para los botones
+                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_participante . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
+                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_participante . ')"><i class="fas fa-trash-alt"></i></button>';
                 $arr_participante[$i]->options = $opciones;
             }
 
@@ -108,4 +119,47 @@ if($tipo == "listarParticipantesEvento"){
     echo json_encode($arr_Respuesta);
 }
 
+
+if($tipo == "listarAlgunosParticipantes"){
+    $arr_Respuesta = array('status'=>false,'mensaje'=>'Error_sesion');
+    if($objSesion->verificar_sesion_si_activa($id_sesion,$token)){
+        if($_POST){
+          $id_evento = $_POST['id_evento'];
+          $numeroListar = 3;
+          if($id_evento == ""){
+              $arr_Respuesta = array('status'=>false,'mensaje'=>'no menciona evento');
+          }else{
+            $arr_participantes = $objParticipante->listarAlungunosParticipantes($id_evento,$numeroListar);
+            if(!empty($arr_participantes)){
+               for ($i = 0; $i < count($arr_participantes); $i++) {
+                $arr_persona = $objPersona->buscarPersonaById($arr_participantes[$i]->persona_id);
+                $arr_rolParticipante = $objRolEvento->buscarRolEventoById($arr_participantes[$i]->rol_id);
+                
+                $arr_participantes[$i]->nombre = $arr_persona->nombres;
+                $arr_participantes[$i]->apellido = $arr_persona->apellidos;
+                $arr_participantes[$i]->rol = $arr_rolParticipante->nombre;
+
+                $arr_Respuesta['status']=true;
+                $arr_Respuesta['contenido']=$arr_participantes;
+                $arr_Respuesta['mensaje'] = 'listando..';
+                }
+            }else{
+            // Manejar el caso de que no haya resultados para esa página
+            $arr_Respuesta['status'] = true; // Es un éxito, pero no hay contenido
+            $arr_Respuesta['contenido'] = [];
+            }
+        }
+      }
+    }
+    echo json_encode($arr_Respuesta); 
+}
+if($tipo == "contarParticipantes"){
+        $arr_Respuesta = array('status'=>false,'mensaje'=>'Error_sesion');
+    if($objSesion->verificar_sesion_si_activa($id_sesion,$token)){
+        $totalParticipantes = $objParticipante->constarTotalParticipantes();
+
+        $arr_Respuesta['status'] = true;
+        $arr_Respuesta['total'] = $totalParticipantes;
+    }
+}
 ?>

@@ -1,3 +1,20 @@
+<?php
+ $ruta = explode("/",$_GET['views']);
+ if($ruta[0] == ""){
+     $home = "active";
+ }else if($ruta[0] == "eventos" || $ruta[0] == "detalleEvento" ||$ruta[0] == "participantes" ){
+   $evento = "active";
+ }else if($ruta[0] == "organizadores"){
+   $organizadores = "active";
+ }else if($ruta[0] == "tareas"){
+   $tareas = "active";
+  }else if($ruta[0] == "emailComunicados"){
+   $emailComunicados = "active";
+  }else if($ruta[0] == "usuarios"){
+   $usuarios = "active";
+ }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,13 +82,12 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link active"><i class="bi bi-house-fill"></i>  Home</a>
-                    <a href="<?php echo BASE_URL;?>eventos" class="nav-item nav-link"><i class="fas fa-calendar-week"></i> eventos</a>
-                    <a href="<?php echo BASE_URL;?>organizadores" class="nav-item nav-link"><i class="fas fa-building"></i> Organizadores</a>
-                    <a href="<?php echo BASE_URL;?>personas" class="nav-item nav-link"><i class="fas fa-users"></i> Personas</a>
-                    <a href="<?php echo BASE_URL;?>tareas" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Tareas</a>
-                    <a href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link"><i class="fas fa-envelope-open-text"></i> Comunicados</a>
-                    <a href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link"><i class="fas fa-user-lock"></i> Usuarios</a>              
+                    <a href="<?php echo BASE_URL;?>" class="nav-item nav-link <?php echo $home?>"><i class="bi bi-house-fill"></i>  Home</a>
+                    <a href="<?php echo BASE_URL;?>eventos" class="nav-item nav-link <?php echo $evento?>"><i class="fas fa-calendar-week"></i> eventos</a>
+                    <a href="<?php echo BASE_URL;?>organizadores" class="nav-item nav-link <?php echo $organizadores?>"><i class="fas fa-building"></i> Organizadores</a>
+                    <a href="<?php echo BASE_URL;?>tareas" class="nav-item nav-link <?php echo $tareas?>"><i class="fa fa-chart-bar me-2"></i>Tareas</a>
+                    <a href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link <?php echo $emailComunicados?>"><i class="fas fa-envelope-open-text"></i> Comunicados</a>
+                    <a href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link <?php echo $usuarios?>"><i class="fas fa-user-lock"></i> Usuarios</a>              
                 </div>
             </nav>
         </div>

@@ -22,6 +22,11 @@ class RolEvento
         $sql = $sql->fetch_object();
         return $sql;
     }
+    public function buscarRolEventoById($id){
+        $sql = $this->conexion->query("SELECT * FROM roles_evento WHERE id = '$id'");
+        $sql = $sql->fetch_object();
+        return $sql;
+    }
     public function listarTodosRoles(){
         $arrayRespuesta = array();
         $consulta = $this->conexion->query("SELECT * FROM roles_evento");
