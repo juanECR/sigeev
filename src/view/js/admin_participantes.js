@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     listarRolesEventoForm();
+    listar_participantes_evento(1);
 });
 async function registrarNuevoRolEvento() {
     try {
@@ -105,6 +106,7 @@ async function registrarParticipanteEvento() {
         console.log('ups, ocurrio un error con la funcion '+ e);
     }
 }
+
 //esta funcion falta completar
 // --- Función para construir los botones de paginación ---
 function actualizarPaginacion(paginacion, contenedorId) {
@@ -135,14 +137,15 @@ function actualizarPaginacion(paginacion, contenedorId) {
     controles.appendChild(liSiguiente);
 }
 
-async function listar_personas(pagina = 1) { // Acepta el número de página
+async function listar_participantes_evento(pagina = 1) { // Acepta el número de página
     try {
         const datos = new FormData();
         datos.append('sesion', session_session);
         datos.append('token', token_token);
-        datos.append('pagina', pagina); 
+        datos.append('pagina', pagina);
+        datos.append('id_evento', id_evento);
 
-        let respuesta = await fetch(base_url + 'src/control/Persona.php?tipo=listarPersonasPaginado', {
+        let respuesta = await fetch(base_url + 'src/control/Participante.php?tipo=listarParticipantesEvento', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -150,7 +153,7 @@ async function listar_personas(pagina = 1) { // Acepta el número de página
         });
 
         let json = await respuesta.json();
-        const tbody = document.querySelector('#tbody_tbl_personas');
+        const tbody = document.querySelector('#tbody_tbl_participantes');
         tbody.innerHTML = ''; // Limpiar tabla antes de agregar nuevas filas
 
         if (json.status && json.contenido.length > 0) {
@@ -170,10 +173,9 @@ async function listar_personas(pagina = 1) { // Acepta el número de página
                     <td>${item.dni}</td>
                     <td>${item.nombres}</td>
                     <td>${item.apellidos}</td>
-                    <td>${item.correo_electronico}</td>
                     <td>${item.telefono}</td>
                     <td>${item.fecha_nacimiento}</td>
-                    <td>${item.genero}</td>
+                    <td>${item.rol}</td>
                     <td>${item.options}</td>
                 `;
                 tbody.appendChild(nuevaFila);
@@ -190,7 +192,7 @@ async function listar_personas(pagina = 1) { // Acepta el número de página
 
     } catch (e) {
         console.log("Oops salió un error: " + e);
-        document.querySelector('#tbody_tbl_personas').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
+        document.querySelector('#tbody_tbl_participantes').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
     }
 }
 
@@ -206,7 +208,7 @@ document.getElementById('paginacion-controles').addEventListener('click', functi
 
         // Solo cargar si no es un botón deshabilitado o la página activa
         if (pagina && !isDisabled && !isActive) {
-            listar_personas(parseInt(pagina));
+            listar_participantes_evento(parseInt(pagina));
         }
     }
 });

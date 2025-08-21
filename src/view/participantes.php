@@ -114,12 +114,13 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">ZIP</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">dni</th>
+                                <th scope="col">nombre</th>
+                                <th scope="col">apellido</th>
+                                <th scope="col">telefono</th>
+                                <th scope="col">fecha nacimiento</th>
+                                <th scope="col">rol</th>
+                                <th scope="col">accion</th>
                             </tr>
                         </thead>
                         <tbody id="tbody_tbl_participantes">
@@ -137,4 +138,5 @@
 
    </div>
 </div>
+<script> var id_evento = <?php echo base64_decode($_GET['data']);?> </script>
 <script src="<?php echo BASE_URL;?>src/view/js/admin_participantes.js"></script>

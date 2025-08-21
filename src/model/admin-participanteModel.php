@@ -16,8 +16,29 @@ class ParticipanteModel{
         }
         return $sql;
    }
-   public function listarParticipantesEventoPaginado(){
+    public function listarParticipantesPaginado(int $limit, int $offset,$id_Evento) {
+        $array = array();
+        // Usamos sentencias preparadas para mayor seguridad
+        $sql = $this->conexion->prepare("SELECT * FROM participantes_evento WHERE evento_id=? LIMIT ? OFFSET ?");
+        // 'ii' significa que ambos parámetros son enteros (integer)
+        $sql->bind_param('iii',$id_Evento, $limit, $offset);
+        $sql->execute();
+        $resultado = $sql->get_result();
 
-   }
+        while ($objeto = $resultado->fetch_object()) {
+           array_push($array, $objeto);
+        }
+        return $array;
+    }
+
+    /**
+     * NUEVO: Esta función cuenta el total de registros en la tabla.
+     * Es esencial para calcular el número total de páginas.
+     */
+    public function constarTotalParticipantes() {
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM participantes_evento");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
 
    }
