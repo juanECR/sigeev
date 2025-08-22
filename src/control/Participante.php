@@ -82,7 +82,7 @@ if($tipo == "listarParticipantesEvento"){
 
         // --- FIN DE CAMBIOS PARA PAGINACIÓN ---
 
-        if (!empty($arr_participante)) { /////////////////////////////////////////////////////////////////////////////////////
+        if (!empty($arr_participante)) {
             // El resto de tu lógica para formatear los datos permanece igual
             for ($i = 0; $i < count($arr_participante); $i++) {
                 $arr_persona = $objPersona->buscarPersonaById($arr_participante[$i]->persona_id);
@@ -95,10 +95,10 @@ if($tipo == "listarParticipantesEvento"){
                 $arr_participante[$i]->fecha_nacimiento = $arr_persona->fecha_nacimiento ?? 'no tiene';
                 $arr_participante[$i]->rolNombre = $arr_rolParticipante->nombre;
 
-                $id_participante = $arr_participante[$i]->id; //valor para los botones
+                $id_participante = $arr_participante[$i]->persona_id; //valor para los botones
                 $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_participante . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
-                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_participante . ')"><i class="fas fa-trash-alt"></i></button>
-                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalAsignarPuesto"><i class="bi bi-award-fill"></i></button>';
+             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_participante . ')"><i class="fas fa-trash-alt"></i></button>
+             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalAsignarPuesto" data-id="'.$id_participante.'"><i class="bi bi-award-fill"></i></button>';
                 $arr_participante[$i]->options = $opciones;
             }
 

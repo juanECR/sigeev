@@ -107,7 +107,6 @@ async function registrarParticipanteEvento() {
     }
 }
 
-//esta funcion falta completar
 // --- Función para construir los botones de paginación ---
 function actualizarPaginacion(paginacion, contenedorId) {
     const { pagina_actual, total_paginas } = paginacion;
@@ -145,7 +144,7 @@ async function listar_participantes_evento(pagina = 1) { // Acepta el número de
         datos.append('pagina', pagina);
         datos.append('id_evento', id_evento);
 
-        let respuesta = await fetch(base_url + 'src/control/Participante.php?tipo=listarParticipantesEvento', {
+        let respuesta = await fetch(base_url_server + 'src/control/Participante.php?tipo=listarParticipantesEvento', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -167,7 +166,6 @@ async function listar_participantes_evento(pagina = 1) { // Acepta el número de
                 
                 // El contador ahora es relativo a la página
                 let contador = offset + index + 1;
-
                 nuevaFila.innerHTML = `
                     <td>${contador}</td>
                     <td>${item.dni}</td>
@@ -212,3 +210,56 @@ document.getElementById('paginacion-controles').addEventListener('click', functi
         }
     }
 });
+
+// Obtén una referencia al modal una vez que el DOM esté cargado
+const modalAsignarPuesto = document.getElementById('modalAsignarPuesto');
+let idParticipanteActual; // Variable para guardar el ID
+// Escucha el evento show.bs.modal de Bootstrap
+modalAsignarPuesto.addEventListener('show.bs.modal', function (evento) {
+    // El 'relatedTarget' es el botón que abrió el modal
+    const boton = evento.relatedTarget;
+    // Obtiene el valor del atributo 'data-id' del botón
+    idParticipanteActual = boton.getAttribute('data-id');
+});
+
+async function asignarPosicion() {
+    try {
+        let form = new  FormData(frm_asignar_puesto);
+        form.append('sesion',session_session);
+        form.append('token',token_token);
+        form.append('id_evento', id_evento);
+        form.append('id_participante',idParticipanteActual);
+
+        let respuesta = await fetch(base_url_server+'src/control/ResultadoEvento.php?tipo=asignarPosicion',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: form
+        });
+        json = await respuesta.json();
+        if(json.status){
+            let modalEl = document.getElementById("modalAsignarPuesto");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+      // Cerrar modal
+            modal.hide();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }else if(json.mensaje == "Error_sesion"){
+            alerta_sesion();
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }
+    } catch (e) {
+        console.log('error funcion async || ' + e);
+    }
+}

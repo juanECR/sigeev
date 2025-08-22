@@ -27,24 +27,31 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">resultados de Eventos</h6>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_resultados">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Evento</th>
+                                <th scope="col">DNI</th>
                                 <th scope="col">Nombre del participante</th>
-                                <th scope="col">posición</th>
-                                <th scope="col">jurado</th>
-                                <th scope="col">accion</th>
+                                <th scope="col">Puntaje</th>
+                                <th scope="col">Puesto</th>
+                                <th scope="col">acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_tbl_resultados">
                          <!-- se llena con js-->
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="paginacion-controles">
+                            <!-- Se llenará con JS -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
 
    </div>
 </div>
+<script>  var id_evento = <?php echo base64_decode($_GET['data']);?> </script>
+<script src="<?php echo BASE_URL;?>src/view/js/admin-resultadosEvento.js"></script>

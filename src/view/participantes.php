@@ -161,7 +161,7 @@
                             </div>
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="funcion();">Asignar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="asignarPosicion();">Asignar</button> 
                             </div>
                         </form>
                     </div>
