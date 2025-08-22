@@ -1,14 +1,15 @@
 {
-    "name": "slow/sigeev",
+    "name": "sigeev/sistem",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Slow\\Sigeev\\": "src/"
+            "Sigeev\\Sistem\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "Juan elias"
+            "name": "juanECR",
+            "email": "rjuanelias2@gmail.com"
         }
     ],
     "require": {}
