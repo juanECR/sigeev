@@ -157,6 +157,7 @@
                                 <option value="1">Pirmer puesto</option>
                                 <option value="2">Segundo puesto</option>
                                 <option value="3">Tercer puesto</option>
+                                <option value="4">Cuarto puesto</option>
                                 </select>
                             </div>
                             <div class="text-center g-2">                             

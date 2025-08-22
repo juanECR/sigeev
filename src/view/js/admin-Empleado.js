@@ -1,6 +1,48 @@
 document.addEventListener('DOMContentLoaded',function(){
-    listarResultados(1);
+    listarEmpleados(1);
 });
+
+async function registrarEmpleado() {
+    try {
+        let datos = new FormData(frm_nuevo_empleado);
+        datos.append('sesion',session_session);
+        datos.append('token',token_token);
+
+        let respuesta = await fetch(base_url_server+'src/control/Empleado.php?tipo=registrar',{
+            method:'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        let json = await respuesta.json();
+        if(json.status){
+         let modalEl = document.getElementById("modalNuevoEmpleado");
+         let modal = bootstrap.Modal.getInstance(modalEl);
+             // Cerrar modal
+             modal.hide();
+
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+              listarEmpleados(1);
+        }else if(json.mensaje == "Error_Sesion"){
+                alerta_sesion();
+        }else{
+                 Swal.fire({
+                icon: "error",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }
+    } catch (e) {
+        console.log('error funcion async || ' + e);
+    }
+}
 
 // --- Función para construir los botones de paginación ---
 function actualizarPaginacion(paginacion, contenedorId) {
@@ -31,15 +73,14 @@ function actualizarPaginacion(paginacion, contenedorId) {
     controles.appendChild(liSiguiente);
 }
 
-async function listarResultados(pagina = 1) { // Acepta el número de página
+async function listarEmpleados(pagina = 1) { // Acepta el número de página
     try {
         const datos = new FormData();
         datos.append('sesion', session_session);
         datos.append('token', token_token);
-        datos.append('pagina', pagina);
-        datos.append('id_evento', id_evento);
+        datos.append('pagina', pagina); 
 
-        let respuesta = await fetch(base_url_server + 'src/control/ResultadoEvento.php?tipo=listarResultadosEvento', {
+        let respuesta = await fetch(base_url + 'src/control/Empleado.php?tipo=listarEmpleadosPaginado', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -47,7 +88,7 @@ async function listarResultados(pagina = 1) { // Acepta el número de página
         });
 
         let json = await respuesta.json();
-        const tbody = document.querySelector('#tbody_tbl_resultados');
+        const tbody = document.querySelector('#tbody_tbl_empleados');
         tbody.innerHTML = ''; // Limpiar tabla antes de agregar nuevas filas
 
         if (json.status && json.contenido.length > 0) {
@@ -61,12 +102,16 @@ async function listarResultados(pagina = 1) { // Acepta el número de página
                 
                 // El contador ahora es relativo a la página
                 let contador = offset + index + 1;
+
                 nuevaFila.innerHTML = `
                     <td>${contador}</td>
                     <td>${item.dni}</td>
-                    <td>${item.nombre}</td>
-                    <td>${item.puntaje}</td>
-                    <td class="text-danger"><i class="fas fa-trophy"></i> ${item.puesto}</td>
+                    <td>${item.nombres}</td>
+                    <td>${item.apellidos}</td>
+                    <td>${item.correo_electronico}</td>
+                    <td>${item.telefono}</td>
+                    <td>${item.fecha_nacimiento}</td>
+                    <td>${item.genero}</td>
                     <td>${item.options}</td>
                 `;
                 tbody.appendChild(nuevaFila);
@@ -83,7 +128,7 @@ async function listarResultados(pagina = 1) { // Acepta el número de página
 
     } catch (e) {
         console.log("Oops salió un error: " + e);
-        document.querySelector('#tbody_tbl_resultados').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
+        document.querySelector('#tbody_tbl_empleados').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
     }
 }
 
@@ -99,7 +144,7 @@ document.getElementById('paginacion-controles').addEventListener('click', functi
 
         // Solo cargar si no es un botón deshabilitado o la página activa
         if (pagina && !isDisabled && !isActive) {
-            listarResultados(parseInt(pagina));
+            listarEmpleados(parseInt(pagina));
         }
     }
 });

@@ -15,7 +15,7 @@
             </div>
             <div class="col-12">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <h4><i class="fa fa-tasks card-header-icon text-primary"></i> Detalles Logísticos</h4><hr>
+                    <h4><i class="fa fa-tasks card-header-icon text-primary"></i>Detalles Logísticos</h4><hr>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <h5><i class="fa fa-calendar-alt text-info mr-2"></i> Fechas</h5><hr>
@@ -34,37 +34,9 @@
                 <div class="bg-secondary rounded h-100 p-4">
                     <h4><i class="fa fa-user-shield card-header-icon text-primary"></i> Personal Asignado</h4><hr>
                     <div class="person-list-asigned">
-                        <!-- Empleado 1 -->
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-user-circle fa-4x text-primary"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">John Doe</h5>
-                                <p class="text-muted mb-0">Desarrollador Web</p>
-                            </div>
-                        </div><hr>
-                        <!-- Empleado 2 -->
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-user-circle fa-4x text-primary"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">John Doe</h5>
-                                <p class="text-muted mb-0">Desarrollador Web</p>
-                            </div>
-                        </div><hr>
-                        <!-- Empleado 3 -->
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <i class="fas fa-user-circle fa-4x text-primary"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">John Doe</h5>
-                                <p class="text-muted mb-0">Desarrollador Web</p>
-                            </div>
-                        </div><hr>
+                        <!-- Empleados js  listra 3 empleados para diseño-->
                     </div>
+                     <a href="<?php echo BASE_URL;?>tareas?data=<?php echo $_GET['data'];?>"><button class="w-100 btn btn-outline-light">Gestionar Asignacion de empleados</button></a>
                 </div>
             </div>
         </div>
@@ -73,13 +45,13 @@
                 <div class="bg-secondary rounded h-100 p-4">
                     <h5><i class="fa fa-sitemap text-info mr-2"></i> Organizador</h5><hr>
                     <p class="mb-1 organizador"><strong>Tech Solutions Inc.</strong></p>
-                    <a href="#" style="color: var(--primary);">Contactar al organizador</a>
+                    <a href="tel:+51999999999" style="color: var(--primary);">Contactar al organizador</a>
                 </div>
             </div>
             <div class="col-12">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h4><i class="fa fa-users card-header-icon text-primary"></i> Participantes</h4><hr>
-                    <p>Mostrando 3 de 75 registrados.</p>
+                    <p>Mostrando 3 registrados.</p>
                     <div class="person-list">
                         <!-- javascript -->
 <!--                         <div class="d-flex align-items-center">

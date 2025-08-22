@@ -92,7 +92,7 @@ async function registrarParticipanteEvento() {
                 showConfirmButton: false,
                 timer: 1500
                 });
-               /*  listar_personas(1); */
+               listar_participantes_evento(1);
         } else if (json.mensaje == "Error_sesion") {
             alerta_sesion();
         } else {

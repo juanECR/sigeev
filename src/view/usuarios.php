@@ -35,7 +35,7 @@
                         <form id="frm_nuevo_usuario">
                             <div class="mb-3">
                                 <label for="dni" class="form-label">Dni:</label>
-                                <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" required>
+                                <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" minlength="8" maxlength="8"  required>
                             </div>
                             <div class="mb-3">
                                 <label for="nombres" class="form-label">Nombres</label>
