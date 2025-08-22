@@ -140,37 +140,28 @@
             <div class="modal-dialog">
                 <div class="modal-content bg-secondary">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalAsignarPuestoLabel"><i class="fa fa-user me-2 text-primary"></i>Nuevo Participante</h1>
+                        <h1 class="modal-title fs-5" id="modalAsignarPuestoLabel"><i class="fa fa-user me-2 text-primary"></i>Asignar posicion</h1>
                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="frm_nuevo_participante">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-
+                        <form id="frm_asignar_puesto">
                             <input type="hidden" value="<?php echo base64_decode($_GET['data'])?>" name="data" id="data">
                             <div class="mb-3">
-                                <label for="dni" class="form-label">Dni:<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese su dni" required>
+                                <label for="puntaje" class="form-label">Puntaje:<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="puntaje" id="puntaje" placeholder="Ingrese puntaje" required>
                             </div>
                             <div class="mb-3">
-                                <label for="genero" class="form-label">Género:<span class="text-danger">*</span></label>
-                                <select class="form-select" name="genero" id="genero" required>
-                                <option value="">Seleccione un genero</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                                <option value="Otro">Otro</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rolEvento" class="form-label">Rol:<span class="text-danger">*</span></label>
-                                <select class="form-select" name="rolEvento" id="rolEvento" required>
-                                <option value="">Seleccione un rol</option>
+                                <label for="posicion" class="form-label">Posición:<span class="text-danger">*</span></label>
+                                <select class="form-select" name="posicion" id="posicion" required>
+                                <option value="">Seleccione un Puesto</option>
+                                <option value="1">Pirmer puesto</option>
+                                <option value="2">Segundo puesto</option>
+                                <option value="3">Tercer puesto</option>
                                 </select>
                             </div>
                             <div class="text-center g-2">                             
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
-                                <button type="button" class="btn btn-outline-primary" onclick="registrarParticipanteEvento();">Registrar</button> 
+                                <button type="button" class="btn btn-outline-primary" onclick="funcion();">Asignar</button> 
                             </div>
                         </form>
                     </div>

@@ -98,7 +98,7 @@ if($tipo == "listarParticipantesEvento"){
                 $id_participante = $arr_participante[$i]->id; //valor para los botones
                 $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_participante . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
                              <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_participante . ')"><i class="fas fa-trash-alt"></i></button>
-                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalAsignarPuesto" data-bs-whatever="@getbootstrap"><i class="bi bi-award-fill"></i></button>';
+                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalAsignarPuesto"><i class="bi bi-award-fill"></i></button>';
                 $arr_participante[$i]->options = $opciones;
             }
 
