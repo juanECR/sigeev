@@ -33,7 +33,6 @@
     <!-- Template Javascript -->
     <script src="<?php echo BASE_URL;?>src/view/js/main.js"></script>
     <script src="<?php echo BASE_URL;?>src/view/js/sesion.js"></script>
-    <script src="<?php echo BASE_URL;?>src/view/js/principal.js"></script>
 </body>
 
 </html>

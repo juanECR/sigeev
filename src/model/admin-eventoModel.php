@@ -21,7 +21,7 @@ class EventoModel{
   public function listarEventosPaginado(int $limit, int $offset) {
         $array = array();
         // Usamos sentencias preparadas para mayor seguridad
-        $sql = $this->conexion->prepare("SELECT * FROM eventos ORDER BY titulo ASC LIMIT ? OFFSET ?");
+        $sql = $this->conexion->prepare("SELECT * FROM eventos ORDER BY fecha_inicio ASC LIMIT ? OFFSET ?");
         // 'ii' significa que ambos parámetros son enteros (integer)
         $sql->bind_param('ii', $limit, $offset);
         $sql->execute();
