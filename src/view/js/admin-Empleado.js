@@ -3,7 +3,16 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 async function registrarEmpleado() {
-    try {
+    let dni = document.getElementById("dni").value;
+    if (dni.length !== 8) {
+             Swal.fire({
+                icon: "error",
+                title: "Erro al digitar Dni",
+                showConfirmButton: false,
+                timer: 1500
+                });
+    }else{
+        try {
         let datos = new FormData(frm_nuevo_empleado);
         datos.append('sesion',session_session);
         datos.append('token',token_token);
@@ -16,6 +25,8 @@ async function registrarEmpleado() {
         });
         let json = await respuesta.json();
         if(json.status){
+        let formureset = document.getElementById("frm_nuevo_empleado");
+        formureset.reset();
          let modalEl = document.getElementById("modalNuevoEmpleado");
          let modal = bootstrap.Modal.getInstance(modalEl);
              // Cerrar modal
@@ -41,6 +52,7 @@ async function registrarEmpleado() {
         }
     } catch (e) {
         console.log('error funcion async || ' + e);
+    }    
     }
 }
 

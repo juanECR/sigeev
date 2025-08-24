@@ -37,45 +37,55 @@ async function ListarRolesSistema(){
 
 
 async function registrarUsuario(){
-  try {
-        const datos = new FormData(frm_nuevo_usuario);
-        datos.append('sesion', session_session);
-        datos.append('token', token_token);
-        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=registrar', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-        });
-        json = await respuesta.json();
-        if (json.status) {
-             let form = document.getElementById("frm_nuevo_usuario");
-             form.reset();
-             let modalEl = document.getElementById("modalNuevoUsuario");
-             let modal = bootstrap.Modal.getInstance(modalEl);
-             // Cerrar modal
-             modal.hide();
-
+    let dni = document.getElementById("dni").value;
+    if(dni.length !== 8){
             Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: json.mensaje,
+                icon: "error",
+                title: "Error, verifica tu DNI e inténtalo de nuevo",
                 showConfirmButton: false,
                 timer: 1500
                 });
-               listar_usuarios(1);
-        } else if (json.msg == "Error_Sesion") {
-            alerta_sesion();
-        } else {
-             Swal.fire({
-                title: "Error",
-                text: json.mensaje,
-                icon: "error"
+    }else{
+        try {
+                const datos = new FormData(frm_nuevo_usuario);
+                datos.append('sesion', session_session);
+                datos.append('token', token_token);
+                let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=registrar', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    body: datos
                 });
+                json = await respuesta.json();
+                if (json.status) {
+                    let form = document.getElementById("frm_nuevo_usuario");
+                    form.reset();
+                    let modalEl = document.getElementById("modalNuevoUsuario");
+                    let modal = bootstrap.Modal.getInstance(modalEl);
+                    // Cerrar modal
+                    modal.hide();
+
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: json.mensaje,
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
+                    listar_usuarios(1);
+                } else if (json.msg == "Error_Sesion") {
+                    alerta_sesion();
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: json.mensaje,
+                        icon: "error"
+                        });
+                }
+        } catch (e) {
+            console.log("Oops, ocurrio un error " + e);
         }
-  } catch (e) {
-     console.log("Oops, ocurrio un error " + e);
-  }
+    }
 }
 
 

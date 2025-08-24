@@ -25,7 +25,7 @@ if ($tipo == "iniciar_sesion") {
    
     //print_r($arrUsuario);
     if (empty($arrPersona)) {
-        $arrResponse = array('status' => false, 'msg' => 'Error, Usuario no esta registrado en el sistema');
+        $arrResponse = array('status' => false, 'msg' => 'Error, Credenciales incorrectas');
     } else {
         $arrUsuario = $objUsuario->buscarUsuarioByPersonaId($arrPersona->id);
         if(empty($arrUsuario)){
@@ -63,8 +63,8 @@ if ($tipo == "iniciar_sesion") {
             $arr_contenido['sesion_token'] = $token;
             $arrResponse['contenido'] = $arr_contenido;
         } else {
-            $arrResponse = array('status' => false, 'msg' => 'Error, Contraseña Incorrecta');
-        }    
+            $arrResponse = array('status' => false, 'msg' => 'Error, Credenciales incorrectas');
+        }   
         }
 
     }
