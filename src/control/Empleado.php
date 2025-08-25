@@ -89,6 +89,7 @@ if ($tipo == "listarEmpleadosPaginado") {
                 $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_empleado . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
                              <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_empleado . ')"><i class="fas fa-trash-alt"></i></button>';
                 $arrEmpleado[$i]->options = $opciones;
+                $arrEmpleado[$i]->opcTarea = '<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea" data-id="'.$id_empleado.'"><i class="bi bi-plus-circle"></i></button>';
             }
 
             $arr_Respuesta['status'] = true;

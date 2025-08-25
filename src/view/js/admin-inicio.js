@@ -1,11 +1,5 @@
-/* function Navegacion() {
-    const nav = document.querySelector(".nav-item");
-    if(menuActual = ""){
-        nav.className = "nav-item nav-link active";
-    }
-} */
 
-    document.addEventListener('DOMContentLoaded', function(){
+ document.addEventListener('DOMContentLoaded', function(){
         contarEventos();
         contarParticipantes();
         listar_eventos(1);

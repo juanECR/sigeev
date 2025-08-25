@@ -70,7 +70,7 @@ async function listarEmpleados(pagina = 1) { // Acepta el número de página
                     <td>${item.telefono}</td>
                     <td>${item.fecha_nacimiento}</td>
                     <td>${item.genero}</td>
-                    <td>${item.options}</td>
+                    <td>${item.opcTarea}</td>
                 `;
                 tbody.appendChild(nuevaFila);
             });
@@ -106,3 +106,56 @@ document.getElementById('paginacion-controles').addEventListener('click', functi
         }
     }
 });
+
+
+    const modalAsignarTarea = document.getElementById('modalNuevaTarea');
+    let idEmpleadoActual; 
+    modalAsignarTarea.addEventListener('show.bs.modal', function (evento){
+    const boton = evento.relatedTarget;
+    idEmpleadoActual = boton.getAttribute('data-id');
+});
+
+async function registrarTarea() {
+    try {
+        let data = new FormData(frm_nueva_tarea);
+        data.append('sesion',session_session);
+        data.append('token',token_token);
+        data.append('id_evento',id_evento);
+        data.append('id_empleado',idEmpleadoActual);
+
+        let respons = await fetch(base_url_server+'src/control/Tarea.php?tipo=registrarTarea',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: data
+        });
+        let json = await respons.json();
+        if(json.status){
+            let modForm = document.getElementById("frm_nueva_tarea");
+            modForm.reset();
+            let modalEl = document.getElementById("modalNuevaTarea");
+            let modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+
+        }else if(json.mensaje == "Error_sesion"){
+          alerta_sesion();
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }
+    } catch (e) {
+        console.log('Error funcion || ' + e );
+    }
+    
+}
