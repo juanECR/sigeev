@@ -188,7 +188,7 @@ switch ($vistaActual) {
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item"><i class="bi bi-person-lines-fill text-primary"></i> My Profile</a>
-                            <a href="#" class="dropdown-item"><i class="bi bi-gear-fill text-primary"></i> Settings</a>
+                            <a href="#" class="dropdown-item" onclick="send_email_password();"><i class="bi bi-gear-fill text-primary"></i> Cambiar Contraseña</a>
                             <a href="#" class="dropdown-item" onclick="cerrar_sesion();"><i class="fas fa-power-off text-primary"></i> Cerrar sesion</a>
                         </div>
                     </div>

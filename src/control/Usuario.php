@@ -213,4 +213,15 @@ if($tipo == "sent_email_password"){
                 }
     }
 }
+if($tipo == "restaurarPassword"){
+   if($_POST){
+      $correo = trim($_POST['correo_electronico']);
+      if(!empty($correo)){
+         $datos_persona = $objPersona->buscarPersonaByCorreo($correo);
+         if($datos_persona){
+          $datos_usuario = $objUsuario->buscarUsuarioByPersonaId($datos_persona->id);
+         }
+      }
+   }
+}
 ?>
