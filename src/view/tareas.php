@@ -26,24 +26,29 @@
         <!-- tabala eventos recientes -->
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h4 class="mb-4">Empleados con Tarea en este evento</h4>
+                <h4 class="mb-4">Empleados / Tareas</h4>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tbl_verTareas">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">ZIP</th>
+                                <th scope="col">Empleado</th>
+                                <th scope="col">Titulo Tarea</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Fecha</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_tbl_verTareas">
                         <!-- javascript -->
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center" id="pageees-control">
+                          
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

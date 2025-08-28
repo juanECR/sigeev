@@ -17,6 +17,14 @@ class EventoModel{
     }
     return $sql;
    }
+   public function listarTodosEventos(){
+      $array = array();
+      $sql = $this->conexion->query("SELECT * FROM eventos");
+      while ($objeto = $sql->fetch_object()) {
+         array_push($array, $objeto);
+      }
+      return $array;
+   }
 
   public function listarEventosPaginado(int $limit, int $offset) {
         $array = array();

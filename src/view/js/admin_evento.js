@@ -263,3 +263,66 @@ async function CrearEvento(){
      console.log("Oops, ocurrio un error " + e);
   }
 }
+
+async function generarReporteExel() {
+    try {
+        const info = new FormData();
+        info.append('sesion', session_session);
+        info.append('token', token_token);
+        //enviar datos hacia el controlador
+       
+    let respuesta = await fetch(base_url_server + 'src/control/Evento.php?tipo=ImprimirReporteExel', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        body: info
+    });
+
+    // Verificar si la respuesta es un archivo Excel
+    // Si la respuesta es OK y el Content-Type es correcto, procesamos como blob
+    if (respuesta.ok && respuesta.headers.get('content-type').includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+        const blob = await respuesta.blob();
+
+        // Crear una URL temporal para el blob
+        const url = window.URL.createObjectURL(blob);
+        
+        // Crear un enlace de descarga
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'reporte_Eventos.xlsx'; // Nombre del archivo
+
+        // Simular el clic en el enlace para iniciar la descarga
+        document.body.appendChild(a);
+        a.click();
+
+        // Limpiar después de la descarga
+        window.URL.revokeObjectURL(url);
+        a.remove();
+        
+        // Mostrar un mensaje de éxito
+        Swal.fire({
+            title: "Reporte Generado",
+            text: "El reporte se ha descargado exitosamente.",
+            icon: "success"
+        });
+
+    } else {
+        // Si no es un archivo Excel (ej. error de sesión o de lógica), procesamos como JSON
+        const json = await respuesta.json();
+        
+        if (json.mensaje === "Error_Sesion") {
+            alerta_sesion();
+        } else {
+            Swal.fire({
+                title: "Error al generar",
+                text: json.mensaje,
+                icon: "error"
+            });
+        }
+    }
+} catch (e) {
+    console.log('Error en función asíncrona: ' + e);
+}
+    
+}

@@ -12,5 +12,7 @@
             "email": "rjuanelias2@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.0"
+    }
 }

@@ -4,6 +4,11 @@ require_once('../model/admin-sesionModel.php');
 require_once('../model/admin-eventoModel.php');
 require_once('../model/admin-organizadorModel.php');
 require_once('../model/adminModel.php');
+require '../../vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 $tipo = $_GET['tipo'];
 
@@ -88,6 +93,73 @@ if($tipo == "contarEventos"){
 
         $arr_Respuesta['status'] = true;
         $arr_Respuesta['total'] = $total_eventos;
+    }
+    echo json_encode($arr_Respuesta);
+}
+
+if($tipo == "ImprimirReporteExel"){
+       $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        $arr_Eventos = $objEvento->listarTodosEventos();
+        if($arr_Eventos){
+            //crear exel
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getProperties()->setCreator("ByJUAN")->setLastModifiedBy("yo")->setTitle("Reporte eventos")->setDescription("Author");
+            $activeWorkSheet = $spreadsheet->getActiveSheet();
+            $activeWorkSheet->setTitle("Eventos");  
+
+            $styleArray = [
+                'font' => [
+                    'bold' => true,
+                ]
+            ];
+            // Aplica negrita a la fila 1 (de A1 a R1 si son 18 columnas)
+            $activeWorkSheet->getStyle('A1:I1')->applyFromArray($styleArray);
+            
+            $headers = [
+                'TITULO', 'DESCRIPCION', 'CATEGORIA', 'FECHA INICIO', 'FECHA FINALIZACION', 'UBICACION', 'ORGANIZADOR', 'ESTADO'
+             ];
+
+            // Asignar cabeceras en la fila 1
+            foreach ($headers as $i => $header) {
+                $columna = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($i + 1);
+                $activeWorkSheet->setCellValue($columna . '1', $header);
+            }
+
+           // Llenar los datos
+            $row = 2;
+            foreach ($arr_Eventos as $evento) {
+                $atributos = [
+                    $evento->titulo ?? '',
+                    $evento->descripcion ?? '',
+                    $evento->categoria_evento_id ?? '',
+                    $evento->fecha_inicio ?? '',
+                    $evento->fecha_fin ?? '',
+                    $evento->ubicacion ?? '',
+                    $evento->organizador_id ?? '',
+                    $evento->estado ?? ''
+                ];
+
+                foreach ($atributos as $i => $valor) {
+                    $columna = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($i + 1);
+                    $activeWorkSheet->setCellValue($columna . $row, $valor);
+                }
+
+                $row++;
+            }
+            ob_clean();
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="reporte_Eventos.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
+        
+          $arr_Respuesta = array('status' => true, 'mensaje' => 'Reporte generado');
+        }else{
+        $arr_Respuesta = array('status' => false, 'mensaje' => 'Fallo al obtener eventos');
+        }
     }
     echo json_encode($arr_Respuesta);
 }
