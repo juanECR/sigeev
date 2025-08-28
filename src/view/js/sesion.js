@@ -72,9 +72,8 @@ async function send_email_password() {
             mode: 'cors',
             cache: 'no-cache',
             body: datos
-            
         })
-    } catch (error) {
-        
+    } catch (e) {
+        console.log('Erro func async || ' + e);
     }
 }

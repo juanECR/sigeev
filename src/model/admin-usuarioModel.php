@@ -45,8 +45,16 @@ class UsuarioModel
         $resultado = $sql->fetch_object();
         return (int)$resultado->total;
     }
-
-
+    public function buscarUsuarioById($id)
+    {
+        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE id='$id'");
+        $sql = $sql->fetch_object();
+        return $sql;
+    }
+    public function UpdateResetPassword($id, $token,  $estado){
+        $sql = $this->conexion->query("UPDATE usuarios SET token_password = '$token', reset_password='$estado' WHERE id = '$id'");
+        return $sql;
+    }
 
 
 
@@ -65,17 +73,9 @@ class UsuarioModel
         return $sql;
     }
 
-    public function UpdateResetPassword($id, $token,  $estado){
-        $sql = $this->conexion->query("UPDATE usuarios SET token_password = '$token', reset_password='$estado' WHERE id = '$id'");
-        return $sql;
-    }
 
-    public function buscarUsuarioById($id)
-    {
-        $sql = $this->conexion->query("SELECT * FROM usuarios WHERE id='$id'");
-        $sql = $sql->fetch_object();
-        return $sql;
-    }
+
+    
     public function buscarUsuarioByDni($dni)
     {
         $sql = $this->conexion->query("SELECT * FROM usuarios WHERE dni='$dni'");
