@@ -31,7 +31,7 @@ class PersonaModel{
       $sql->execute();
       $result = $sql->get_result();
       $result = $result->fetch_object();
-      return $sql;
+      return $result;
    }
    public function buscarPersonaById($id){
       $sql = $this->conexion->query("SELECT * FROM personas WHERE id='$id'");

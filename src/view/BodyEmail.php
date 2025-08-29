@@ -1,3 +1,6 @@
+<?php
+ $tokenn = urlencode($token);
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -61,14 +64,14 @@
                                         Restablece tu Contraseña
                                     </h1>
                                     <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #A0A0A0; text-align: center;">
-                                        Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Haz clic en el botón de abajo para continuar.
+                                        Hola <?php echo $nombre_usuario?>, Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Haz clic en el botón de abajo para continuar.
                                     </p>
 
                                     <!-- BOTÓN DE ACCIÓN (CTA) -->
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin: 0 auto;">
                                         <tr>
                                             <td align="center" bgcolor="#E50914" style="border-radius: 5px;">
-                                                <a href="<?php echo BASE_URL;?>UpdatePassword" target="_blank" style="font-size: 16px; font-weight: bold; color: #FFFFFF; text-decoration: none; text-transform: uppercase; padding: 15px 30px; border-radius: 5px; display: inline-block;">
+                                                <a href="<?php echo BASE_URL;?>UpdatePassword?data=<?php echo $id_usuario;?>&data2=<?php echo $tokenn;?>" target="_blank" style="font-size: 16px; font-weight: bold; color: #FFFFFF; text-decoration: none; text-transform: uppercase; padding: 15px 30px; border-radius: 5px; display: inline-block;">
                                                     Crear Nueva Contraseña
                                                 </a>
                                             </td>

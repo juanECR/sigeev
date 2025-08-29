@@ -147,6 +147,18 @@ if($tipo == "listarUsuariosPaginado"){
     echo json_encode($arr_Respuesta);
 }
 
+if($tipo == "validar_datos_reset_password"){
+   $id_email = $_POST['id'];
+   $token_email = $_POST['token'];
+
+   $arr_Respuesta = array('status'=> false, 'msg'=>'link caducado');
+   $datos_usuario = $objUsuario->buscarUsuarioById($id_email);
+   if($datos_usuario->reset_password == 1 && password_verify($datos_usuario->token_password, $token_email)){
+     $arr_Respuesta = array('status'=> true, 'msg'=>'ok');
+   }
+   echo json_encode($arr_Respuesta);
+}
+
 if($tipo == "sent_email_password"){
      $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
@@ -213,6 +225,7 @@ if($tipo == "sent_email_password"){
                 }
     }
 }
+
 if($tipo == "restaurarPassword"){
    if($_POST){
       $correo = trim($_POST['correo_electronico']);

@@ -11,6 +11,106 @@ async function alerta_sesion() {
     location.replace(base_url + "login");
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    validar_datos_reset_password();
+});
+async function validar_datos_reset_password(){
+    let id = document.getElementById('data').value;
+    let token = document.getElementById('data2').value;
+
+        const formData = new FormData();
+        formData.append('id',id);
+        formData.append('token',token);
+        formData.append('sesion','');
+
+            try {
+                let respuesta = await fetch(base_url_server+'src/control/Usuario.php?tipo=validar_datos_reset_password', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    body: formData
+                });
+                let json = await respuesta.json();
+                if (json.status == false) { /////////////////faltaaaaaaaaaaaaaaaaaaaaaaaa
+                     //modificacion del formulario cuando link esta caducado
+                      const text_r_P = document.querySelectorAll('.intro-text');
+                      text_r_P.forEach(text => {
+                      text.style.display = 'none'; });
+                      let botonrp = document.getElementById('button_r_pass');
+                      botonrp.innerHTML = '<a href="../login"> Iniciar sesion </a>';
+                      let formulario = document.getElementById('reset_pass_form');
+                      formulario.innerHTML = '<span style="color: white;">Este link ha caducado</span>';
+                }
+                console.log(respuesta);
+            } catch (e) {
+                console.log("Error " + e);
+            }
+}
+
+/* function validar_inputs_password(){
+    let pass1 = document.getElementById('newPassword').value;
+    let pass2 = document.getElementById('confirmPassword').value;
+    if (pass1.length<8 && pass2.length<8) {
+      Swal.fire({
+                type: 'Error',
+                title: 'Ingresa Minimo 8 caracteres',
+                text: 'la contraseña Tiene que ser minimo 8 caracteres',
+                footer: '',
+                timer: 1500
+            });
+            return;
+    }else if(pass1 != pass2){
+        Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: 'Las Contraseñas no coinciden',
+                footer: '',
+                timer: 1500
+            });
+            return;
+    }else {
+        actualizar_password(pass1);
+    }
+    
+} */
+async function actualizar_password(password) {
+      //enviar informacion de password y id al controlador usuario
+      // recibir infomacion y encriptar la nueva contraseña - controlador
+      // guardar en base de datos y actualizar campo de reset password =0 y token passord = ''
+      //notificacion a usuario sobre sobr el estado del proceso.
+        let id = document.getElementById('data').value;
+        const formData = new FormData();
+        formData.append('id',id);
+        formData.append('password',password);
+        formData.append('sesion','');
+        formData.append('token','');
+
+            try {
+                let respuesta = await fetch(base_url_server+'src/control/Usuario.php?tipo=restablecer_password', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    body: formData
+                });
+                let json = await respuesta.json();
+                if (json.status) {
+                    Swal.fire({
+                        type: 'success', 
+                        title: '¡Éxito!',
+                        text: 'Tu contraseña ha sido actualizada correctamente.',
+                        confirmButtonText: 'Aceptar',
+                        customClass: {confirmButton: 'btn btn-confirm mt-2'},
+                        allowOutsideClick: false 
+                        })
+                        location.reload();
+
+                }
+                //console.log(respuesta);
+            } catch (e) {
+                console.log("Error " + e);
+            }
+}
+
 (function ($) {
     "use strict";
 

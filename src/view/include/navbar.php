@@ -178,7 +178,7 @@ switch ($vistaActual) {
                                 <small>15 minutes ago</small>
                             </a>
                             <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                            <a href="#" class="dropdown-item text-center">Notificaciones</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

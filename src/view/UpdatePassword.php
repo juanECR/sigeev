@@ -1,3 +1,13 @@
+<?php
+
+$data  = $_GET['data']  ?? null;
+$data2 = urldecode($_GET['data2']) ?? null;
+
+// Validar y sanitizar
+$data  = htmlspecialchars($data);
+$data2 = htmlspecialchars($data2);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -207,6 +217,10 @@
         }
 
     </style>
+    <script>
+        base_url = '<?php echo BASE_URL;?>';
+        base_url_server = '<?php echo BASE_URL_SERVER;?>';
+    </script>
 </head>
 <body>
     <div class="split-container">
@@ -220,6 +234,8 @@
             <p class="intro-text">Ingresa y confirma tu nueva contraseña.</p>
 
             <form id="resetForm">
+                <input type="hidden" id="data" name="data" value="<?php echo $data?>" >
+                <input type="hidden" id="data2" name="data2" value="<?php echo $data2?>" >
                 <div class="form-group">
                     <label for="newPassword">Nueva Contraseña</label>
                     <input type="password" id="newPassword" placeholder="Mínimo 8 caracteres" required>
@@ -238,6 +254,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
             const form = document.getElementById('resetForm');
             const newPasswordInput = document.getElementById('newPassword');
             const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -272,8 +289,12 @@
                 messageDiv.textContent = '¡Contraseña actualizada con éxito!';
 
                 // Aquí iría la lógica para enviar al servidor.
+                actualizar_password(newPassword);
             });
         });
     </script>
+    <script src="<?php echo BASE_URL ?>src/view/pp/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="<?php echo BASE_URL;?>src/view/js/main.js"></script>
+    <script> validar_datos_reset_password();</script>
 </body>
 </html>
