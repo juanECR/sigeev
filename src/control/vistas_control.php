@@ -16,6 +16,8 @@ class vistasControlador extends vistaModelo
                 $ruta = explode("/", $_GET['views']);
                 if ($ruta[0]=="UpdatePassword") {
                     $respuesta = "UpdatePassword";
+                }else if($ruta[0]=="resetPassword"){
+                     $respuesta = "resetPassword";
                 }else {
                     $respuesta = "login";
                 }

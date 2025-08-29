@@ -220,6 +220,60 @@ if($tipo == "restaurarPassword"){
          $datos_persona = $objPersona->buscarPersonaByCorreo($correo);
          if($datos_persona){
           $datos_usuario = $objUsuario->buscarUsuarioByPersonaId($datos_persona->id);
+          if($datos_usuario){
+                $llave = $objAdmin->generar_llave(30);
+                $token = password_hash($llave, PASSWORD_DEFAULT);
+                $update = $objUsuario->UpdateResetPassword($id_usuario,$llave,1);
+                if ($update) {
+                    /////////////////////////////////////////////////////////////////////////falta///////////////////////
+                            //Create an instance; passing `true` enables exceptions
+                        //incluimos la plantilla de correo para el body email
+                        ob_start();
+                        include __DIR__ . '../../view/BodyEmail.php';
+                        $emailBody = ob_get_clean();
+                        
+                        //php mailer
+                        $mail = new PHPMailer(true);
+
+                        try {
+                            //Server settings
+                            $mail->SMTPDebug = 2;                      //Enable verbose debug output
+                            $mail->isSMTP();                                            //Send using SMTP
+                            $mail->Host       = 'mail.limon-cito.com';                     //Set the SMTP server to send through
+                            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                            $mail->Username   = 'sisve_jota@limon-cito.com';                     //SMTP username
+                            $mail->Password   = 'jota123@@JOTA';                               //SMTP password
+                            $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
+                            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                            //Recipients
+                            $mail->setFrom('sisve_jota@limon-cito.com', 'Support Sisve app');
+                            $mail->addAddress($correo, $datos_persona->nombres);     //Add a recipient
+                            //Name is optional
+
+
+
+                            //Content
+                            $mail->isHTML(true);                                  //Set email format to HTML
+                            $mail->Subject = 'password reset request';
+
+        /*                   $file = fopen("../view/BodyEmail.php","r");
+                            $str = fread($file, filesize("../view/BodyEmail.php"));
+                            $str = trim($str);
+                            fclose($file); */
+
+                            $mail->Body    = $emailBody;
+                            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                            $mail->send();
+                            echo 'Correo enviado con éxito.';
+                        } catch (Exception $e) {
+                            echo "Error al enviar: {$mail->ErrorInfo}";
+                        }
+                }else{
+                    echo "fallo";
+                }
+          }
          }
       }
    }

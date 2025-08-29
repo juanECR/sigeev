@@ -77,14 +77,15 @@ async function send_email_password() {
         console.log('Erro func async || ' + e);
     }
 }
-async function restaurarPassword(correo) {
+async function restaurarPassword() {
+    const correo = document.getElementById("email").value;
     try {
         const datos = new FormData();
         datos.append('correo_electronico',correo);
         datos.append('sesion', '');
         datos.append('token','');
 
-        await fetch(base_url_server+'src/control/Usuario.php?tipo=restaurarPassword',{
+        let respuesta = await fetch(base_url_server+'src/control/Usuario.php?tipo=restaurarPassword',{
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
