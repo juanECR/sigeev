@@ -31,15 +31,15 @@ async function validar_datos_reset_password(){
                     body: formData
                 });
                 let json = await respuesta.json();
-                if (json.status == false) { /////////////////faltaaaaaaaaaaaaaaaaaaaaaaaa
-                     //modificacion del formulario cuando link esta caducado
-                      const text_r_P = document.querySelectorAll('.intro-text');
-                      text_r_P.forEach(text => {
-                      text.style.display = 'none'; });
-                      let botonrp = document.getElementById('button_r_pass');
-                      botonrp.innerHTML = '<a href="../login"> Iniciar sesion </a>';
-                      let formulario = document.getElementById('reset_pass_form');
-                      formulario.innerHTML = '<span style="color: white;">Este link ha caducado</span>';
+                if (json.status == false) {
+                    let form = document.getElementById("resetForm");
+                    form.innerHTML = '';
+                    let titulo = document.querySelector(".titulo");
+                    titulo.innerHTML = '<p>Enlace invalido.</p>';
+                    let caja = document.querySelector(".visual-side");
+                    caja.innerHTML = '';
+                    let btncreate = document.querySelector(".intro-text");
+                    btncreate.innerHTML = '<a href="login" style="color:red;">Iniciar sesion</a>';
                 }
                 console.log(respuesta);
             } catch (e) {
@@ -94,15 +94,12 @@ async function actualizar_password(password) {
                 });
                 let json = await respuesta.json();
                 if (json.status) {
-                    Swal.fire({
-                        type: 'success', 
-                        title: '¡Éxito!',
-                        text: 'Tu contraseña ha sido actualizada correctamente.',
-                        confirmButtonText: 'Aceptar',
-                        customClass: {confirmButton: 'btn btn-confirm mt-2'},
-                        allowOutsideClick: false 
-                        })
-                        location.reload();
+                        Swal.fire({
+                        title: "Contraseña actualizada",
+                        text: "Tu contraseña a sido modificada con exito",
+                        icon: "success"
+                        });
+                        validar_datos_reset_password();
 
                 }
                 //console.log(respuesta);

@@ -148,15 +148,55 @@ if($tipo == "listarUsuariosPaginado"){
 }
 
 if($tipo == "validar_datos_reset_password"){
-   $id_email = $_POST['id'];
-   $token_email = $_POST['token'];
+$id_email = (int)($_POST['id'] ?? 0);
+$token_email = trim($_POST['token'] ?? '');
+$arr_Respuesta = array('status' => false, 'mensaje' => 'Enlace invalido o fallido');
+if ($id_email <= 0 || empty($token_email)) {
+    $arr_Respuesta = array('status' => false, 'mensaje' => 'Enlace invalido');
+}
+$datos_usuario = $objUsuario->buscarUsuarioById($id_email);
+if ($datos_usuario) {
+    if ($datos_usuario->reset_password == 1 && password_verify($datos_usuario->token_password,$token_email )) {
+        $arr_Respuesta = array('status' => true, 'mensaje' => 'ok');
+    }
+}
+echo json_encode($arr_Respuesta);
+exit;
+}
 
-   $arr_Respuesta = array('status'=> false, 'msg'=>'link caducado');
-   $datos_usuario = $objUsuario->buscarUsuarioById($id_email);
-   if($datos_usuario->reset_password == 1 && password_verify($datos_usuario->token_password, $token_email)){
-     $arr_Respuesta = array('status'=> true, 'msg'=>'ok');
-   }
-   echo json_encode($arr_Respuesta);
+if($tipo == "restablecer_password"){
+        $arr_Respuesta = array('status' => false, 'msg' => 'Error al restablecer');
+        if ($_POST) {
+            $id = trim($_POST['id']);
+            $NewPassword = trim($_POST['password']);
+            $hashedPassword = password_hash($NewPassword, PASSWORD_DEFAULT);
+
+            if ($id == "" || $NewPassword == "") {
+                $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+            } else {
+                //validar si existe el usuario con ese id
+                $arr_Usuario = $objUsuario->buscarUsuarioById($id);
+                if ($arr_Usuario){
+                    $operacion = $objUsuario->actualizarPassword($id, $hashedPassword);
+                    if ($operacion) {
+                        $tokenVacio = "";
+                        $nuevoEstado = 0;
+                        $operacion2 = $objUsuario->UpdateResetPassword($id, $tokenVacio, $nuevoEstado);
+                        if (!$operacion2) {
+                           $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al limpiar token');
+                        }
+                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Actualizado correctamente');
+                    } else {
+                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Fallo al actualizar');
+                    }
+                    
+                } else {
+                   $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, usuario no existe');
+                }
+            }
+        }
+         echo json_encode($arr_Respuesta);
+         exit();
 }
 
 if($tipo == "sent_email_password"){
@@ -234,6 +274,8 @@ if($tipo == "restaurarPassword"){
          if($datos_persona){
           $datos_usuario = $objUsuario->buscarUsuarioByPersonaId($datos_persona->id);
           if($datos_usuario){
+                $id_usuario = $datos_usuario->id;
+                $nombre_usuario = $datos_persona->nombres;
                 $llave = $objAdmin->generar_llave(30);
                 $token = password_hash($llave, PASSWORD_DEFAULT);
                 $update = $objUsuario->UpdateResetPassword($id_usuario,$llave,1);
@@ -261,7 +303,7 @@ if($tipo == "restaurarPassword"){
 
                             //Recipients
                             $mail->setFrom('sisve_jota@limon-cito.com', 'Support Sisve app');
-                            $mail->addAddress($correo, $datos_persona->nombres);     //Add a recipient
+                            $mail->addAddress($correo, $nombre_usuario);     //Add a recipient
                             //Name is optional
 
 

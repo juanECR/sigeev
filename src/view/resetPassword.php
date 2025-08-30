@@ -106,7 +106,7 @@
             background-color: #444;
         }
 
-        button[type="button"] {
+        button[type="submit"] {
             width: 100%;
             padding: 15px;
             background-color: var(--color-secondary);
@@ -121,12 +121,12 @@
             letter-spacing: 1px;
         }
 
-        button[type="button"]:hover:not(:disabled) {
+        button[type="submit"]:hover:not(:disabled) {
             background-color: var(--color-accent);
             transform: translateY(-2px);
         }
         
-        button[type="button"]:disabled {
+        button[type="submit"]:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
@@ -181,7 +181,7 @@
                 <label for="email">Correo Electrónico</label>
                 <input type="email" id="email" name="email" placeholder="tu.correo@ejemplo.com" required>
             </div>
-            <button type="button" onclick="restaurarPassword();">Enviar Enlace de Recuperación</button>
+            <button type="submit">Enviar Enlace de Recuperación</button>
             <div id="message" class="message"></div>
         </form>
         
@@ -193,9 +193,9 @@
             const form = document.getElementById('forgotForm');
             const emailInput = document.getElementById('email');
             const messageDiv = document.getElementById('message');
-            const submitButton = form.querySelector('button[type="button"]');
+            const submitButton = form.querySelector('button[type="submit"]');
 
-            form.addEventListener('button', (e) => {
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
 
                 const email = emailInput.value;
@@ -216,13 +216,15 @@
                 // Simulación de envío exitoso
                 messageDiv.style.color = '#28a745'; // Color verde para éxito
                 messageDiv.textContent = 'Si el correo está registrado, recibirás un enlace.';
-                
+                restaurarPassword();
                 // Deshabilitar el botón para evitar múltiples envíos
                 submitButton.disabled = true;
                 emailInput.disabled = true;
+                
+
             });
         });
     </script>
-    <script src="<?php echo BASE_URL;?>src/view/js/sesion.js"></script>
+    <script src="<?php echo BASE_URL;?>src/view/js/excludesistem.js"></script>
 </body>
 </html>

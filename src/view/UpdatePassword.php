@@ -1,11 +1,10 @@
 <?php
-
-$data  = $_GET['data']  ?? null;
-$data2 = urldecode($_GET['data2']) ?? null;
+$data  = $_GET['data']  ?? '';
+$data2 = $_GET['data2'] ?? '';
 
 // Validar y sanitizar
 $data  = htmlspecialchars($data);
-$data2 = htmlspecialchars($data2);
+$data2 = htmlspecialchars(urldecode($data2));
 
 ?>
 <!DOCTYPE html>
@@ -230,7 +229,7 @@ $data2 = htmlspecialchars($data2);
         </div>
 
         <div class="form-side">
-            <h2>Restablecer Contraseña</h2>
+            <h2 class="titulo">Restablecer Contraseña</h2>
             <p class="intro-text">Ingresa y confirma tu nueva contraseña.</p>
 
             <form id="resetForm">
@@ -246,9 +245,10 @@ $data2 = htmlspecialchars($data2);
                     <input type="password" id="confirmPassword" placeholder="Repite tu contraseña" required>
                 </div>
 
-                <button type="submit">Actualizar Contraseña</button>
-                <div id="message" class="message"></div>
+                <button type="submit" id="btnLog">Actualizar Contraseña</button>
+                
             </form>
+            <div id="message" class="message"></div>
         </div>
     </div>
 
@@ -293,8 +293,7 @@ $data2 = htmlspecialchars($data2);
             });
         });
     </script>
-    <script src="<?php echo BASE_URL ?>src/view/pp/plugins/sweetalert2/sweetalert2.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="<?php echo BASE_URL;?>src/view/js/main.js"></script>
-    <script> validar_datos_reset_password();</script>
 </body>
 </html>

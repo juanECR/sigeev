@@ -52,9 +52,22 @@ class UsuarioModel
         return $sql;
     }
     public function UpdateResetPassword($id, $token,  $estado){
-        $sql = $this->conexion->query("UPDATE usuarios SET token_password = '$token', reset_password='$estado' WHERE id = '$id'");
-        return $sql;
+        $sql = $this->conexion->prepare("UPDATE usuarios SET token_password =?, reset_password=? WHERE id =?");
+        if(!$sql){return false;}
+        $sql->bind_param('sii',$token, $estado, $id);
+        $resultado = $sql->execute();
+        $sql->close();
+        return $resultado;
     }
+    public function actualizarPassword($id, $password){
+    $stmt = $this->conexion->prepare("UPDATE usuarios SET password = ? WHERE id = ?");
+    if (!$stmt) {return false;}
+    $stmt->bind_param("si", $password, $id);
+    $resultado = $stmt->execute();
+    $stmt->close();
+    return $resultado;
+    }
+
 
 
 
@@ -67,15 +80,6 @@ class UsuarioModel
         $sql = $this->conexion->query("UPDATE usuarios SET dni='$dni',nombres_apellidos='$nombres_apellidos',correo='$correo',telefono='$telefono',estado ='$estado' WHERE id='$id'");
         return $sql;
     }
-    public function actualizarPassword($id, $password)
-    {
-        $sql = $this->conexion->query("UPDATE usuarios SET password ='$password' WHERE id='$id'");
-        return $sql;
-    }
-
-
-
-    
     public function buscarUsuarioByDni($dni)
     {
         $sql = $this->conexion->query("SELECT * FROM usuarios WHERE dni='$dni'");
