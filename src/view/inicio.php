@@ -15,7 +15,7 @@
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total empleados</p>
-                                <h6 class="mb-0">0</h6>
+                                <h6 class="mb-0 n_empleados">0</h6>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Total tareas</p>
-                                <h6 class="mb-0">0</h6>
+                                <h6 class="mb-0 n_tareas">0</h6>
                             </div>
                         </div>
                     </div>

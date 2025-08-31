@@ -26,7 +26,7 @@
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
              <h2 class="text-center mb-4">Envíar un correo</h2>
-            <form action="tu_script_de_procesamiento.php" method="POST">
+            <form id="frm_enviar_Correo" >
                 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -49,7 +49,7 @@
                 </div>
                 
                 <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-primary">Enviar Mensaje</button>
+                    <button type="button" class="btn btn-primary" onclick="enviarCorreo()">Enviar Mensaje</button>
                 </div>
                 
             </form>
@@ -59,3 +59,4 @@
 
    </div>
 </div>
+<script src="<?php echo BASE_URL;?>src/view/js/admin-comunicados.js"></script>

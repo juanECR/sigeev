@@ -11,9 +11,7 @@ async function alerta_sesion() {
     location.replace(base_url + "login");
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    validar_datos_reset_password();
-});
+
 async function validar_datos_reset_password(){
     let id = document.getElementById('data').value;
     let token = document.getElementById('data2').value;

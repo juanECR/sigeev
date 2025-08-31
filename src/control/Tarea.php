@@ -117,4 +117,15 @@ if($tipo == "eliminarTarea"){
     echo json_encode($arr_Respuesta);
 }
 
+if($tipo == "contarTareas"){
+    $arr_Respuesta = array('status'=>false,'mensaje'=>'Error_sesion');
+    if($objSesion->verificar_sesion_si_activa($id_sesion,$token)){
+        $totalTareas = $objTarea->contarTareas();
+
+        $arr_Respuesta['status'] = true;
+        $arr_Respuesta['total'] = $totalTareas;
+    }
+    echo json_encode($arr_Respuesta);
+}
+
 ?>

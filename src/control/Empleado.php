@@ -109,5 +109,15 @@ if ($tipo == "listarEmpleadosPaginado") {
     }
     echo json_encode($arr_Respuesta);
 }
+if($tipo == "contarEmpleados"){
+        $arr_Respuesta = array('status'=>false,'mensaje'=>'Error_sesion');
+    if($objSesion->verificar_sesion_si_activa($id_sesion,$token)){
+        $totalEmpleados = $objEmpleado->contarTotalEmpleados();
+
+        $arr_Respuesta['status'] = true;
+        $arr_Respuesta['total'] = $totalEmpleados;
+    }
+    echo json_encode($arr_Respuesta);
+}
 
 ?>

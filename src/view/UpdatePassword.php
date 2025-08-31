@@ -254,6 +254,7 @@ $data2 = htmlspecialchars(urldecode($data2));
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            validar_datos_reset_password();
             
             const form = document.getElementById('resetForm');
             const newPasswordInput = document.getElementById('newPassword');

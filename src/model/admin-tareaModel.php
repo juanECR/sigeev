@@ -42,9 +42,14 @@ class TareaModel{
 
     return $array;
     }
-
+    //contar tareas de un evento especifico
     public function contarTotalTareas($id_evento) {
         $sql = $this->conexion->query("SELECT COUNT(id) as total FROM tareas WHERE evento_id = '$id_evento'");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
+    public function contarTareas() {
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM tareas ");
         $resultado = $sql->fetch_object();
         return (int)$resultado->total;
     }

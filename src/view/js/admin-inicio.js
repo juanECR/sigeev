@@ -3,6 +3,8 @@
         contarEventos();
         contarParticipantes();
         listar_eventos(1);
+        constarEmpleados();
+        contarTareas();
     });
 
     async function contarEventos() {
@@ -39,6 +41,44 @@
             json = await respuesta.json();
             if(json.status){
               document.querySelector(".n_participantes").innerHTML = json.total;
+            }   
+        } catch (e) {
+            console.log('funcion error || ' + e);
+        } 
+    }
+    async function constarEmpleados(){
+        try {
+            let datos = new FormData();
+            datos.append('sesion',session_session);
+            datos.append('token',token_token);
+            let respuesta = await fetch(base_url_server+'src/control/Empleado.php?tipo=contarEmpleados',{
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                body: datos
+            });
+            json = await respuesta.json();
+            if(json.status){
+              document.querySelector(".n_empleados").innerHTML = json.total;
+            }   
+        } catch (e) {
+            console.log('funcion error || ' + e);
+        } 
+    }
+    async function contarTareas(){
+        try {
+            let datos = new FormData();
+            datos.append('sesion',session_session);
+            datos.append('token',token_token);
+            let respuesta = await fetch(base_url_server+'src/control/Tarea.php?tipo=contarTareas',{
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                body: datos
+            });
+            json = await respuesta.json();
+            if(json.status){
+              document.querySelector(".n_tareas").innerHTML = json.total;
             }   
         } catch (e) {
             console.log('funcion error || ' + e);
