@@ -41,5 +41,32 @@ if($tipo == "listarDetallesEvento"){
     echo json_encode($arr_Respuesta);
 }
 
+if($tipo == "actualizarEvento"){
+     $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        if ($_POST) {
+            $titulo = strtoupper(trim($_POST['titulo']));
+            $descripcion = strtolower($_POST['descripcion']);
+            $categoria_id = trim($_POST['categoria']);
+            $fecha_inicio = $_POST['fecha_inicio'];
+            $fecha_fin = $_POST['fecha_fin'];
+            $ubicacion = $_POST['ubicacion'];
+            $organizador_id = trim($_POST['organizador']);
+
+            if ($titulo =="" ||$descripcion == ""||$categoria_id== "" || $fecha_inicio == "" || $fecha_fin == "" || $ubicacion == ""|| $organizador_id == "") {
+                $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+            } else {
+                    $id_evento = $objEvento->registrarEvento($titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id);
+                    if ($id_evento > 0) {
+                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Evento creado');
+                    } else {
+                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al Crear evento');
+                    }
+            }
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}
+
 
 ?>

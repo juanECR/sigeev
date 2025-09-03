@@ -72,8 +72,70 @@
                     <h4><i class="fa fa-cogs card-header-icon text-primary"></i> Otros</h4><hr>
                     <p>Aquí puedes gestionar el evento como editar o cancelar este evento.</p>
                     <a href="<?php echo BASE_URL;?>resultadosEventos?data=<?php echo $_GET['data'];?>"><button class="btn btn-outline-success mt-3 w-100"><i class="bi bi-bar-chart-line-fill"></i> Resultados evento</button></a>
-                    <button class="btn btn-outline-light mt-3 w-100"><i class="fa fa-edit mr-2"></i> Editar Evento</button>
+                    <button class="btn btn-outline-light mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalEditarEvento"><i class="fa fa-edit mr-2"></i> Editar Evento</button>
                     <button class="btn btn-outline-primary mt-3 w-100"><i class="fa fa-trash-alt mr-2"></i> Cancelar Evento</button>
+                </div>
+            </div>
+            <!--modal editar evento-->
+            <div class="modal fade" id="modalEditarEvento" tabindex="-1" aria-labelledby="modalEditarEventoLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-secondary">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalEditarEventoLabel">Actualizar evento</h1>
+                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="frm_editar_evento">
+                                <div class="mb-3">
+                                    <label for="titulo" class="form-label">Titulo</label>
+                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese El Titulo del evento" required>
+                                </div>  
+                                <div class="mb-3">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Ingrese detalles del evento"></textarea>
+                                </div> 
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoria:</label>
+                                    <select class="form-select" name="categoria" id="categoria" required>
+                                    <option value="">Seleccione una Categoria</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fecha_inicio" class="form-label">Fecha Inicio:</label>
+                                    <input type="datetime-local" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
+                                </div>     
+    
+                                <div class="mb-3">
+                                    <label for="fecha_fin" class="form-label">Fecha Finalización:</label>
+                                    <input type="datetime-local" class="form-control" name="fecha_fin" id="fecha_fin" required>
+                                </div> 
+                                <div class="mb-3">
+                                    <label for="ubicacion" class="form-label">Ubicación:</label>
+                                    <input type="text" class="form-control" name="ubicacion" id="ubicacion" placeholder="Ingrese la ubicacion del evento" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="organizador" class="form-label">Organizador:</label>
+                                    <select class="form-select" name="organizador" id="organizador" required>
+                                    <option value="">Seleccione Organizador</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado:</label>
+                                    <select class="form-select" name="estado" id="estado" required>
+                                    <option value="">Seleccione estado</option>
+                                    <option value="programado">programado</option>
+                                    <option value="en curso">en curso</option>
+                                    <option value="finalizado">finalizado</option>
+                                    <option value="cancelado">cancelado</option>
+                                    </select>
+                                </div>
+                                <div class="text-center g-2">                             
+                                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
+                                    <button type="button" class="btn btn-outline-primary" onclick="editarEvento();">Actualizar</button> 
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -324,5 +324,8 @@ async function generarReporteExel() {
 } catch (e) {
     console.log('Error en función asíncrona: ' + e);
 }
+
     
 }
+
+

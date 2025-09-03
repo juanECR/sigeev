@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     listarDetallesEvento();
     listarAlgunosParticipantes();
+    listarcategoriasFrm();
+    listarOrganizadoresFrm();
 });
 async function listarDetallesEvento() {
     try {
@@ -24,6 +26,8 @@ async function listarDetallesEvento() {
             document.querySelector(".f_inicio").innerHTML ='<strong>Inicio:</strong> '+datos.fecha_inicio+'';
             document.querySelector(".f_fin").innerHTML ='<strong>Finaliza:</strong> '+datos.fecha_fin+'';
             document.querySelector(".organizador").innerHTML ='<strong>'+datos.organizador+'</strong>';
+
+            document.getElementById("#titulo").value = datos.titulo;
         }else if(json.mensaje == "Error_sesion"){
             alerta_sesion();
         }
@@ -68,4 +72,100 @@ async function listarAlgunosParticipantes(){
     } catch (e) {
         console.log('error en funcion ||' + e);
     }
+}
+
+async function listarcategoriasFrm() {
+    try {
+         let datos = new FormData();
+         datos.append('sesion',session_session);
+         datos.append('token',token_token);
+         let respuesta = await fetch(base_url_server+'src/control/CategoriasEvento.php?tipo=listarCategorias',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+         });
+         json = await respuesta.json();
+         if (json.status) {
+             let datos = json.contenido;
+             datos.forEach(item => {
+                let nuevaFila =  document.createElement("option");
+                //nuevaFilaid: es crear // item.Id: viene de la base de datos
+                nuevaFila.value = item.id;
+                nuevaFila.innerHTML = item.nombre;
+                document.querySelector('#categoria').appendChild(nuevaFila);
+        });
+         }
+        
+    } catch (e) {
+        console.log('ocurrio un error de funcion' + e);
+    }
+}
+async function listarOrganizadoresFrm(){
+    try {
+        let valores = new FormData();
+        valores.append('sesion',session_session);
+        valores.append('token',token_token);
+        let respuest = await fetch(base_url_server + 'src/control/Organizador.php?tipo=listarOrganizadores' ,{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: valores
+        });
+        let json = await respuest.json();
+        if(json.status){
+            let content = json.contenido;
+             content.forEach(item => {
+                let newFila =  document.createElement("option");
+                //newFilaid: es crear // item.Id: viene de la base de datos
+                newFila.value = item.id;
+                newFila.innerHTML = item.razon_social;
+                document.querySelector('#organizador').appendChild(newFila);
+        });
+        }else if(json.msg == "Error_Sesion"){
+              console.log("fallo al iniciar sesion");
+        }
+    } catch (e) {
+        console.log('Ups ocurrio un error con la funcion ' + e);
+    }
+}
+async function  editarEvento(){
+    try {
+        let info = new FormData(frm_editar_evento);
+        info.append('sesion',session_session);
+        info.append('token',token_token);
+        info.append('id_evento',id_evento);
+
+        let respuesta = await fetch(base_url_server + 'src/control/DetalleEvento.php?tipo=actualizarEvento',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: info
+        });
+        json = await respuesta.json();
+        if(json.status){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }else if(json.mensaje == "Error_Sesion"){
+           alerta_sesion();
+        }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }
+        
+    } catch (error) {
+        console.log('error function async !! ' + error);
+        
+    }
+    
 }
