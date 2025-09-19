@@ -55,5 +55,27 @@ class EventoModel{
        $consulta = $consulta->fetch_object();
        return $consulta;
     }
+   public function actualizarEvento($id_evento,$titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id,$estado){
+      $sql = $this->conexion->prepare("UPDATE eventos SET titulo =?,descripcion =?,categoria_evento_id=?,fecha_inicio=?,fecha_fin=?,ubicacion=?,organizador_id=?,estado=? WHERE id = ?");
+      $sql->bind_param('ssisssisi',$titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id,$estado,$id_evento);
+      if (!$sql->execute()) {
+        throw new Exception("Error al ejecutar la consulta: " . $sql->error);
+      }
+      $filasAfectadas = $sql->affected_rows;
+      $sql->close();
+
+      return $filasAfectadas > 0;
+   }
+   public function cancelarEvento($id_Evento){
+     $sql = $this->conexion->prepare("UPDATE eventos SET estado = 'cancelado' WHERE id=?");
+     $sql->bind_param('i',$id_Evento);
+     if(!$sql->execute()){
+      throw new Exception("Error al ejecutar la consulta: " . $sql->error);
+     }
+     $filasAfectadas = $sql->affected_rows;
+     $sql->close();
+
+     return $filasAfectadas > 0;
+   }
 }
 ?>

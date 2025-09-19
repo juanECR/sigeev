@@ -73,7 +73,7 @@
                     <p>Aquí puedes gestionar el evento como editar o cancelar este evento.</p>
                     <a href="<?php echo BASE_URL;?>resultadosEventos?data=<?php echo $_GET['data'];?>"><button class="btn btn-outline-success mt-3 w-100"><i class="bi bi-bar-chart-line-fill"></i> Resultados evento</button></a>
                     <button class="btn btn-outline-light mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalEditarEvento"><i class="fa fa-edit mr-2"></i> Editar Evento</button>
-                    <button class="btn btn-outline-primary mt-3 w-100"><i class="fa fa-trash-alt mr-2"></i> Cancelar Evento</button>
+                    <button class="btn btn-outline-primary mt-3 w-100" onclick="cancelarEvento()"><i class="fa fa-trash-alt mr-2"></i> Cancelar Evento</button>
                 </div>
             </div>
             <!--modal editar evento-->

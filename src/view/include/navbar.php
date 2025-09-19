@@ -21,6 +21,9 @@ switch ($vistaActual) {
     case 'usuarios':
         $usuario = 'active';
         break;
+    case 'clientesApi':
+         $clientesApi = 'active';
+         break;
     case '': // El caso por defecto es la página de inicio
     default:
         $home = 'active';
@@ -100,6 +103,7 @@ switch ($vistaActual) {
                     <a id="nav-empleados" href="<?php echo BASE_URL;?>empleados" class="nav-item nav-link <?php echo $empleado?>"><i class="fa fa-users me-2"></i>Empleados</a>
                     <a id="nav-emailComunicados" href="<?php echo BASE_URL;?>emailComunicados" class="nav-item nav-link <?php echo $comunicado?>"><i class="fas fa-envelope-open-text"></i> Comunicados</a>
                     <a id="nav-usuarios" href="<?php echo BASE_URL;?>usuarios" class="nav-item nav-link <?php echo $usuario?>"><i class="fas fa-user-lock"></i> Usuarios</a>              
+                    <a id="nav-usuarios" href="<?php echo BASE_URL;?>clientesApi" class="nav-item nav-link <?php echo $clientesApi?>"><i class="fas fa-user-lock"></i> Clientes Api</a>              
                 </div>
             </nav>
         </div>

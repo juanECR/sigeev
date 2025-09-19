@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Trim;
+
 session_start();
 require_once('../model/admin-sesionModel.php');
 require_once('../model/admin-eventoModel.php');
@@ -45,6 +48,7 @@ if($tipo == "actualizarEvento"){
      $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
         if ($_POST) {
+            $id_evento = trim($_POST['id_evento']);
             $titulo = strtoupper(trim($_POST['titulo']));
             $descripcion = strtolower($_POST['descripcion']);
             $categoria_id = trim($_POST['categoria']);
@@ -52,20 +56,40 @@ if($tipo == "actualizarEvento"){
             $fecha_fin = $_POST['fecha_fin'];
             $ubicacion = $_POST['ubicacion'];
             $organizador_id = trim($_POST['organizador']);
-
+            $estado = trim($_POST['estado']);
+            if(!$id_evento ||$id_evento == null || !is_numeric($id_evento)){
+            $arr_Respuesta = array('status' => false, 'mensaje' => 'Error de sistema - Consulta invalida');
+            }else
             if ($titulo =="" ||$descripcion == ""||$categoria_id== "" || $fecha_inicio == "" || $fecha_fin == "" || $ubicacion == ""|| $organizador_id == "") {
                 $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
             } else {
-                    $id_evento = $objEvento->registrarEvento($titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id);
-                    if ($id_evento > 0) {
-                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Evento creado');
+                    $id_evento_updated = $objEvento->actualizarEvento($id_evento,$titulo,$descripcion,$categoria_id,$fecha_inicio,$fecha_fin,$ubicacion,$organizador_id,$estado);
+                    if ($id_evento_updated) {
+                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Actualizado correctamente');
                     } else {
-                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al Crear evento');
+                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al actualizar filas');
                     }
             }
         }
     }
     echo json_encode($arr_Respuesta);
+}
+
+if($tipo == "cancelarEvento"){
+      $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)){
+         $id_evento = $_POST['id_evento'];
+            if(!$id_evento ||$id_evento == null || !is_numeric($id_evento)){
+            $arr_Respuesta = array('status' => false, 'mensaje' => 'Error de sistema - Consulta invalida');
+            }else{
+             $cancelar = $objEvento->cancelarEvento($id_evento);
+             if($cancelar){
+               $arr_Respuesta = array('status' => true, 'mensaje' => 'Evento cancelado');
+             }else{
+                $arr_Respuesta = array('status' => false, 'mensaje' => 'Error de sistema');
+             }
+            }
+    }
 }
 
 

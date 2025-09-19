@@ -163,13 +163,17 @@ async function  editarEvento(){
         });
         json = await respuesta.json();
         if(json.status){
+             location.reload();
+/*             let modal = document.getElementById("modalEditarEvento");
+
+
             Swal.fire({
                 position: "top-end",
                 icon: "success",
                 title: json.mensaje,
                 showConfirmButton: false,
                 timer: 1500
-                });
+                }); */
         }else if(json.mensaje == "Error_Sesion"){
            alerta_sesion();
         }else{
@@ -187,4 +191,36 @@ async function  editarEvento(){
         
     }
     
+}
+
+//falta Arreglar metodo cancelar evento
+async function cancelarEvento() {
+    try {
+       let info = new FormData();
+        info.append('sesion',session_session);
+        info.append('token',token_token);
+        info.append('id_evento',id_evento);
+        let respuest = await fetch(base_url_server+'src/control/DetalleEvento.php?tipo=cancelarEvento',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: info
+        });
+        json = await respuest.json();
+        if(json.status){
+           location.reload();
+        }else if(json.mensaje == "Error_Sesion"){
+           alerta_sesion();
+        }else{ 
+                Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: json.mensaje,
+                showConfirmButton: false,
+                timer: 1500
+                });
+        }
+    } catch (e) {
+        console.log("erro func.  || " + e);
+    }
 }
