@@ -8,7 +8,7 @@ $tipo = $_GET['tipo'];
 
 //instanciar la clase categoria model
 $objSesion = new SessionModel();
-$objUsuario = new ClienteApiModel();
+$objClienteApi = new ClienteApiModel();
 $objAdmin = new AdminModel();
 
 //variables de sesion
@@ -21,23 +21,22 @@ if($tipo == "registrarCliente"){
         //print_r($_POST);
         //repuesta
         if ($_POST) {
-            $dni = $_POST['dni'];
-            $nombres = $_POST['nombres'];
-            $apellidos = $_POST['apellidos'];
-            $correo = $_POST['correo'];
+            $ruc = $_POST['ruc'];
+            $razon_social = strtoupper($_POST['razon_social']);
             $telefono = $_POST['telefono'];
-            $fecha_nacimiento = $_POST['fecha_nacimiento'];
-            $genero = $_POST['genero'];
-
-            if ($dni =="" ||$nombres == ""||$apellidos== "" || $correo == "" || $telefono == "" || $fecha_nacimiento == ""|| $genero == "") {
+            $correo = $_POST['correo'];
+            if(!is_numeric($ruc)||empty($ruc)||strlen($ruc)<11){
+              $arr_Respuesta = array('status' => false, 'mensaje' => 'Error ruc');
+            }else
+            if ($razon_social == ""|| $correo == "" || $telefono == "") {
                 $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
             } else {
-                $arr_Persona = $objPersona->buscarPersonaByCorreo($correo);
-                if ($arr_Persona) {
-                    $arr_Respuesta = array('status' => false, 'mensaje' => 'Registro Fallido, Usuario ya se encuentra registrado');
+                $arrCliente = $objClienteApi->buscarClienteApiByRuc($ruc);
+                if ($arrCliente) {
+                    $arr_Respuesta = array('status' => false, 'mensaje' => 'Registro Fallido, Cliente ya se encuentra registrado');
                 } else {
-                    $id_persona = $objPersona->registrarPersona($dni,$nombres,$apellidos,$correo,$telefono,$fecha_nacimiento,$genero);
-                    if ($id_persona > 0) {
+                    $id_new_cliente = $objClienteApi->registrarCliente($ruc,$razon_social,$correo,$telefono);
+                    if ($id_new_cliente > 0) {
                         // array con los id de los sistemas al que tendra el acceso con su rol registrado
                         // caso de administrador y director
                         $arr_Respuesta = array('status' => true, 'mensaje' => 'Registro Exitoso');

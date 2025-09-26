@@ -10,10 +10,10 @@ let Uri = base_url_server+'src/control/clientesApi.php?tipo=';
 
 async function registrarCliente(){
     let ruc = document.getElementById("ruc").value;
-    if(dni.length !== 11){
+    if(ruc.length !== 11){
             Swal.fire({
                 icon: "error",
-                title: "Error, verifica tu DNI e inténtalo de nuevo",
+                title: "Error, verifica el RUC e inténtalo de nuevo",
                 showConfirmButton: false,
                 timer: 1500
                 });
@@ -44,7 +44,7 @@ async function registrarCliente(){
                         showConfirmButton: false,
                         timer: 1500
                         });
-                    listar_usuarios(1);
+                    /* listar_usuarios(1); */
                 } else if (json.msg == "Error_Sesion") {
                     alerta_sesion();
                 } else {
