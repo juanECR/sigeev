@@ -1,8 +1,7 @@
 
 //funciones que deven iniciarse al iniciar la pagina.
 document.addEventListener("DOMContentLoaded", function() {
-/*     ListarRolesSistema();
-    listar_usuarios(1); */
+    listarClientesApi(1);
 });
 
 let Uri = base_url_server+'src/control/clientesApi.php?tipo=';
@@ -44,7 +43,7 @@ async function registrarCliente(){
                         showConfirmButton: false,
                         timer: 1500
                         });
-                    /* listar_usuarios(1); */
+                    /* listarClientesApi(1); */
                 } else if (json.msg == "Error_Sesion") {
                     alerta_sesion();
                 } else {
@@ -63,14 +62,14 @@ async function registrarCliente(){
 
   
 //LISTAR USUARIOS DEL SISTEMA
-async function listar_usuarios(pagina = 1) {
+async function listarClientesApi(pagina = 1) {
     try {
         const datos = new FormData();
         datos.append('sesion', session_session);
         datos.append('token', token_token);
         datos.append('pagina', pagina); 
 
-        let respuesta = await fetch(base_url + 'src/control/Usuario.php?tipo=listarUsuariosPaginado', {
+        let respuesta = await fetch(Uri+'listarClientesApi',{
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -78,7 +77,7 @@ async function listar_usuarios(pagina = 1) {
         });
 
         let json = await respuesta.json();
-        const tbody = document.querySelector('#tbody_tbl_usuarios');
+        const tbody = document.querySelector('#tbody_tbl_clientesApi');
         tbody.innerHTML = ''; // Limpiar tabla antes de agregar nuevas filas
 
         if (json.status && json.contenido.length > 0) {
@@ -88,19 +87,17 @@ async function listar_usuarios(pagina = 1) {
             
             datos.forEach((item, index) => {
                 let nuevaFila = document.createElement("tr");
-                nuevaFila.id = "fila" + item.id;
+                nuevaFila.id = item.id;
                 
                 // El contador ahora es relativo a la página
                 let contador = offset + index + 1;
 
                 nuevaFila.innerHTML = `
                     <td>${contador}</td>
-                    <td>${item.dni}</td>
-                    <td>${item.nombre}</td>
-                    <td>${item.apellido}</td>
-                    <td>${item.correo}</td>
+                    <td>${item.ruc}</td>
+                    <td>${item.razon_social}</td>
                     <td>${item.telefono}</td>
-                    <td>${item.rol}</td>
+                    <td>${item.correo}</td>
                     <td>${item.estado}</td>
                     <td>${item.options}</td>
                 `;
@@ -118,7 +115,7 @@ async function listar_usuarios(pagina = 1) {
 
     } catch (e) {
         console.log("Oops salió un error: " + e);
-        document.querySelector('#tbody_tbl_usuarios').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
+        document.querySelector('#tbody_tbl_clientesApi').innerHTML = '<tr><td colspan="9" class="text-center text-danger">Error al cargar los datos.</td></tr>';
     }
 }
 
@@ -135,7 +132,7 @@ document.getElementById('paginacion-controles').addEventListener('click', functi
 
         // Solo cargar si no es un botón deshabilitado o la página activa
         if (pagina && !isDisabled && !isActive) {
-            listar_usuarios(parseInt(pagina));
+            listarClientesApi(parseInt(pagina));
         }
     }
 });

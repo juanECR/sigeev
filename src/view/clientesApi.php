@@ -17,8 +17,6 @@
                 <h6 class="mb-4">Acciones</h6>
                 <div class="m-n2">
                     <button type="button" class="btn btn-outline-primary m-2" data-bs-toggle="modal" data-bs-target="#modalNuevoCliente"><i class="fa fa-plus me-2"></i>Nuevo</button>
-                    <button type="button" class="btn btn-outline-success m-2"><i class="fa fa-file-excel me-2"></i>Reporte</button>
-                    <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-file-pdf me-2"></i>Reporte</button>
                 </div>
             </div>
         </div>
@@ -59,26 +57,24 @@
             </div>
         </div>
 
-        <!-- tabala eventos recientes -->
+        <!-- tabala clientres api -->
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Usuarios registrados</h6>
                 <div class="table-responsive">
-                    <table class="table" id="tbl_usuarios"> 
+                    <table class="table" id="tbl_clientesApi"> 
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Dni</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
+                                <th scope="col">RUC</th>
+                                <th scope="col">RAZON SOCIAL</th>
+                                <th scope="col">Telefono</th>                      
                                 <th scope="col">Correo Electronico</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Rol</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col"> </th>
                             </tr>
                         </thead>
-                        <tbody id="tbody_tbl_usuarios">
+                        <tbody id="tbody_tbl_clientesApi">
                                 <!--CONTENIDO TABLA CON JS-->
                         </tbody>
                     </table>

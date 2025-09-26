@@ -50,39 +50,8 @@ if($tipo == "registrarCliente"){
     echo json_encode($arr_Respuesta);
 }
 //LISTAR TODOS LAS PERSONAS
-if($tipo == "listarPersonas"){
-    $arr_Respuesta = array('status'=> false, 'contenido'=>'' ,'mensaje'=>'Error sesion');
-    if($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
-        $arr_Persona = $objPersona->listarPersonas();
-        /* $arr_Producto = $objProducto->obtener_productos(); */
-        if (!empty($arr_Persona)) {
-            //recordemos que el array es para agregar las opciones de las categorias
-                        for ($i=0; $i < count($arr_Persona); $i++) {
-                            if($arr_Persona[$i]->genero == "M"){
-                                $arr_Persona[$i]->genero = "Masculino";
-                            }else if($arr_Persona[$i]->genero == "F"){
-                                $arr_Persona[$i]->genero = "Femenino";
-                            }
-                        $id_persona      = $arr_Persona[$i]->id;
-                        $dni             = $arr_Persona[$i]->dni;
-                        $nombres          = $arr_Persona[$i]->nombres;
-                        $apellidos         = $arr_Persona[$i]->apellidos;
-                        $correo_electronico    = $arr_Persona[$i]->correo_electronico;
-                        $telefono             = $arr_Persona[$i]->telefono;
-                        $fecha_nacimiento     = $arr_Persona[$i]->fecha_nacimiento;
-                        $genero             = $arr_Persona[$i]->genero;
-                        $opciones = '<a href="'.BASE_URL.'editarProducto/'.$id_persona.'"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
-                        <button class="btn btn-danger btn-sm" onclick="eliminar_producto('.$id_persona.')"><i class="fas fa-trash-alt"></i></button>';
-                        $arr_Persona[$i]->options = $opciones;
-            }
-            $arr_Respuesta['status'] = true;
-            $arr_Respuesta['contenido'] = $arr_Persona;
-        }
-    }
-    echo json_encode($arr_Respuesta);
-}
 
-if ($tipo == "listarPersonasPaginado") {
+if ($tipo == "listarClientesApi") {
     $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sesión');
 
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
@@ -97,32 +66,30 @@ if ($tipo == "listarPersonasPaginado") {
         $offset = ($pagina_actual - 1) * $resultados_por_pagina;
 
         // 3. Obtener el total de registros y calcular el total de páginas
-        $total_personas = $objPersona->contarTotalPersonas(); // Usamos la nueva función del modelo
-        $total_paginas = ceil($total_personas / $resultados_por_pagina);
+        $totalClientesApi = $objClienteApi->contarTotalClientes(); // Usamos la nueva función del modelo
+        $total_paginas = ceil($totalClientesApi / $resultados_por_pagina);
 
         // 4. Obtener solo las personas para la página actual
-        $arr_Persona = $objPersona->listarPersonasPaginado($resultados_por_pagina, $offset); // Usamos la nueva función
+        $arrClientesApi = $objClienteApi->listarClientesApiPaginado($resultados_por_pagina, $offset); // Usamos la nueva función
 
         // --- FIN DE CAMBIOS PARA PAGINACIÓN ---
 
-        if (!empty($arr_Persona)) {
+        if (!empty($arrClientesApi)) {
             // El resto de tu lógica para formatear los datos permanece igual
-            for ($i = 0; $i < count($arr_Persona); $i++) {
-                if ($arr_Persona[$i]->genero == "M") {
-                    $arr_Persona[$i]->genero = "Masculino";
-                } else if ($arr_Persona[$i]->genero == "F") {
-                    $arr_Persona[$i]->genero = "Femenino";
-                }
+            for ($i = 0; $i < count($arrClientesApi); $i++) {
 
-                $id_persona = $arr_Persona[$i]->id;
+                $arrClientesApi[$i]->estado = 1? $arrClientesApi[$i]->estado = '<p class="text-success">activo</p>':$arrClientesApi[$i]->estado = '<p class="text-light">inactivo</p>';
+
+
+                $id_cliente = $arrClientesApi[$i]->id;
                 // Importante: Sanitizar la salida para prevenir XSS
-                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_persona . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
-                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_persona . ')"><i class="fas fa-trash-alt"></i></button>';
-                $arr_Persona[$i]->options = $opciones;
+                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_cliente . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
+                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_cliente . ')"><i class="fas fa-trash-alt"></i></button>';
+                $arrClientesApi[$i]->options = $opciones;
             }
 
             $arr_Respuesta['status'] = true;
-            $arr_Respuesta['contenido'] = $arr_Persona;
+            $arr_Respuesta['contenido'] = $arrClientesApi;
             
             // AÑADIDO: Incluir información de la paginación en la respuesta JSON
             $arr_Respuesta['paginacion'] = [

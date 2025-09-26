@@ -24,5 +24,23 @@ class ClienteApiModel{
       $result = $result->fetch_object();
       return $result;
  }
+   public function contarTotalClientes() {
+        $sql = $this->conexion->query("SELECT COUNT(id) as total FROM client_api");
+        $resultado = $sql->fetch_object();
+        return (int)$resultado->total;
+    }
+        public function listarClientesApiPaginado(int $limit, int $offset) {
+        $array = array();
+        $sql = $this->conexion->prepare("SELECT * FROM client_api LIMIT ? OFFSET ?");
+        // 'ii' significa que ambos parámetros son enteros (integer)
+        $sql->bind_param('ii', $limit, $offset);
+        $sql->execute();
+        $resultado = $sql->get_result();
+
+        while ($objeto = $resultado->fetch_object()) {
+           array_push($array, $objeto);
+        }
+        return $array;
+    }
 }
 ?>
