@@ -87,6 +87,51 @@
             </div>
         </div>
 
+                 <!--modal editar cliente api-->
+        <div class="modal fade" id="modalEditarCliente" tabindex="-1" aria-labelledby="modalEditarClienteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-secondary">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalEditarClienteLabel">Nuevo Cliente</h1>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="frm_act_cliente">
+                            <input type="hidden" name="data" id="data" value="">
+                            <div class="mb-3">
+                                <label for="new_ruc" class="form-label">RUC:</label>
+                                <input type="number" class="form-control" name="new_ruc" id="new_ruc" placeholder="Ingrese su ruc" minlength="8" maxlength="8"  required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="new_razon_social" class="form-label">Razon Social</label>
+                                <input type="text" class="form-control" name="new_razon_social" id="new_razon_social" placeholder="Ingrese sus Razon social" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="new_telefono" class="form-label">Teléfono:</label>
+                                <input type="number" class="form-control" name="new_telefono" id="new_telefono" placeholder="Ingerese su telefono" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="new_correo" class="form-label">Correo electrónico:</label>
+                                <input type="email" class="form-control" name="new_correo" id="new_correo" placeholder="ejemplo@correo.com" required>
+                            </div>  
+                            <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado:</label>
+                                    <select class="form-select" name="estado" id="estado" required>
+                                    <option value="">Seleccione estado</option>
+                                    <option value="0">inactivo</option>
+                                    <option value="1">activo</option>
+                                    </select>
+                            </div>              
+                            <div class="text-center g-2">                             
+                                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" >Cancelar</button>  
+                                <button type="button" class="btn btn-outline-primary" onclick="actualizarCliente();" >Actualizar</button> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
    </div>
 </div>
 <script src="<?php echo BASE_URL;?>src/view/js/admin-clientesApi.js"></script>

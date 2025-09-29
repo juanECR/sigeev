@@ -78,13 +78,12 @@ if ($tipo == "listarClientesApi") {
             // El resto de tu lógica para formatear los datos permanece igual
             for ($i = 0; $i < count($arrClientesApi); $i++) {
 
-                $arrClientesApi[$i]->estado = 1? $arrClientesApi[$i]->estado = '<p class="text-success">activo</p>':$arrClientesApi[$i]->estado = '<p class="text-light">inactivo</p>';
+                $arrClientesApi[$i]->estado = $arrClientesApi[$i]->estado == 1 ? '<p class="text-success">activo</p>' : '<p class="text-light">inactivo</p>';
 
 
                 $id_cliente = $arrClientesApi[$i]->id;
                 // Importante: Sanitizar la salida para prevenir XSS
-                $opciones = '<a href="' . BASE_URL . 'editarProducto/' . $id_cliente . '"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
-                             <button class="btn btn-danger btn-sm" onclick="eliminar_producto(' . $id_cliente . ')"><i class="fas fa-trash-alt"></i></button>';
+                $opciones = '<button class="btn btn-primary btn-sm" onclick="buscarClienteApi('.$id_cliente.')" data-bs-toggle="modal" data-bs-target="#modalEditarCliente"><i class="fas fa-edit"></i></button>';
                 $arrClientesApi[$i]->options = $opciones;
             }
 
@@ -106,5 +105,54 @@ if ($tipo == "listarClientesApi") {
     echo json_encode($arr_Respuesta);
 }
 
+if($tipo == "buscarClienteApi"){
+    $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sesión');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        $id_clientApi = trim($_POST['id']);
+        if($id_clientApi == '' || !is_numeric($id_clientApi) || empty($id_clientApi)){
+        $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sistema');
+        }else{
+            $buscarCliente = $objClienteApi->buscarClientApiById($id_clientApi);
+            if($buscarCliente){
+              $arr_Respuesta['status']= true;
+              $arr_Respuesta['mensaje'] = 'succesfull';
+              $arr_Respuesta['contenido'] = $buscarCliente;
+            }else{
+                $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sistema');
+            }
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}
+
+if($tipo == "actualizarCliente"){
+    $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        if ($_POST) {
+            $id = trim($_POST['data']);
+            $ruc = $_POST['new_ruc'];
+            $razon_social = strtoupper($_POST['new_razon_social']);
+            $telefono = $_POST['new_telefono'];
+            $correo = $_POST['new_correo'];
+            $estado = $_POST['estado'];
+            if(!is_numeric($ruc)||empty($ruc)||strlen($ruc)<11){
+              $arr_Respuesta = array('status' => false, 'mensaje' => 'Error ruc');
+            }else
+            if ($razon_social == ""|| $correo == "" || $telefono == "") {
+                $arr_Respuesta = array('status' => false, 'mensaje' => 'Error, campos vacíos');
+            } else {
+                    $actualizar_cliente = $objClienteApi->actualizarCliente($id,$ruc,$razon_social,$correo,$telefono,$estado);
+                    if ($actualizar_cliente) {
+                        // array con los id de los sistemas al que tendra el acceso con su rol registrado
+                        // caso de administrador y director
+                        $arr_Respuesta = array('status' => true, 'mensaje' => 'Actualizado correctamente');
+                    } else {
+                        $arr_Respuesta = array('status' => false, 'mensaje' => 'Error al actualizar usuario');     
+                    }
+                }
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}
 
 ?>

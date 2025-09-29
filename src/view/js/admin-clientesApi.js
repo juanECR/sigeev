@@ -43,7 +43,7 @@ async function registrarCliente(){
                         showConfirmButton: false,
                         timer: 1500
                         });
-                    /* listarClientesApi(1); */
+                    listarClientesApi(1);
                 } else if (json.msg == "Error_Sesion") {
                     alerta_sesion();
                 } else {
@@ -164,4 +164,80 @@ function actualizarPaginacion(paginacion, contenedorId) {
     liSiguiente.className = `page-item ${pagina_actual >= total_paginas ? 'disabled' : ''}`;
     liSiguiente.innerHTML = `<a class="page-link" href="#" data-pagina="${pagina_actual + 1}">Siguiente</a>`;
     controles.appendChild(liSiguiente);
+}
+
+async function buscarClienteApi(id) {
+    let data = document.getElementById("data");
+    let ruc = document.getElementById("new_ruc");
+    let razon = document.getElementById("new_razon_social");
+    let telefono = document.getElementById("new_telefono");
+    let correo = document.getElementById("new_correo");
+    let estado = document.getElementById("estado");
+    try {
+        const datos = new FormData();
+                datos.append('sesion', session_session);
+                datos.append('token', token_token);
+                datos.append('id',id);
+                let respuesta = await fetch(Uri+'buscarClienteApi', {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    body: datos
+                });
+                json = await respuesta.json();
+                if(json.status){
+                   let datos = json.contenido;
+                   data.value = datos.id;
+                   ruc.value = datos.ruc;
+                   razon.value = datos.razon_social;
+                   telefono.value = datos.telefono;
+                   correo.value = datos.correo;
+                   estado.value = datos.estado;
+                }
+    } catch (e) {
+        console.log('erro fun || ' + e);     
+    }
+}
+async function actualizarCliente() {
+    try {
+        const datos = new FormData(frm_act_cliente);
+         datos.append('sesion', session_session);
+        datos.append('token', token_token);
+        let respuesta = await fetch(Uri+'actualizarCliente',{
+            method: 'POST',
+             mode: 'cors',
+            cache: 'no-cache',
+             body: datos
+        });
+
+        json = await respuesta.json();
+        if(json.status){
+                let form = document.getElementById("frm_act_cliente");
+                    form.reset();
+                    let modalEl = document.getElementById("modalEditarCliente");
+                    let modal = bootstrap.Modal.getInstance(modalEl);
+                    // Cerrar modal
+                    modal.hide();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: json.mensaje,
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
+                        listarClientesApi(1);
+        }else if(json.mensaje == "Error_Sesion"){
+         alerta_sesion();
+        }else{
+        Swal.fire({
+            title: "Error",
+            text: json.mensaje,
+            icon: "error"
+            });
+        }
+
+    } catch (e) {
+        console.log('funct error ||' + e);
+    }
+    
 }

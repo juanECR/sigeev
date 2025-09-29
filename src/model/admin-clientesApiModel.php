@@ -24,6 +24,14 @@ class ClienteApiModel{
       $result = $result->fetch_object();
       return $result;
  }
+ public function buscarClientApiById($id){
+      $sql = $this->conexion->prepare("SELECT * FROM client_api WHERE id=?");
+      $sql->bind_param('i',$id);
+      $sql->execute();
+      $result = $sql->get_result();
+      $result = $result->fetch_object();
+      return $result;
+ }
    public function contarTotalClientes() {
         $sql = $this->conexion->query("SELECT COUNT(id) as total FROM client_api");
         $resultado = $sql->fetch_object();
@@ -41,6 +49,18 @@ class ClienteApiModel{
            array_push($array, $objeto);
         }
         return $array;
+    }
+    public function actualizarCliente($id,$ruc,$razon_social,$correo,$telefono,$estado){
+    $sql = $this->conexion->prepare("UPDATE client_api SET ruc= ?,razon_social = ?,telefono = ? , correo = ?, estado=?  WHERE id = ?");
+    if (!$sql) {
+        return false; // Error al preparar la consulta
+    }
+    // 'sssi' = string, string, string, integer
+    $sql->bind_param('isssii',$ruc, $razon_social, $telefono, $correo,$estado, $id);
+    $resultado = $sql->execute();
+    $sql->close();
+
+    return $resultado; // Devuelve true si se actualizó, false en caso de error
     }
 }
 ?>
