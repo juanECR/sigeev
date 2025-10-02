@@ -83,7 +83,8 @@ if ($tipo == "listarClientesApi") {
 
                 $id_cliente = $arrClientesApi[$i]->id;
                 // Importante: Sanitizar la salida para prevenir XSS
-                $opciones = '<button class="btn btn-primary btn-sm" onclick="buscarClienteApi('.$id_cliente.')" data-bs-toggle="modal" data-bs-target="#modalEditarCliente"><i class="fas fa-edit"></i></button>';
+                $opciones = '<button class="btn btn-primary btn-sm" onclick="buscarClienteApi('.$id_cliente.')" data-bs-toggle="modal" data-bs-target="#modalEditarCliente"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-primary btn-sm" onclick="asignarCliente('.$id_cliente.')" data-bs-toggle="modal" data-bs-target="#modalTokensApi"><i class="bi bi-key"></i></button>';
                 $arrClientesApi[$i]->options = $opciones;
             }
 
@@ -106,7 +107,7 @@ if ($tipo == "listarClientesApi") {
 }
 
 if($tipo == "buscarClienteApi"){
-    $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sesión');
+    $arr_Respuesta = array('status' => false, 'contenido' => '', 'mensaje' => 'Error de sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
         $id_clientApi = trim($_POST['id']);
         if($id_clientApi == '' || !is_numeric($id_clientApi) || empty($id_clientApi)){

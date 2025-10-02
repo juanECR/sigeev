@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <!-- tabala clientres api -->
+        <!-- tabala clientes api -->
         <div class="col-12">
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Usuarios registrados</h6>
@@ -128,6 +128,61 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!--modal listar tokens cliente api-->
+        <div class="modal fade" id="modalTokensApi" tabindex="-1" aria-labelledby="modalTokensApiLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content bg-secondary"> 
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTokensApiLabel">Gestión de Tokens API para [Nombre del Cliente]</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" value="" id="dataClient" name="dataClient">
+                        <div class="d-flex justify-content-end mb-4">
+                            <button class="btn btn-primary" type="button" id="btnGenerarToken" onclick="generarToken();">
+                                <i class="bi bi-key-fill me-2"></i> Generar Nuevo Token
+                            </button>
+                        </div>
+
+                        <h3 class="h5 mb-3">Tokens Activos del Cliente</h3>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Token</th>
+                                        <th scope="col">Creado el</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col" class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_tokens">
+<!--                                     <tr>
+                                        <td><span class="font-monospace">sk_live_xxxx...a4f8</span></td>
+                                        <td>2024-01-15</td>
+                                        <td><span class="badge text-bg-light">Activo</span></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-outline-secondary" title="Copiar Token">
+                                                <i class="bi bi-clipboard"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger ms-2" title="Revocar/Desactivar">
+                                                <i class="bi bi-slash-circle"></i>
+                                            </button>
+                                        </td>
+                                    </tr> -->
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
                 </div>
             </div>
         </div>

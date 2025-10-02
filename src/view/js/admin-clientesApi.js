@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 let Uri = base_url_server+'src/control/clientesApi.php?tipo=';
-
+let UriTokens = base_url_server+'src/control/tokensApi.php?tipo=';
 
 async function registrarCliente(){
     let ruc = document.getElementById("ruc").value;
@@ -240,4 +240,109 @@ async function actualizarCliente() {
         console.log('funct error ||' + e);
     }
     
+}
+
+/////////////////////////// gestion tokens api //////////////////////////////////
+
+
+function asignarCliente(id){
+    let data = document.getElementById("dataClient");
+    data.value = id;
+
+    listarTokensCliente(id);
+}
+
+function generarToken(){
+    Swal.fire({
+  title: "Generar Token?",
+  text: "¿Deseas Generar token para este cliente?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, generar token!"
+}).then((result) => {
+  if (result.isConfirmed) {
+     generarTokenClient();
+  }
+});
+}
+
+async function generarTokenClient() {
+    let dataClient = document.getElementById("dataClient").value;
+    try {
+          let datos = new FormData();
+          datos.append('token', token_token);  
+          datos.append('sesion', session_session); 
+          datos.append('data', dataClient); 
+          let respue = await fetch(UriTokens +'generarTokenClient',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+          });
+          json = await respue.json();
+          if(json.status){
+                 Swal.fire({
+                    title: "Token generado!",
+                    text: jaon.mensaje,
+                    icon: "success"
+                    });
+          }else if(json.mensaje == "Error_Sesion"){
+            alerta_sesion();
+          }else{
+                 Swal.fire({
+                    title: "Error!",
+                    text: json.mensaje,
+                    icon: "error"
+                    });
+          }
+     } catch (e) {
+            console.log('error funct || ' + e);
+     }
+}
+
+async function listarTokensCliente(id){
+    try {
+        let datos = new FormData();
+          datos.append('token', token_token);  
+          datos.append('sesion', session_session); 
+          datos.append('data', id); 
+          let respue = await fetch(UriTokens +'listarTokensCliente',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+          });
+          json = await respue.json();
+          let bodyHtml = document.getElementById("tbody_tokens");
+          if(json.status){
+            bodyHtml.innerHTML = '';
+            let datos = json.contenido;
+            datos.forEach((item) => {
+                let nuevaFila = document.createElement("tr");
+                nuevaFila.id = item.id;
+                
+                let contador = 0;
+                contador++;
+
+                nuevaFila.innerHTML = `
+                    <td>${contador}</td>
+                    <td><span class="font-monospace">${item.token}</span></td>
+                    <td>${item.fecha_registro}</td>
+                    <td>${item.estado}</td>
+                    <td class="text-center">${item.options}</td>
+                `;
+                bodyHtml.appendChild(nuevaFila);
+            });
+            
+          }else if(json.mensaje == "Error_Sesion"){
+           alerta_sesion();
+          }else{
+            bodyHtml.innerHTML = "Error al listar datos";
+          }
+        
+    } catch (e) {
+        console.log('erro function || '+ e);     
+    }
 }
