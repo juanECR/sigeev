@@ -52,5 +52,14 @@ class TokenApiModel{
    return $array;
     }
 
+    public function cambiarEstado($id_token,$estado){
+        if($estado == 0){
+            $sql = $this->conexion->query("UPDATE tokens_api SET estado = 1 WHERE id='$id_token'");
+        }else if($estado == 1){
+            $sql = $this->conexion->query("UPDATE tokens_api SET estado = 0 WHERE id='$id_token'");
+        }
+        return $sql;
+    }
+
 
 }

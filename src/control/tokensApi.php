@@ -47,16 +47,17 @@ if($tipo == "listarTokensCliente"){
        $arr_tokens = $objToken->listarTokensCliente($id_client);
        if($arr_tokens){
         for ($i=0; $i < count($arr_tokens); $i++) {
-            if($arr_tokens[$i]->estado == 1){
-              $arr_tokens[$i]->estado = '<span class="badge text-bg-warning">Activo</span>';
-              $opciones = '<button class="btn btn-sm btn-outline-light" title="Copiar Token"><i class="bi bi-clipboard"></i></button>
-                       <button class="btn btn-sm btn-outline-success ms-2" title="Revocar/Desactivar"><i class="bi bi-toggle-on"></i></button>';
-            }else if($arr_tokens[$i]->estado == 0){
-              $arr_tokens[$i]->estado = '<span class="badge text-bg-danger">Inactivo</span>';
-               $opciones = '<button class="btn btn-sm btn-outline-light" title="Copiar Token"><i class="bi bi-clipboard"></i></button>
-                       <button class="btn btn-sm btn-outline-danger ms-2" title="Revocar/Desactivar"><i class="bi bi-toggle-on"></i></button>';
-            }
             $id_token = $arr_tokens[$i]->id;
+            if($arr_tokens[$i]->estado == 1){
+              $arr_tokens[$i]->estado = '<span class="bg-success text-white px-2 py-1 rounded">Activo</span>';
+              $opciones = '<button class="btn btn-sm btn-outline-light" title="Copiar Token"><i class="bi bi-clipboard"></i></button>
+                       <button class="btn btn-sm btn-outline-success ms-2" title="Revocar/Desactivar"  onclick="cambiarEstado('.$id_token.','.(1).')"><i class="bi bi-toggle-on"></i></button>';
+            }else if($arr_tokens[$i]->estado == 0){
+              $arr_tokens[$i]->estado = '<span class="bg-danger text-white px-2 py-1 rounded">Inactivo</span>';
+               $opciones = '<button class="btn btn-sm btn-outline-light" title="Copiar Token"><i class="bi bi-clipboard"></i></button>
+                       <button class="btn btn-sm btn-outline-danger ms-2" title="Activar" onclick="cambiarEstado('.$id_token.','.(0).')"><i class="bi bi-toggle-off"></i></button>';
+            }
+           
     
             $arr_tokens[$i]->options = $opciones;
         }
@@ -67,6 +68,29 @@ if($tipo == "listarTokensCliente"){
         $arr_Respuesta = array('status' => false, 'mensaje' => 'Error base de datos');
        }
     }
+   }
+   echo json_encode($arr_Respuesta);
+}
+
+if($tipo == "cambiarEstadoToken"){
+   $arr_Respuesta = array('status' => false, 'mensaje' => 'Error_Sesion');
+   if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+     if($_POST){
+        $id_token = $_POST['data'];
+        $estado = $_POST['status'];
+        if (empty($id_token)||!is_numeric($id_token)) {
+           $arr_Respuesta = array('status' => false, 'mensaje' => 'token_invalido');
+        }else{
+            $actualizarEstado = $objToken->cambiarEstado($id_token,$estado);
+            if($actualizarEstado){
+              $arr_Respuesta = array('status' => true, 'mensaje' => 'estado actualizado corrrectamente');
+            }else{
+               $arr_Respuesta = array('status' => false, 'mensaje' => 'error actualizar estado');
+            }
+        }
+     }else{
+        $arr_Respuesta = array('status' => false, 'mensaje' => 'Consulta invalida');
+     }
    }
    echo json_encode($arr_Respuesta);
 }

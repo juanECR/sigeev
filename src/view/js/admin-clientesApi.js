@@ -244,62 +244,11 @@ async function actualizarCliente() {
 
 /////////////////////////// gestion tokens api //////////////////////////////////
 
-
 function asignarCliente(id){
     let data = document.getElementById("dataClient");
     data.value = id;
 
     listarTokensCliente(id);
-}
-
-function generarToken(){
-    Swal.fire({
-  title: "Generar Token?",
-  text: "¿Deseas Generar token para este cliente?",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Si, generar token!"
-}).then((result) => {
-  if (result.isConfirmed) {
-     generarTokenClient();
-  }
-});
-}
-
-async function generarTokenClient() {
-    let dataClient = document.getElementById("dataClient").value;
-    try {
-          let datos = new FormData();
-          datos.append('token', token_token);  
-          datos.append('sesion', session_session); 
-          datos.append('data', dataClient); 
-          let respue = await fetch(UriTokens +'generarTokenClient',{
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-          });
-          json = await respue.json();
-          if(json.status){
-                 Swal.fire({
-                    title: "Token generado!",
-                    text: jaon.mensaje,
-                    icon: "success"
-                    });
-          }else if(json.mensaje == "Error_Sesion"){
-            alerta_sesion();
-          }else{
-                 Swal.fire({
-                    title: "Error!",
-                    text: json.mensaje,
-                    icon: "error"
-                    });
-          }
-     } catch (e) {
-            console.log('error funct || ' + e);
-     }
 }
 
 async function listarTokensCliente(id){
@@ -339,10 +288,93 @@ async function listarTokensCliente(id){
           }else if(json.mensaje == "Error_Sesion"){
            alerta_sesion();
           }else{
-            bodyHtml.innerHTML = "Error al listar datos";
+            bodyHtml.innerHTML = "<span class='text-danger text-center'>no hay datos<span>";
           }
         
     } catch (e) {
         console.log('erro function || '+ e);     
+    }
+}
+
+function generarToken(){
+    Swal.fire({
+  title: "Generar Token?",
+  text: "¿Deseas Generar token para este cliente?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, generar token!"
+}).then((result) => {
+  if (result.isConfirmed) {
+     generarTokenClient();
+  }
+});
+}
+
+async function generarTokenClient() {
+    let dataClient = document.getElementById("dataClient").value;
+    try {
+          let datos = new FormData();
+          datos.append('token', token_token);  
+          datos.append('sesion', session_session); 
+          datos.append('data', dataClient); 
+          let respue = await fetch(UriTokens +'generarTokenClient',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+          });
+          json = await respue.json();
+          if(json.status){
+                 Swal.fire({
+                    title: "Token generado!",
+                    text: json.mensaje,
+                    icon: "success"
+                    });
+                    listarTokensCliente(dataClient);
+          }else if(json.mensaje == "Error_Sesion"){
+            alerta_sesion();
+          }else{
+                 Swal.fire({
+                    title: "Error!",
+                    text: json.mensaje,
+                    icon: "error"
+                    });
+          }
+     } catch (e) {
+            console.log('error funct || ' + e);
+     }
+}
+
+async function cambiarEstado(idtoken, estado){
+     let dataClient = document.getElementById("dataClient").value;
+    try {
+        let datos = new FormData();
+          datos.append('token', token_token);  
+          datos.append('sesion', session_session); 
+          datos.append('data', idtoken); 
+          datos.append('status', estado); 
+          let respue = await fetch(UriTokens +'cambiarEstadoToken',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+          });
+          json = await respue.json();
+          if(json.status){
+              listarTokensCliente(dataClient);
+          } else if(json.mensaje == "Error_Sesion"){
+            alerta_sesion();
+          }else{
+                 Swal.fire({
+                    title: "Error!",
+                    text: json.mensaje,
+                    icon: "error"
+                    });
+          }
+        
+    } catch (e) {
+        console.log('error funct || ' + e);     
     }
 }

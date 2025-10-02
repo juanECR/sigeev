@@ -138,7 +138,7 @@
                 <div class="modal-content bg-secondary"> 
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="modalTokensApiLabel">Gestión de Tokens API para [Nombre del Cliente]</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" value="" id="dataClient" name="dataClient">
