@@ -13,9 +13,11 @@ class TokenApiModel{
         if (!is_numeric($id_cliente) || $id_cliente <= 0) {
             return false;
         }
-
+        $fecha_actual = date("Ymd");
         // Generar token seguro
         $token = bin2hex(random_bytes(32)); // 64 caracteres hex
+
+        $token_final = $token.'-'.$fecha_actual.'-'.$id_cliente;
 
         // Preparar la consulta
         $sql = $this->conexion->prepare("INSERT INTO tokens_api (id_cliente_api, token) VALUES (?, ?)");
@@ -26,7 +28,7 @@ class TokenApiModel{
         }
 
         // Vincular parámetros: 'i' = integer, 's' = string
-        $sql->bind_param("is", $id_cliente, $token);
+        $sql->bind_param("is", $id_cliente, $token_final);
 
         // Ejecutar
         if ($sql->execute()) {

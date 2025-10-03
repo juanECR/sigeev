@@ -1,7 +1,4 @@
 <?php
-// --- PUNTO DE ENTRADA ÚNICO PARA TODAS LAS PETICIONES DE LA API ---
-
-// Iniciar la sesión si es necesario para las verificaciones
 session_start();
 
 // 1. CABECERAS ESENCIALES DE LA API
@@ -15,7 +12,8 @@ header('Content-Type: application/json; charset=utf-8');
 // -------------------------------------------------------------------
 // Usamos rutas relativas como en tu controlador original
 require_once('../model/admin-sesionModel.php');
-require_once('../model/admin-eventoModel.php');
+require_once('../model/admin-apiModel.php');
+require_once('../model/admin-clientesApiModel.php');
 // ... incluye otros modelos que la API pueda necesitar ...
 
 // 3. OBTENER EL TIPO DE ACCIÓN Y PREPARAR LA RESPUESTA
@@ -25,12 +23,39 @@ $arr_Respuesta = ['status' => 'error', 'message' => 'Tipo de acción no válido.
 
 // 4. INSTANCIAR LOS MODELOS (solo cuando se necesiten)
 // -------------------------------------------------------------------
-$objEvento = new EventoModel();
+$objApi = new ApiModel();
 $objSesion = new SessionModel();
+$objClient = new ClienteApiModel();
 
 
+$token = $_REQUEST['token'];
 // 5. ENRUTADOR DE LA API BASADO EN EL PARÁMETRO 'TIPO'
 // -------------------------------------------------------------------
+
+if($tipo == "listarEventosByOrganizador"){
+ $tokenn = explode('-',$token);
+ $id_client = $tokenn[2];
+
+ $arr_client = $objClient->buscarClientApiById($id_client);
+ if($arr_client->estado == 1){
+    //data es el valor del parametro de busqueda (organizador)
+       $dato = $_POST['data'];
+       //obtener id por nombre del organizador
+       $arrOrganizador = $objApi->obtnerIdOrganizadorByNombre();
+      //obtener eventos por id organizador
+       $arr_eventos = $objApi->listarEventosByOrganizador($dato);
+
+
+
+ }else{
+
+ }
+  
+}
+
+
+
+//peticion con tipo swith
 switch ($tipo) {
 
     // --- Endpoint Público: Listar Próximos Eventos ---
@@ -38,7 +63,7 @@ switch ($tipo) {
     // URL: /src/control/api.php?tipo=listarProximos
     case 'listarProximos':
         // Llamamos a la función del modelo que creamos anteriormente
-        $proximosEventos = $objEvento->listarTodosEventos(); // Pedimos 5 eventos
+        $proximosEventos = $objApi->listarTodosEventos(); // Pedimos 5 eventos
         
         $arr_Respuesta = [
             'status' => 'success',
@@ -55,7 +80,7 @@ switch ($tipo) {
         $token = $_REQUEST['token'] ?? null;
 
         if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
-            $todosLosEventos = $objEvento->listarTodosEventos();
+            $todosLosEventos = $objApi->listarTodosEventos();
             $arr_Respuesta = [
                 'status' => 'success',
                 'data' => $todosLosEventos
