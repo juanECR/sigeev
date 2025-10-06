@@ -18,8 +18,8 @@ require_once('../model/admin-clientesApiModel.php');
 
 // 3. OBTENER EL TIPO DE ACCIÓN Y PREPARAR LA RESPUESTA
 // -------------------------------------------------------------------
-$tipo = $_GET['tipo'] ?? null; // Usamos '??' para evitar errores si 'tipo' no existe
-$arr_Respuesta = ['status' => 'error', 'message' => 'Tipo de acción no válido.']; // Respuesta por defecto
+$tipo = $_GET['tipo'] ?? null;
+$arr_Respuesta = ['status' => 'error', 'message' => 'Tipo de acción no válido.'];
 
 // 4. INSTANCIAR LOS MODELOS (solo cuando se necesiten)
 // -------------------------------------------------------------------
@@ -28,10 +28,9 @@ $objSesion = new SessionModel();
 $objClient = new ClienteApiModel();
 
 
-$token = $_REQUEST['token'];
-// 5. ENRUTADOR DE LA API BASADO EN EL PARÁMETRO 'TIPO'
-// -------------------------------------------------------------------
+/* $token = $_REQUEST['token']; */
 
+//endpoint para filtrar eventos por organizador
 if($tipo == "listarEventosByOrganizador"){
  $tokenn = explode('-',$token);
  $id_client = $tokenn[2];
@@ -40,30 +39,52 @@ if($tipo == "listarEventosByOrganizador"){
  if($arr_client->estado == 1){
     //data es el valor del parametro de busqueda (organizador)
        $dato = $_POST['data'];
-       //obtener id por nombre del organizador
-       $arrOrganizador = $objApi->obtnerIdOrganizadorByNombre();
       //obtener eventos por id organizador
-       $arr_eventos = $objApi->listarEventosByOrganizador($dato);
-
-
-
+       $arr_eventos = $objApi->listarEventosByOrganizadorId($dato);
+       if($arr_eventos){
+           $arr_Respuesta = array('status' => true,'data'=>$arr_eventos);
+       }else{
+         $arr_Respuesta = array('status' => false,'data'=>'');
+       }
  }else{
-
+    $arr_Respuesta = array('status' => false,'data'=>'','mensaje' => 'Peticion invalida');
  }
-  
+}
+
+//endpoint para listar organizadores para los filtros
+if($tipo == "ObtenerOrganizadores"){
+  $tokenn = explode('-',$token);
+  $id_client = $tokenn[2];
+
+ $arr_client = $objClient->buscarClientApiById($id_client);
+ if($arr_client->estado == 1){
+
+    $arrOrganizadores = $objApi->listarOrganizadores();
+    if($arrOrganizadores){
+        $arr_Respuesta = array('status' => true,'data'=>$arrOrganizadores);
+    }else{
+         $arr_Respuesta = array('status' => false,'data'=>'');
+    }
+ }else{
+     $arr_Respuesta = array('status' => false,'data'=>'','mensaje' => 'Peticion invalida');
+ }
+}
+
+
+//endopint listar eventos proximos
+if($tipo == "listarProximos"){
+    $arrEventos = $objApi->listarEventosOProximos();
+    $arr_Respuesta = array('status' => 'success','timestamp' => date('c'),'data'=>$arrEventos);
 }
 
 
 
-//peticion con tipo swith
-switch ($tipo) {
 
-    // --- Endpoint Público: Listar Próximos Eventos ---
-    // No requiere verificación de sesión. Cualquiera puede consumirlo.
-    // URL: /src/control/api.php?tipo=listarProximos
+// URL: /src/control/api.php?tipo=listarProximos
+
+/* switch ($tipo) {
     case 'listarProximos':
-        // Llamamos a la función del modelo que creamos anteriormente
-        $proximosEventos = $objApi->listarTodosEventos(); // Pedimos 5 eventos
+        $proximosEventos = $objApi->listarTodosEventos();
         
         $arr_Respuesta = [
             'status' => 'success',
@@ -71,10 +92,6 @@ switch ($tipo) {
             'data' => $proximosEventos
         ];
         break;
-
-    // --- Endpoint Privado: Listar TODOS los eventos (requiere sesión activa) ---
-    // Sigue el mismo patrón de seguridad que tu controlador original.
-    // URL: /src/control/api.php?tipo=listarTodosEventos&sesion=...&token=...
     case 'listarTodosEventos':
         $id_sesion = $_REQUEST['sesion'] ?? null;
         $token = $_REQUEST['token'] ?? null;
@@ -86,21 +103,15 @@ switch ($tipo) {
                 'data' => $todosLosEventos
             ];
         } else {
-            // Si la sesión no es válida, devolvemos un error de autenticación
             $arr_Respuesta = [
                 'status' => 'error',
                 'message' => 'Error de autenticación: la sesión o el token no son válidos.'
             ];
-            // Opcional: Enviar un código de estado HTTP de no autorizado
+      
             http_response_code(401); 
         }
         break;
-
-    // --- Agrega aquí más 'case' para otros endpoints de la API ---
-    // case 'obtenerDetalleEvento':
-    //     // tu lógica aquí...
-    //     break;
-}
+} */
 
 // 6. DEVOLVER LA RESPUESTA FINAL EN FORMATO JSON
 // -------------------------------------------------------------------
