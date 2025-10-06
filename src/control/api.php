@@ -28,8 +28,16 @@ $objSesion = new SessionModel();
 $objClient = new ClienteApiModel();
 
 
-/* $token = $_REQUEST['token']; */
+$token = $_POST['token'] ?? null;
 
+if ($token === null) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Token no proporcionado.',
+        'timestamp' => date('c')
+    ], JSON_PRETTY_PRINT);
+    exit();
+}
 //endpoint para filtrar eventos por organizador
 if($tipo == "listarEventosByOrganizador"){
  $tokenn = explode('-',$token);
@@ -73,8 +81,15 @@ if($tipo == "ObtenerOrganizadores"){
 
 //endopint listar eventos proximos
 if($tipo == "listarProximos"){
+     $tokenn = explode('-',$token);
+     $id_client = $tokenn[2];
+    $arr_client = $objClient->buscarClientApiById($id_client);
+ if($arr_client->estado == 1){
     $arrEventos = $objApi->listarEventosOProximos();
     $arr_Respuesta = array('status' => 'success','timestamp' => date('c'),'data'=>$arrEventos);
+ }else{
+    $arr_Respuesta = array('status' => 'error','timestamp' => date('c'),'data'=>'');
+ }
 }
 
 
