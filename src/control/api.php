@@ -38,6 +38,7 @@ if ($token === null) {
     ], JSON_PRETTY_PRINT);
     exit();
 }
+
 //endpoint para filtrar eventos por organizador
 if($tipo == "listarEventosByOrganizador"){
  $tokenn = explode('-',$token);
@@ -86,9 +87,11 @@ if($tipo == "listarProximos"){
     $arr_client = $objClient->buscarClientApiById($id_client);
  if($arr_client->estado == 1){
     $arrEventos = $objApi->listarEventosOProximos();
-    $arr_Respuesta = array('status' => 'success','timestamp' => date('c'),'data'=>$arrEventos);
+    $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>'Cliente inactivo');
+ }else if($arr_client->estado == 0){
+    $arr_Respuesta = array('status' => false,'timestamp' => date('c'),'data'=>'Cliente inactivo');
  }else{
-    $arr_Respuesta = array('status' => 'error','timestamp' => date('c'),'data'=>'');
+     $arr_Respuesta = array('status' => false,'timestamp' => date('c'),'data'=>'ERROR PETICION');
  }
 }
 
