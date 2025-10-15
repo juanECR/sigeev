@@ -1,51 +1,60 @@
 <?php
 session_start();
 
-// 1. CABECERAS ESENCIALES DE LA API
-// -------------------------------------------------------------------
 // Permite que cualquier página web externa consuma esta API (CORS)
 header("Access-Control-Allow-Origin: *"); 
 // Indica que la respuesta siempre será en formato JSON
 header('Content-Type: application/json; charset=utf-8');
 
-// 2. INCLUIR LOS MODELOS NECESARIOS
-// -------------------------------------------------------------------
-// Usamos rutas relativas como en tu controlador original
 require_once('../model/admin-sesionModel.php');
 require_once('../model/admin-apiModel.php');
 require_once('../model/admin-clientesApiModel.php');
-// ... incluye otros modelos que la API pueda necesitar ...
 
-// 3. OBTENER EL TIPO DE ACCIÓN Y PREPARAR LA RESPUESTA
-// -------------------------------------------------------------------
 $tipo = $_GET['tipo'] ?? null;
 $arr_Respuesta = ['status' => 'error', 'message' => 'Tipo de acción no válido.'];
 
-// 4. INSTANCIAR LOS MODELOS (solo cuando se necesiten)
-// -------------------------------------------------------------------
 $objApi = new ApiModel();
 $objSesion = new SessionModel();
 $objClient = new ClienteApiModel();
 
-
-$token = $_POST['token'] ?? null;
-
-if ($token === null) {
+// Función para enviar respuestas de error y salir
+function responderError(string $mensaje): void {
     echo json_encode([
         'status' => 'error',
-        'message' => 'Token no proporcionado.',
+        'mensaje' => $mensaje,
         'timestamp' => date('c')
     ], JSON_PRETTY_PRINT);
     exit();
 }
 
-//endpoint para filtrar eventos por organizador
-if($tipo == "listarEventosByOrganizador"){
- $tokenn = explode('-',$token);
- $id_client = $tokenn[2];
+$token = $_POST['token'] ?? null;
+$datas = explode('-',$token);
+//validar token y formato
+if (empty($token) || count($datas) < 3) {
+    responderError('Token no proporcionado o formato inválido.');
+}
 
- $arr_client = $objClient->buscarClientApiById($id_client);
- if($arr_client->estado == 1){
+$id_cliente = $datas[2];
+if (!is_numeric($id_cliente) || (int)$id_cliente <= 0) {
+    responderError('ID de cliente inválido.');
+}
+
+// Validar existencia y estado del cliente
+$arrCliente = $objClient->buscarClientApiById($id_cliente);
+if (!$arrCliente || $arrCliente->estado == 0) {
+    responderError('Cliente no encontrado o inactivo.');
+}
+
+// Validar estado del token asociado al cliente
+$arrTokenForClient = $objApi->buscarTokenForClient($id_cliente, $token);
+if (!$arrTokenForClient || $arrTokenForClient->estado == 0) {
+    responderError('Token no encontrado o inactivo.');
+}
+
+
+
+//endpoint para filtrar eventos por organizador // falta terminar
+if($tipo == "listarEventosByOrganizador"){
     //data es el valor del parametro de busqueda (organizador)
        $dato = $_POST['data'];
       //obtener eventos por id organizador
@@ -55,85 +64,26 @@ if($tipo == "listarEventosByOrganizador"){
        }else{
          $arr_Respuesta = array('status' => false,'data'=>'');
        }
- }else{
-    $arr_Respuesta = array('status' => false,'data'=>'','mensaje' => 'Peticion invalida');
- }
 }
 
 //endpoint para listar organizadores para los filtros
 if($tipo == "ObtenerOrganizadores"){
-  $tokenn = explode('-',$token);
-  $id_client = $tokenn[2];
-
- $arr_client = $objClient->buscarClientApiById($id_client);
- if($arr_client->estado == 1){
-
     $arrOrganizadores = $objApi->listarOrganizadores();
     if($arrOrganizadores){
-        $arr_Respuesta = array('status' => true,'data'=>$arrOrganizadores);
+        $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>$arrOrganizadores,'mensaje' => 'exito');
     }else{
-         $arr_Respuesta = array('status' => false,'data'=>'');
+         $arr_Respuesta = array('status' => false,'timestamp' => date('c'),'mensaje' => 'Organizadores no encontrados');
     }
- }else{
-     $arr_Respuesta = array('status' => false,'data'=>'','mensaje' => 'Peticion invalida');
- }
 }
-
 
 //endopint listar eventos proximos
-if($tipo == "listarProximos"){
-     $tokenn = explode('-',$token);
-     $id_client = $tokenn[2];
-    $arr_client = $objClient->buscarClientApiById($id_client);
- if($arr_client->estado == 1){
-    $arrEventos = $objApi->listarEventosOProximos();
-    $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>'Cliente inactivo');
- }else if($arr_client->estado == 0){
-    $arr_Respuesta = array('status' => false,'timestamp' => date('c'),'data'=>'Cliente inactivo');
- }else{
-     $arr_Respuesta = array('status' => false,'timestamp' => date('c'),'data'=>'ERROR PETICION');
- }
+if($tipo === "listarProximos"){
+            $arrEventos = $objApi->listarEventosOProximos();
+            $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>$arrEventos, 'mensaje' => 'exito');
 }
 
-
-
-
-// URL: /src/control/api.php?tipo=listarProximos
-
-/* switch ($tipo) {
-    case 'listarProximos':
-        $proximosEventos = $objApi->listarTodosEventos();
-        
-        $arr_Respuesta = [
-            'status' => 'success',
-            'timestamp' => date('c'),
-            'data' => $proximosEventos
-        ];
-        break;
-    case 'listarTodosEventos':
-        $id_sesion = $_REQUEST['sesion'] ?? null;
-        $token = $_REQUEST['token'] ?? null;
-
-        if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
-            $todosLosEventos = $objApi->listarTodosEventos();
-            $arr_Respuesta = [
-                'status' => 'success',
-                'data' => $todosLosEventos
-            ];
-        } else {
-            $arr_Respuesta = [
-                'status' => 'error',
-                'message' => 'Error de autenticación: la sesión o el token no son válidos.'
-            ];
-      
-            http_response_code(401); 
-        }
-        break;
-} */
-
-// 6. DEVOLVER LA RESPUESTA FINAL EN FORMATO JSON
-// -------------------------------------------------------------------
+//DEVOLVER LA RESPUESTA FINAL EN FORMATO JSON
 echo json_encode($arr_Respuesta, JSON_PRETTY_PRINT);
-exit(); // Finalizamos la ejecución para asegurar que no se imprima nada más
+exit(); 
 
 ?>

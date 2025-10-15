@@ -8,6 +8,11 @@ class ApiModel{
         $this->conexion = $this->conexion->connect();
  }
 
+ public function buscarTokenForClient($idCliente, $token){
+   $sql = $this->conexion->query("SELECT * FROM tokens_api WHERE id_cliente_api = '$idCliente' AND token = '$token'");
+   $result = $sql->fetch_object();
+   return $result;
+ }
  public function listarEventosByOrganizadorId($organizador){
     $arrResult = array();
     $consult = $this->conexion->query("SELECT * FROM eventos WHERE organizador_id = '$organizador'");
