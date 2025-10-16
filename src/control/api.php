@@ -81,6 +81,15 @@ if($tipo === "listarProximos"){
             $arrEventos = $objApi->listarEventosOProximos();
             $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>$arrEventos, 'mensaje' => 'exito');
 }
+if($tipo === "obtenerCategoriasEventos"){
+            $arrCategoriasEvento = $objApi->obtenercategoriasEventos();
+            if($arrCategoriasEvento){
+            $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>$arrCategoriasEvento, 'mensaje' => 'exito');
+            }else{
+                $arr_Respuesta = array('status' => false,'timestamp' => date('c'), 'mensaje' => 'error database');
+            }
+          
+}
 
 //DEVOLVER LA RESPUESTA FINAL EN FORMATO JSON
 echo json_encode($arr_Respuesta, JSON_PRETTY_PRINT);

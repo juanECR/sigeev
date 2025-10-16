@@ -38,8 +38,16 @@ class ApiModel{
     return $arrResult;
  }
 
- public function obtnerIdOrganizadorByNombre(){
+/*  public function obtnerIdOrganizadorByNombre(){
 
+ } */
+ public function obtenercategoriasEventos(){
+   $res = array();
+   $sql = $this->conexion->query("SELECT * FROM categoria_evento");
+   while ($objeto = $sql->fetch_object()) {
+      array_push($res, $objeto);
+   }
+   return $res;
  }
 
 }
