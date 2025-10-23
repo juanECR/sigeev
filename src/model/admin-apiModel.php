@@ -49,5 +49,9 @@ class ApiModel{
    }
    return $res;
  }
-
+ public function buscarCategoriaPorId($id_categoria){
+  $consut = $this->conexion->query("SELECT * FROM categoria_evento WHERE id = '$id_categoria'");
+  $result = $consut->fetch_object();
+  return $result;
+ }
 }

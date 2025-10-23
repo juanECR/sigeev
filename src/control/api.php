@@ -51,8 +51,6 @@ if (!$arrTokenForClient || $arrTokenForClient->estado == 0) {
     responderError('Token no encontrado o inactivo.');
 }
 
-
-
 //endpoint para filtrar eventos por organizador // falta terminar
 if($tipo == "listarEventosByOrganizador"){
     //data es el valor del parametro de busqueda (organizador)
@@ -79,8 +77,13 @@ if($tipo == "ObtenerOrganizadores"){
 //endopint listar eventos proximos
 if($tipo === "listarProximos"){
             $arrEventos = $objApi->listarEventosOProximos();
+            for ($i=0; $i < count($arrEventos); $i++) { 
+                $arrCategoria = $objApi->buscarCategoriaPorId($arrEventos[$i]->categoria_evento_id);
+                $arrEventos[$i]->categoriaName = $arrCategoria->nombre;
+            }
             $arr_Respuesta = array('status' => true,'timestamp' => date('c'),'data'=>$arrEventos, 'mensaje' => 'exito');
 }
+
 if($tipo === "obtenerCategoriasEventos"){
             $arrCategoriasEvento = $objApi->obtenercategoriasEventos();
             if($arrCategoriasEvento){
