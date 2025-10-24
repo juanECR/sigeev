@@ -51,6 +51,8 @@ if (!$arrTokenForClient || $arrTokenForClient->estado == 0) {
     responderError('Token no encontrado o inactivo.');
 }
 
+//-------_-----------_---------/   ENDPOINTS /////////////////////__---------------
+
 //endpoint para filtrar eventos por organizador // falta terminar
 if($tipo == "listarEventosByOrganizador"){
     //data es el valor del parametro de busqueda (organizador)
