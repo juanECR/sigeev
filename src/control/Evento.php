@@ -64,7 +64,7 @@ if($tipo == "crearEvento"){
      $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
         if ($_POST) {
-            $titulo = strtoupper(trim($_POST['titulo']));
+            $titulo = mb_strtoupper($_POST['titulo']);
             $descripcion = strtolower($_POST['descripcion']);
             $categoria_id = trim($_POST['categoria']);
             $fecha_inicio = $_POST['fecha_inicio'];
